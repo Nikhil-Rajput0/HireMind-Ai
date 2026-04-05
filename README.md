@@ -1,36 +1,128 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🚀 HireMind AI
 
-## Getting Started
+> An AI-powered platform to help you crack interviews, build resumes, and boost your chances of getting hired.
 
-First, run the development server:
+---
+
+## 🌟 Overview
+
+HireMind AI is an all-in-one career preparation platform designed for students and job seekers.  
+It leverages Artificial Intelligence to simulate real interviews, analyze resumes, and generate professional CVs — all in one place.
+
+---
+
+## ✨ Features
+
+- 🎤 **AI Interview Practice**
+  - Real-time mock interviews
+  - Voice-based interaction
+  - Instant feedback & performance analysis
+
+- 📄 **Resume Generator**
+  - Create ATS-friendly resumes
+  - Clean & professional templates
+  - Easy customization
+
+- 📊 **Resume Analyzer**
+  - Resume scoring system
+  - Keyword & formatting suggestions
+  - ATS optimization tips
+
+- ⚡ **Fast Speech Recognition**
+  - Real-time voice input
+  - Accurate transcription
+  - Smooth user experience
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+
+- ⚛️ React.js / Next.js
+- 🎨 Tailwind CSS
+- 🎞️ Framer Motion
+- 🎠 Swiper.js
+
+### Backend
+
+- 🟢 Node.js
+- 🚀 Express.js
+
+### Database
+
+- 🍃 MongoDB
+
+### Other Tools
+
+- 🔐 JWT Authentication
+- ☁️ Vercel Deployment
+
+---
+
+## 📸 Screenshots
+
+> Add your screenshots here
+
+- Homepage
+- AI Interview
+- Resume Generator
+- Resume Analyzer
+
+---
+
+## 🚀 Getting Started
+
+### 1️⃣ Clone the repository
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/your-username/hiremind-ai.git
+cd hiremind-ai
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2️⃣ Install dependencies
+Bash
+npm install
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+3️⃣ Setup environment variables
+Create a .env file in root:
+Environment
+MONGO_URI=your_mongodb_connection
+JWT_SECRET=your_secret_key
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4️⃣ Run the project
+Bash
+npm run dev
 
-## Learn More
+👉 App will run on:
+http://localhost:3000
 
-To learn more about Next.js, take a look at the following resources:
+📂 Folder Structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+hiremind-ai/
+│── app/
+│── components/
+│── lib/
+│── public/
+│── styles/
+│── package.json
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+🎯 Future Improvements
+🤖 Advanced AI feedback system
+🧠 Company-specific interview questions
+📈 Performance analytics dashboard
+🌐 Multi-language support
+🤝
 
-## Deploy on Vercel
+📄 License
+This project is licensed under the MIT License.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+👨‍💻 Author
+Nikhil Kumar Singh
+🌐 Portfolio: https://nikhil-next-dev.vercel.app
+💼 LinkedIn: https://linkedin.com/in/your-profile⁠�
+📧 Email: nikhilrajpu236@gmail.com
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+⭐ Support
+If you like this project, give it a ⭐ on GitHub!
+💡 HireMind AI — Practice Smart, Get Hired Faster.
