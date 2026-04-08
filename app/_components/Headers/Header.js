@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import { CiCreditCard1 } from "react-icons/ci";
 import { CiStar } from "react-icons/ci";
 import { BiSupport } from "react-icons/bi";
@@ -21,14 +20,29 @@ function Header() {
     <ul className="flex gap-8 flex-1 mx-auto justify-center items-center">
       {headerLink.map((el) => (
         <li key={el.href}>
-          <Link
+          <a
             href={el.href}
-            onClick={(e) => setActiveLink(el.href)}
-            className={`flex items-center gap-1 text-[16px] font-medium ${activeLink === el.href ? "text-[#19ca09]" : ""}`}
+            onClick={(e) => {
+              e.preventDefault();
+
+              const target = document.querySelector(el.href);
+              if (!target) return;
+
+              window.lenis?.scrollTo(target, {
+                duration: 1.2,
+              });
+
+              window.history.pushState(null, "", el.href);
+
+              setActiveLink(el.href);
+            }}
+            className={`flex items-center gap-1 text-[16px] font-medium ${
+              activeLink === el.href ? "text-[#19ca09]" : ""
+            }`}
           >
             {el.ico}
             {el.type}
-          </Link>
+          </a>
         </li>
       ))}
     </ul>

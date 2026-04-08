@@ -77,14 +77,16 @@ function Hero() {
           </div>
         </div>
         <div>
-          <div className="flex flex-col items-center">
-            <iframe
-              className="h-100 w-full border-none shadow-xl/20 mb-5 bg-white rounded-xl"
-              src="https://www.youtube.com/embed/5mmWjrhfQ14?si=deKyPlbQNw_cc1oK"
-              title="YouTube video player"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-            ></iframe>
+          <div className="flex flex-col items-center px-6">
+            <div className="h-100 w-full pointer-events-none  border-none shadow-xl/20 mb-5 bg-white rounded-xl">
+              <iframe
+                className="h-full w-full rounded-lg"
+                src="https://www.youtube.com/embed/5mmWjrhfQ14?si=deKyPlbQNw_cc1oK?autoplay=1&mute=1&controls=0"
+                title="YouTube video player"
+                loading="lazy"
+                allow="autoplay; encrypted-media"
+              ></iframe>
+            </div>
             <button className="px-5 py-2 rounded-full bg-yellow-500 mx-auto">
               Video For Mobile
             </button>

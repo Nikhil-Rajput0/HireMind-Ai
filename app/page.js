@@ -7,7 +7,7 @@ import AutoSlider from "./_components/CompaniesSlider/AutoSlider";
 import OurFeatures from "./_components/Features/OurFeatures";
 import Reviews from "./_components/Reviews/Reviews";
 import Subscription from "./_components/Price/Subscription";
-import Contact from "./Contacts/Contact";
+import Contact from "./_components/Contacts/Contact";
 import FooterBar from "./_components/Footer/FooterBar";
 import FreaquentlyAskQues from "./_components/Q&A/FreaquentlyAskQues";
 
@@ -30,9 +30,6 @@ export default function Page() {
         <FreaquentlyAskQues />
         <Contact />
       </main>
-      <footer className="pt-20">
-        <FooterBar />
-      </footer>
     </>
   );
 }
