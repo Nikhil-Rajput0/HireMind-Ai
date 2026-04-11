@@ -22,6 +22,21 @@ export default function SmoothScroll() {
 
     requestAnimationFrame(raf);
 
+    let timeout;
+
+    const iframe = document.getElementById("hero-video");
+
+    lenis.on("scroll", () => {
+      // disable iframe while scrolling
+      if (iframe) iframe.style.pointerEvents = "none";
+
+      clearTimeout(timeout);
+
+      // enable after scroll stops
+      timeout = setTimeout(() => {
+        if (iframe) iframe.style.pointerEvents = "auto";
+      }, 150);
+    });
     return () => {
       lenis.destroy();
     };

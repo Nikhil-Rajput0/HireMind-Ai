@@ -1,4 +1,3 @@
-import React from "react";
 import { FaRegCreditCard } from "react-icons/fa";
 import { MdOutlineStarPurple500 } from "react-icons/md";
 import { CiFaceSmile } from "react-icons/ci";
@@ -78,13 +77,20 @@ function Hero() {
         </div>
         <div>
           <div className="flex flex-col items-center px-6">
-            <div className="h-100 w-full pointer-events-none  border-none shadow-xl/20 mb-5 bg-white rounded-xl">
+            <div
+              id="video-container"
+              className="aspect-video w-full border-none shadow-xl/20 mb-5 bg-white rounded-xl"
+            >
               <iframe
-                className="h-full w-full rounded-lg"
-                src="https://www.youtube.com/embed/5mmWjrhfQ14?si=deKyPlbQNw_cc1oK?autoplay=1&mute=1&controls=0"
+                id="hero-video"
+                className="h-full w-full rounded-lg cursor-pointer"
+                width="auto"
+                height="auto"
+                src="https://www.youtube-nocookie.com/embed/gUqece4_dh8?si=LlJ8foYhkTXdZB40"
                 title="YouTube video player"
-                loading="lazy"
-                allow="autoplay; encrypted-media"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
               ></iframe>
             </div>
             <button className="px-5 py-2 rounded-full bg-yellow-500 mx-auto">
