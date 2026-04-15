@@ -15,7 +15,7 @@ const headerLink = [
 ];
 
 function Header() {
-  const [activeLink, setActiveLink] = useState("#features");
+  const [activeLink, setActiveLink] = useState("");
   return (
     <ul className="flex gap-8 flex-1 mx-auto justify-center items-center">
       {headerLink.map((el) => (

@@ -1,28 +1,52 @@
 "use client";
+import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import axios from "axios";
+import userContext from "@/app/contexts/UserContext";
+import toast from "react-hot-toast";
 
 function SignUp() {
-  const [inputValue, setInputValue] = useState({
-    name: "",
-    email: "",
-    password: "",
-    passwordConfirm: "",
-  });
-
+  const { inputValue, setInputValue } = useContext(userContext);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    setInputValue({ name: "", email: "", password: "", passwordConfirm: "" });
 
     if (!e.target.checkValidity()) {
       e.target.reportValidity();
       return;
     }
-    router.push("/homepage");
+    if (inputValue.password !== inputValue.passwordConfirm) {
+      toast.error("passwordConfirm not match");
+      return;
+    }
+    setLoading(true);
+
+    try {
+      const res = await axios.post(
+        "http://localhost:8000/api/v1/users/sendOtp",
+        {
+          email: inputValue.email,
+        },
+        { withCredentials: true },
+      );
+      toast.success(res.data.message);
+
+      Cookies.set("inputValue", JSON.stringify(inputValue), {
+        expires: 1 / 144,
+        sameSite: "lax",
+      });
+
+      router.push("/authentication/signUp/signUpVerify");
+    } catch (error) {
+      toast.error(error.reponse.data.message);
+      console.log(error.response);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleChange = (e) => {
@@ -95,11 +119,11 @@ function SignUp() {
         />
       </div>
       <button
+        disabled={loading}
         type="submit"
-        href={"/homepage"}
-        className="w-full text-center py-2 bg-green-400 rounded-full hover:bg-green-500 font-medium cursor-pointer"
+        className={`w-full text-center py-2 ${loading ? "bg-gray-300" : "bg-green-400"}  rounded-full ${loading ? "" : "hover:bg-green-500"}  font-medium ${loading ? "cursor-not-allowed" : "cursor-pointer"}`}
       >
-        Sign Up&rarr;
+        {loading ? "Submitting..." : <span>Sign Up&rarr;</span>}
       </button>
       <div className="flex items-center gap-2 pt-3 pb-3 text-[11px]">
         <input id="check" type="checkbox" required name="checked" />

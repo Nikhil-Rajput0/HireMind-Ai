@@ -1,7 +1,9 @@
 import Image from "next/image";
-import profile from "../../../public/profile.png";
+import profile from "@/public/profile.png";
 import { FaRegEdit } from "react-icons/fa";
 import { FaRegSave } from "react-icons/fa";
+import UpdateUser from "@/app/_components/ProfileHandler/UpdateUser";
+import UpdatePassword from "@/app/_components/ProfileHandler/UpdatePassword";
 
 export const metadata = {
   title: `HireMind Ai | Profile`,
@@ -10,8 +12,8 @@ export const metadata = {
 
 function Page() {
   return (
-    <section className="grid grid-cols-[1fr_2fr] pl-10 pt-10 items-center">
-      <div className="flex items-center justify-center">
+    <section className="grid grid-cols-[1fr_2fr] pl-10 pt-10 px-40">
+      <div className="flex items-start justify-center">
         <Image
           alt="Your Profile"
           height={"auto"}
@@ -19,35 +21,20 @@ function Page() {
           className="h-60 w-60 cursor-pointer"
         />
       </div>
-      <div className="flex gap-3 flex-col text-gray-800">
-        <div className="flex flex-col">
-          <h3>Name</h3>
-          <div className="flex items-center gap-2">
-            <p>Guest User</p>
-            <button className="cursor-pointer">
-              <FaRegEdit className="text-green-900" />
-            </button>
-          </div>
-        </div>
+      <div className="flex flex-col bg-gray-800 rounded-lg px-2">
         <div>
-          <h3>Email</h3>
-          <div className="flex items-center gap-2">
-            <p>guest@gmail.com</p>
-            <button className="cursor-pointer">
-              <FaRegEdit className="text-green-900" />
-            </button>
-          </div>
+          <h3 className="text-gray-300 pt-3 pb-3 text-2xl text-center">
+            Account settings
+          </h3>
         </div>
+        <UpdateUser />
+        <div className="w-full bg-gray-300 h-px"></div>
         <div>
-          <h3>About</h3>
-          <div className="flex items-center gap-2">
-            <p>I&apos;M a Full stack developer.</p>
-            <button className="cursor-pointer">
-              <FaRegEdit className="text-green-900" />
-            </button>
-          </div>
+          <h3 className="text-gray-300 pt-3 pb-3 text-2xl text-center">
+            Change Password
+          </h3>
         </div>
-        <div></div>
+        <UpdatePassword />
       </div>
     </section>
   );

@@ -1,11 +1,19 @@
 "use client";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import axios from "axios";
+import { useState } from "react";
+import toast from "react-hot-toast";
 
 function SignIn() {
   const router = useRouter();
+  const [inputValue, setInputValue] = useState({
+    email: "",
+    password: "",
+  });
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!e.target.checkValidity()) {
@@ -13,7 +21,28 @@ function SignIn() {
       return;
     }
 
-    router.push("/homepage");
+    setLoading(true);
+    try {
+      const res = await axios.post(
+        "http://localhost:8000/api/v1/users/login",
+        {
+          email: inputValue.email,
+          password: inputValue.password,
+        },
+        { withCredentials: true },
+      );
+      toast.success(res.data.message);
+      window.location.href = "/homepage";
+    } catch (error) {
+      toast.error(error.response?.data?.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setInputValue((prevData) => ({ ...prevData, [name]: value }));
   };
 
   return (
@@ -27,6 +56,8 @@ function SignIn() {
           type="email"
           placeholder="example@gmail.com"
           name="email"
+          value={inputValue.email}
+          onChange={handleChange}
           required
           className="bg-gray-200 px-3 py-1 shadow-2xl/50 focus:outline-green-400 rounded-2xl ring-1 ring-green-400"
         />
@@ -40,22 +71,27 @@ function SignIn() {
           type="password"
           placeholder="pass@123"
           name="password"
+          value={inputValue.password}
+          onChange={handleChange}
           required
           className="bg-gray-200 px-3 py-1 shadow-2xl/50 focus:outline-green-400 ring-1 ring-green-400 rounded-2xl"
         />
       </div>
       <div className="flex items-center gap-3">
         <p className="text-[14px]">Don&apos;t remember Password</p>
-        <Link href={"#"} className="text-[14px] underline text-green-600">
+        <Link
+          href={"/authentication/forgetPassword"}
+          className="text-[14px] underline text-green-600"
+        >
           Forget Password
         </Link>
       </div>
       <button
+        disabled={loading}
         type="submit"
-        href={"/homepage"}
-        className="w-full text-center py-2 bg-green-400 rounded-full hover:bg-green-500 font-medium cursor-pointer"
+        className={`w-full text-center py-2 ${loading ? "bg-gray-300" : "bg-green-400"}  rounded-full ${loading ? "" : "hover:bg-green-500"}  font-medium ${loading ? "cursor-not-allowed" : "cursor-pointer"}`}
       >
-        Sign in&rarr;
+        {loading ? "Submitting..." : <span>Sign in&rarr;</span>}
       </button>
       <div className="flex items-center gap-2 pt-3 pb-3">
         <input id="check" type="checkbox" name="remember-me" />
