@@ -1,6 +1,8 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import userContext from "./UserContext";
+import toast from "react-hot-toast";
+import axios from "axios";
 
 const UserContextProvider = ({ children }) => {
   const [userData, setUserData] = useState({
@@ -15,6 +17,21 @@ const UserContextProvider = ({ children }) => {
     passwordConfirm: "",
   });
   const [otp, setOtp] = useState("");
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const res = await axios.get(
+          "http://localhost:8000/api/v1/users/getMe",
+          { withCredentials: true },
+        );
+
+        setUserData(res.data.user);
+      } catch (err) {
+        toast.error(err.response?.data?.message);
+      }
+    };
+    getData();
+  }, [setUserData]);
   return (
     <userContext.Provider
       value={{ inputValue, setInputValue, otp, setOtp, userData, setUserData }}

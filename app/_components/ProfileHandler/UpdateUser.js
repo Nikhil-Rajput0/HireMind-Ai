@@ -12,21 +12,6 @@ function UpdateUser() {
   const [loading, setLoading] = useState(false);
 
   //  Get user data
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const res = await axios.get(
-          "http://localhost:8000/api/v1/users/getMe",
-          { withCredentials: true },
-        );
-
-        setUserData(res.data.user);
-      } catch (err) {
-        toast.error(err.response?.data?.message);
-      }
-    };
-    getData();
-  }, [setUserData]);
 
   //  Handle submit
   const handleSubmit = async (e) => {

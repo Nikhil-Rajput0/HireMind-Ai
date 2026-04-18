@@ -6,11 +6,13 @@ import { RiAiGenerate2 } from "react-icons/ri";
 import { BiSolidAnalyse } from "react-icons/bi";
 import { GiClawString } from "react-icons/gi";
 import { PiGogglesBold } from "react-icons/pi";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import userContext from "@/app/contexts/UserContext";
+import toast from "react-hot-toast";
 
 function SideBar() {
   const { userData } = useContext(userContext);
+
   return (
     <div className="flex flex-col justify-between h-[90%]">
       <div className="flex flex-col gap-6 z-120">
