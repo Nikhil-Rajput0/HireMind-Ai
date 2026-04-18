@@ -24,7 +24,7 @@ function SignIn() {
     setLoading(true);
     try {
       const res = await axios.post(
-        "http://localhost:8000/api/v1/users/login",
+        `${process.env.NEXT_PUBLIC_SERVER_UI}api/v1/users/login`,
         {
           email: inputValue.email,
           password: inputValue.password,

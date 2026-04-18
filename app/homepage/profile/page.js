@@ -4,6 +4,7 @@ import { FaRegEdit } from "react-icons/fa";
 import { FaRegSave } from "react-icons/fa";
 import UpdateUser from "@/app/_components/ProfileHandler/UpdateUser";
 import UpdatePassword from "@/app/_components/ProfileHandler/UpdatePassword";
+import UserProfile from "@/app/_components/ProfileHandler/UserProfile";
 
 export const metadata = {
   title: `HireMind Ai | Profile`,
@@ -13,14 +14,7 @@ export const metadata = {
 function Page() {
   return (
     <section className="grid grid-cols-[1fr_2fr] pl-10 pt-10 px-40">
-      <div className="flex items-start justify-center">
-        <Image
-          alt="Your Profile"
-          height={"auto"}
-          src={profile}
-          className="h-60 w-60 cursor-pointer"
-        />
-      </div>
+      <UserProfile />
       <div className="flex flex-col bg-gray-800 rounded-lg px-2">
         <div>
           <h3 className="text-gray-300 pt-3 pb-3 text-2xl text-center">

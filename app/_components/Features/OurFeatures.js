@@ -1,10 +1,10 @@
 "use client";
 
 import FeaturesCard from "./FeaturesCard";
-import speechRecogLogo from "../../../public/sppech.jpeg";
-import interviewLogo from "../../../public/ai-interview.jpeg";
-import resumeGenLogo from "../../../public/resume-gen.jpeg";
-import resumeAnalyseLogo from "../../../public/resume-ana.jpeg";
+import speechRecogLogo from "@/public/sppech.jpg";
+import interviewLogo from "@/public/ai-interview.jpg";
+import resumeGenLogo from "@/public/resume-gen.jpg";
+import resumeAnalyseLogo from "@/public/resume-ana.jpg";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectCoverflow } from "swiper/modules";
 
@@ -15,9 +15,9 @@ function OurFeatures() {
   return (
     <section id="features" className="py-15 px-40">
       <div>
-        <h3 className="text-center text-3xl pb-4 text-[#40650c] font-semibold">
+        <h1 className="text-center text-3xl pb-4 text-[#40650c] font-semibold">
           Our Features
-        </h3>
+        </h1>
       </div>
       <Swiper
         effect="coverflow"

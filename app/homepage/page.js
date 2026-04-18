@@ -9,7 +9,7 @@ import Contact from "../_components/Contacts/Contact";
 function Page() {
   return (
     <>
-      <div className="pl-6">
+      <div className="pl-9">
         <Hero />
       </div>
       <OurFeatures />

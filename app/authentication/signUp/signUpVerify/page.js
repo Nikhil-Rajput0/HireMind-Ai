@@ -37,13 +37,13 @@ function Page() {
 
     try {
       const verifyResponse = await axios.post(
-        "http://localhost:8000/api/v1/users/verifyOtp",
+        `${process.env.NEXT_PUBLIC_SERVER_UI}api/v1/users/verifyOtp`,
         { email: userData.email, otp: otp },
         { withCredentials: true },
       );
 
       const signupResponse = await axios.post(
-        "http://localhost:8000/api/v1/users/signUp",
+        `${process.env.NEXT_PUBLIC_SERVER_UI}api/v1/users/signUp`,
         {
           name: userData.name,
           email: userData.email,

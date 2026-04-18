@@ -25,12 +25,12 @@ function FreaquentlyAskQues() {
       <div>
         {questions.map((item, index) => (
           <div key={index} className="pb-2">
-            <div className="flex items-center justify-between w-125 px-3 py-2 bg-white border border-gray-400 shadow-xl rounded-t-lg text-gray-900 font-medium">
+            <div
+              onClick={() => toggleQuestions(index)}
+              className="flex items-center cursor-pointer justify-between w-125 px-3 py-2 bg-white border border-gray-400 shadow-xl rounded-t-lg text-gray-900 font-medium"
+            >
               <span className="font-medium">{item.heading}</span>
-              <button
-                className="w-8 cursor-pointer"
-                onClick={() => toggleQuestions(index)}
-              >
+              <button aria-label="Expand menu" className="w-8 cursor-pointer">
                 {activeIndex === index ? <FaChevronUp /> : <FaChevronDown />}
               </button>
             </div>

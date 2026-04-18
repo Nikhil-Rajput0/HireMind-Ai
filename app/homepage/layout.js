@@ -21,11 +21,13 @@ export default function HomeLayout({ children }) {
           <HeaderMain />
         </nav>
       </header>
-      <aside className="fixed top-18 h-[90%] w-40 ring-1 ring-gray-200 shadow-xl z-100 bg-gray-100 py-8">
+      <aside className="fixed top-18 h-[90%] w-44 ring-1 ring-gray-200 shadow-xl z-100 bg-gray-100 py-8">
         <SideBar />
       </aside>
-      <main className="py-18 max-w-6xl ml-auto">{children}</main>
+      <main className="py-18 ml-30">{children}</main>
+      <footer className="ml-38">
+        <FooterBar />
+      </footer>
     </>
   );
-  
 }

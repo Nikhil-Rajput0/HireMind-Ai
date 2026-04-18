@@ -31,7 +31,7 @@ function SubscriptionCard({
       </div>
       <div>
         <p
-          className={`${textColor ? "text-white" : "text-green-400 "} text[14px] pb-2`}
+          className={`${textColor ? "text-white" : "text-black "} text[14px] pb-2 font-medium`}
         >
           {type}
         </p>

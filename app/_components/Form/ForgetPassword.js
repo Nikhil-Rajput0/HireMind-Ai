@@ -15,7 +15,7 @@ function ForgetPassword() {
     try {
       setLoading(true);
       const res = await axios.post(
-        "http://localhost:8000/api/v1/users/forgetPassword",
+        `${process.env.NEXT_PUBLIC_SERVER_UI}api/v1/users/forgetPassword`,
         { email },
         { withCredentials: true },
       );

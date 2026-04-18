@@ -30,6 +30,9 @@ export default function Page() {
         <FreaquentlyAskQues />
         <Contact />
       </main>
+      <footer>
+        <FooterBar />
+      </footer>
     </>
   );
 }

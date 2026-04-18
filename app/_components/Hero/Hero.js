@@ -3,6 +3,7 @@ import { MdOutlineStarPurple500 } from "react-icons/md";
 import { CiFaceSmile } from "react-icons/ci";
 import { FaLaptop } from "react-icons/fa";
 import { SiAnswer } from "react-icons/si";
+import Link from "next/link";
 
 function Hero() {
   return (
@@ -32,9 +33,12 @@ function Hero() {
           </p>
 
           <div className="flex gap-5 items-center pt-2">
-            <button className="border-none px-5 py-4 w-full hover:bg-green-600 cursor-pointer bg-green-700 rounded-full font-medium text-white">
+            <Link
+              href={"/homepage"}
+              className="border-none flex items-center justify-center py-4 w-full hover:bg-green-600 cursor-pointer bg-green-700 rounded-full font-medium text-white"
+            >
               Try For Free &rarr;
-            </button>
+            </Link>
             <div>
               <div className="flex gap-1 items-center">
                 <FaRegCreditCard className="text-[15px]" />
@@ -66,8 +70,8 @@ function Hero() {
                   <MdOutlineStarPurple500 className="text-yellow-500 text-[13px]" />
                 </div>
                 <div>
-                  <p className="text-[#7c8a73] text-[13px]">
-                    <span className="text-black font-medium">4.86</span>/5000+
+                  <p className="text-gray-800 text-[13px] font-medium">
+                    <span className="text-black font-bold">4.86</span>/5000+
                     reviews
                   </p>
                 </div>
@@ -84,7 +88,7 @@ function Hero() {
               <iframe
                 id="hero-video"
                 className="h-full w-full rounded-lg cursor-pointer"
-                width="auto"
+                width={"auto"}
                 height="auto"
                 src="https://www.youtube-nocookie.com/embed/gUqece4_dh8?si=LlJ8foYhkTXdZB40"
                 title="YouTube video player"

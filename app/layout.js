@@ -46,9 +46,6 @@ export default function RootLayout({ children }) {
               },
             }}
           />
-          <footer>
-            <FooterBar />
-          </footer>
         </UserContextProvider>
       </body>
     </html>

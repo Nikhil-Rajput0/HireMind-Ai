@@ -3,6 +3,11 @@ import { useState } from "react";
 import userContext from "./UserContext";
 
 const UserContextProvider = ({ children }) => {
+  const [userData, setUserData] = useState({
+    name: "",
+    email: "",
+    photo: "",
+  });
   const [inputValue, setInputValue] = useState({
     name: "",
     email: "",
@@ -11,7 +16,9 @@ const UserContextProvider = ({ children }) => {
   });
   const [otp, setOtp] = useState("");
   return (
-    <userContext.Provider value={{ inputValue, setInputValue, otp, setOtp }}>
+    <userContext.Provider
+      value={{ inputValue, setInputValue, otp, setOtp, userData, setUserData }}
+    >
       {children}
     </userContext.Provider>
   );

@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import reviews from "../../../public/review.png";
+import reviews from "../../../public/review.jpg";
 import { motion } from "framer-motion";
 
 function ReviewsSlider() {
@@ -14,6 +14,7 @@ function ReviewsSlider() {
       <Image
         quality={75}
         alt="reviews"
+        objectFit="cover"
         src={reviews}
         height="auto"
         width={"auto"}

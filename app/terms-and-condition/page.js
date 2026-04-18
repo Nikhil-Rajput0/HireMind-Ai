@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import logo from "../../public/logo.png";
+import FooterBar from "../_components/Footer/FooterBar";
 
 function Page() {
   return (
@@ -146,6 +147,9 @@ function Page() {
           </div>
         </div>
       </main>
+      <footer>
+        <FooterBar />
+      </footer>
     </section>
   );
 }

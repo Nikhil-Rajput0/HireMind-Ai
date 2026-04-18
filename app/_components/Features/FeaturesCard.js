@@ -6,12 +6,12 @@ function FeaturesCard({ type, heading, text, image }) {
       <div className="bg-linear-to-br from-gray-100 to-gray-200 rounded-lg ring-1 ring-gray-300/80 shadow-md/50 p-8">
         <div className="flex flex-col gap-6 ">
           <div>
-            <h3 className="bg-green-500 rounded-full px-2 py-1 inline-flex">
+            <p className="bg-green-500 rounded-full px-2 py-1 inline-flex">
               {type}
-            </h3>
+            </p>
           </div>
           <div>
-            <h1 className="text-2xl font-bold">{heading}</h1>
+            <h2 className="text-2xl font-bold">{heading}</h2>
           </div>
           <div className="mx-auto w-full">
             <Image
@@ -19,6 +19,7 @@ function FeaturesCard({ type, heading, text, image }) {
               loading="eager"
               alt="Features logo"
               width={220}
+              objectFit="cover"
               src={image}
               className="rounded-3xl"
             />

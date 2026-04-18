@@ -28,12 +28,14 @@ function FooterBar() {
           <h3 className="pb-3 text-[22px] text-green-600">Social Links</h3>
           <div className="flex gap-2 items-center">
             <a
+              aria-label="Linkedin profile link"
               href="https://linkedin.com/in/nikhil-rajput-a14716275"
               target="_blank"
             >
               <FaLinkedin className="text-[30px] text-[#03c0c0]" />
             </a>
             <a
+              aria-label="Github profile link"
               href="https://github.com/Nikhil-Rajput0"
               target="_blank"
               className="text-[30px] text-red-800"
@@ -41,6 +43,7 @@ function FooterBar() {
               <FaGithub />
             </a>
             <a
+              aria-label="Twitter profile link"
               href="https://x.com/Nikhilrajput236"
               target="_blank"
               className="text-[30px] text-cyan-400"
