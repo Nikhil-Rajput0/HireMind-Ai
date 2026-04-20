@@ -17,20 +17,6 @@
     -webkit-user-select: auto;
     user-select: auto;
   }
-
-  /* DISABLE ALL MOTION ON MOBILE */
-  @media (hover: none) and (pointer: coarse) {
-    * {
-      animation: none !important;
-      transition: none !important;
-      transform: none !important;
-    }
-
-    /* Kill Lenis completely */
-    .lenis {
-      pointer-events: none !important;
-    }
-  }
 }
 
 body,
@@ -58,11 +44,6 @@ html {
     &:hover {
       transform: none !important;
     }
-  }
-
-  /* Disable problematic animations */
-  [data-motion*="whileHover"] {
-    transform: none !important;
   }
 }
 
