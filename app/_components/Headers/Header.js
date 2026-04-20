@@ -78,7 +78,7 @@ function Header() {
 
         <AnimatePresence>
           {active && (
-            <ul
+            <motion.ul
               suppressHydrationWarning={true}
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
@@ -115,7 +115,7 @@ function Header() {
                   </a>
                 </li>
               ))}
-            </ul>
+            </motion.ul>
           )}
         </AnimatePresence>
       </div>
