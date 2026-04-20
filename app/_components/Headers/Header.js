@@ -25,8 +25,9 @@ function Header() {
     const target = document.querySelector(href);
     if (!target) return;
 
-    window.lenis?.scrollTo(target, {
-      duration: 1.2,
+    target.scrollIntoView({
+      behaviour: "smooth",
+      block: "start",
     });
 
     window.history.pushState(null, "", href);
@@ -83,7 +84,7 @@ function Header() {
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              transition={{ ease: "linear", duration: 0.3 }}
+              transition={{ ease: "linear", duration: 1 }}
               style={{
                 touchAction: "manipulation",
                 WebkitOverflowScrolling: "touch",

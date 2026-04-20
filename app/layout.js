@@ -1,6 +1,4 @@
 import { Toaster } from "react-hot-toast";
-// import FooterBar from "./_components/Footer/FooterBar";
-import SmoothScroll from "./_components/LenisScroll/SmoothScroll";
 import UserContextProvider from "./contexts/UserContextProvider";
 import "./globals.css";
 import { Inter } from "next/font/google";
@@ -38,7 +36,6 @@ export default function RootLayout({ children }) {
         suppressHydrationWarning
       >
         <UserContextProvider>
-          <SmoothScroll />
           {children}
           <Toaster
             position="top-right"

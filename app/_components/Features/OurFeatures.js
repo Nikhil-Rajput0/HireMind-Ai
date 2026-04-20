@@ -37,7 +37,7 @@ function OurFeatures() {
         effect="coverflow"
         grabCursor={true}
         centeredSlides={true}
-        slidesPerView={isMobile ? 1.2 : "auto"} // RESPONSIVE
+        slidesPerView={isMobile ? 1 : "auto"} // RESPONSIVE
         loop={true}
         touchEventsTarget="container"
         simulateTouch={true}

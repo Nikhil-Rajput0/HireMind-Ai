@@ -5,30 +5,14 @@ import { FaYahoo } from "react-icons/fa";
 import { FaTwitter } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
 
 function SliderPlaceholder() {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    setIsMobile(window.innerWidth < 768 || "ontouchstart" in window);
-  }, []);
   return (
     <motion.div
       suppressHydrationWarning={true}
-      initial={{ x: 0 }}
-      animate={{ x: isMobile ? 0 : "-100%" }} // NO ANIMATION ON MOBILE
-      transition={{
-        ease: "linear",
-        repeat: Infinity,
-        duration: "55",
-        repeatDelay: isMobile ? 0 : undefined,
-      }}
-      className="flex items-center font-bold text-xl pointer-coarse:static max-w-full" // MOBILE STATIC
-      style={{
-        touchAction: "pan-y pan-x",
-        willChange: isMobile ? "auto" : "transform",
-      }}
+      animate={{ x: ["0%", "-100%"] }}
+      transition={{ ease: "linear", repeat: Infinity, duration: 25 }}
+      className="flex items-center font-bold text-xl min-w-max"
     >
       <h3 className="flex gap-1 items-center  pr-18">
         <FcGoogle />{" "}
