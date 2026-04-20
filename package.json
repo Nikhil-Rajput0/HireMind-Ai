@@ -9,7 +9,6 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@studio-freight/lenis": "^1.0.42",
     "@tsparticles/react": "^3.0.0",
     "axios": "^1.15.0",
     "framer-motion": "^12.38.0",
