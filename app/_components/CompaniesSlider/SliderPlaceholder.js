@@ -5,16 +5,32 @@ import { FaYahoo } from "react-icons/fa";
 import { FaTwitter } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 function SliderPlaceholder() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768 || "ontouchstart" in window);
+  }, []);
   return (
     <motion.div
+      suppressHydrationWarning={true}
       initial={{ x: 0 }}
-      animate={{ x: "-100%" }}
-      transition={{ ease: "linear", repeat: Infinity, duration: "55" }}
-      className="flex items-center font-bold text-xl"
+      animate={{ x: isMobile ? 0 : "-100%" }} // NO ANIMATION ON MOBILE
+      transition={{
+        ease: "linear",
+        repeat: Infinity,
+        duration: "55",
+        repeatDelay: isMobile ? 0 : undefined,
+      }}
+      className="flex items-center font-bold text-xl pointer-coarse:static max-w-full" // MOBILE STATIC
+      style={{
+        touchAction: "pan-y pan-x",
+        willChange: isMobile ? "auto" : "transform",
+      }}
     >
-      <h3 className="flex gap-1 items-center pl-18 pr-18">
+      <h3 className="flex gap-1 items-center  pr-18">
         <FcGoogle />{" "}
         <span className="bg-clip-text text-transparent bg-linear-to-r from-orange-600 via-yellow-500 to-blue-500">
           Google
@@ -29,7 +45,7 @@ function SliderPlaceholder() {
       <h3 className="flex gap-1 items-center pr-18">
         <FaTwitter className="text-blue-400 text-4xl" /> Twitter
       </h3>
-      <h3 className="flex gap-1 items-center ">
+      <h3 className="flex gap-1 items-center pr-18">
         <FaFacebook className="text-blue-600 text-4xl" /> Facebook
       </h3>
     </motion.div>

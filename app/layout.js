@@ -1,5 +1,5 @@
 import { Toaster } from "react-hot-toast";
-import FooterBar from "./_components/Footer/FooterBar";
+// import FooterBar from "./_components/Footer/FooterBar";
 import SmoothScroll from "./_components/LenisScroll/SmoothScroll";
 import UserContextProvider from "./contexts/UserContextProvider";
 import "./globals.css";
@@ -11,20 +11,42 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "HireMind Ai",
+  title: "HireMind AI - AI-Powered Interview Preparation",
   description:
-    "HireMind Ai is all time best Interview preparation solution, Which help college students and freshers to grab there first dream job. You can use HireMind Ai both free and paid version which affect user Experience.",
+    "HireMind AI is the best AI-powered interview preparation platform helping students and professionals ace their job interviews.",
+  keywords:
+    "interview preparation, AI interview, job interview, mock interview, career preparation",
+  authors: [{ name: "HireMind AI" }],
+  creator: "HireMind AI",
+  publisher: "HireMind AI",
+  robots: "index, follow",
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: true,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={`bg-[#e0e0e0] ${inter.className}`}>
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={`bg-[#e0e0e0] ${inter.className}`}
+        suppressHydrationWarning
+      >
         <UserContextProvider>
           <SmoothScroll />
           {children}
           <Toaster
             position="top-right"
+            containerStyle={{
+              pointerEvents: "none",
+
+              zIndex: 100,
+            }}
             toastOptions={{
               duration: 3000,
               style: {
@@ -32,7 +54,7 @@ export default function RootLayout({ children }) {
                 color: "#fff",
                 borderRadius: "10px",
                 padding: "12px 16px",
-                zIndex: 300,
+                pointerEvents: "auto", // ✅ allow click inside toast only
               },
               success: {
                 style: {

@@ -18,7 +18,7 @@ function SideBar() {
       <div className="flex flex-col gap-6 z-120">
         <div className="px-3 ">
           <div className="inline-flex gap-1 items-center text-lg bg-[#90EE90] text-black rounded-full px-3 py-2">
-            <FaCruzeiroSign />:<p>{userData?.credits || 100}</p>
+            <FaCruzeiroSign />:<p>{userData?.credits}</p>
           </div>
         </div>
         <ul className="flex flex-col text-[15px] gap-1 text-black font-medium">

@@ -1,18 +1,46 @@
 "use client";
+import userContext from "@/app/contexts/UserContext";
+import axios from "axios";
 import Link from "next/link";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 function InterviewDetailsForm({ interviewType }) {
-  const [formData, setFormData] = useState({
-    name: "",
-    interviewType,
-    role: "",
-    difficulty: "",
-  });
+  const { formData, setFormData } = useContext(userContext);
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    setFormData((prev) => ({
+      ...prev,
+      interviewType,
+    }));
+  }, [interviewType, setFormData]);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    setLoading(true);
+
+    try {
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_SERVER_UI}api/v1/interviews/create`,
+        {
+          user: formData.user,
+          name: formData.name,
+          interviewType,
+          role: formData.role,
+          difficulty: formData.difficulty,
+        },
+        { withCredentials: true },
+      );
+      router.push(`/interview/${res.data.data.interview._id}`);
+      toast.success(res.data?.message);
+    } catch (error) {
+      toast.error(error.response?.data?.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleChange = (e) => {
@@ -47,7 +75,8 @@ function InterviewDetailsForm({ interviewType }) {
           id="interviewType"
           name="interviewType"
           value={formData.interviewType}
-          readOnly
+          onChange={handleChange}
+          disabled
           placeholder="eg: First Interview"
           required
           className="bg-gray-300 px-3 py-1 shadow-2xl/50 focus:outline-green-400 rounded-xl shadow-sm"
@@ -77,6 +106,7 @@ function InterviewDetailsForm({ interviewType }) {
           onChange={handleChange}
           className="bg-gray-300 text-black py-2 px-3 rounded-xl"
         >
+          <option value="">Select an option</option>
           <option>Easy</option>
           <option>Medium</option>
           <option>Hardest</option>

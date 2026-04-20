@@ -77,18 +77,19 @@ function Subscription() {
   };
 
   return (
-    <section id="price" className="py-10 px-40">
-      <div className="text-center text-3xl pb-6 text-[#40650c] font-semibold">
+    <section id="price" className="py-10 lg:px-40 px-12">
+      <div className="text-center text-lg lg:text-3xl pb-6 text-[#40650c] font-semibold">
         Buy Your Plan
       </div>
-      <div className="flex flex-col gap-5 items-center">
-        <div className="flex border border-gray-300 bg-gray-200 rounded-full items-center justify-between w-120">
-          <div className="flex-1 flex items-center justify-center">
+      <div className="flex flex-col gap-5  items-center">
+        <div className="flex border border-gray-300 bg-gray-200 rounded-full items-center justify-between lg:w-120 w-full">
+          <div className="lg:flex-1 flex items-center lg:justify-center justify-between text-xs lg:text-md">
             {tabs.map((tab) => (
               <button
+                suppressHydrationWarning={true}
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`px-6 py-3 cursor-pointer flex gap-2 items-center rounded-lg transition-all duration-300 ${
+                className={`lg:px-6 px-2.5 py-3 cursor-pointer flex gap-2 items-center rounded-lg transition-all duration-300 ${
                   activeTab === tab.id
                     ? "bg-green-600 text-white shadow-lg scale-105"
                     : "bg-gray-200 text-gray-700 hover:bg-gray-300"
@@ -100,7 +101,7 @@ function Subscription() {
             ))}
           </div>
         </div>
-        <div className="pt-3">
+        <div className="pt-3 hidden lg:block">
           <div className="flex bg-gray-100 rounded-full px-8 py-2 items-center justify-center">
             <div>
               <h3 className="flex items-center justify-center gap-1 text-[14px] font-normal text-gray-700 after:content-['|'] after:w-px after:text-gray-800 after:pl-3 after:pr-3">
@@ -122,7 +123,7 @@ function Subscription() {
           </div>
         </div>
         <div className="pt-3">
-          <div className=" flex items-center justify-center gap-4">
+          <div className="grid grid-cols-1 lg:flex items-center lg:justify-center lg:gap-4 gap-8">
             {plans[activeTab].map((plan, index) => (
               <SubscriptionCard
                 key={index}

@@ -7,25 +7,31 @@ import { FaTwitter } from "react-icons/fa";
 function FooterBar() {
   return (
     <>
-      <div className="bg-gray-900 px-40 min-h-[50vh] py-20 grid grid-cols-[2fr_1fr_1fr] gap-10">
-        <div>
-          <h3 className="pb-3 text-[22px] text-green-600">About Us</h3>
-          <p className="text-[15px] font-normal text-gray-300">
+      <div className="bg-gray-900 px-10 md:px-40 h-full py-20 grid grid-cols-[2fr_1fr] lg:grid-cols-[2fr_1fr_1fr] gap-10">
+        <div className="row-start-1 col-start-1">
+          <h3 className="pb-3 text-md lg:text-[22px] text-green-600">
+            About Us
+          </h3>
+          <p className=" text-sm lg:text-[15px] font-normal text-gray-300">
             These platform is made up for students and freshers to get there
             dream job. start with free version and then upgarde to premium
             version like lifetime Subscription at just 3000.
           </p>
         </div>
-        <div>
-          <h3 className="pb-3 text-[22px] text-green-600">Links</h3>
-          <div className="flex flex-col text-gray-300">
+        <div className="row-start-2 col-span-2 lg:row-start-1 lg:col-start-2">
+          <h3 className="pb-3 text-md lg:text-[22px] text-green-600 grid-rows-2">
+            Links
+          </h3>
+          <div className="flex text-sm lg:text-[15px] flex-col text-gray-300">
             <Link href="/privacy-policy">Privacy policy</Link>
             <Link href="/terms-and-condition">Terms and Conditions</Link>
             <a href="#support">Contact</a>
           </div>
         </div>
-        <div>
-          <h3 className="pb-3 text-[22px] text-green-600">Social Links</h3>
+        <div className="row-start-1 col-start-2 lg:col-start-3">
+          <h3 className="pb-3 text-md lg:text-[22px] text-green-600 grid grid-rows-1">
+            Social Links
+          </h3>
           <div className="flex gap-2 items-center">
             <a
               aria-label="Linkedin profile link"
@@ -54,7 +60,7 @@ function FooterBar() {
         </div>
       </div>
       <div className="py-4 flex justify-center bg-gray-900 text-[#fafafa]">
-        <h3 className="">
+        <h3 suppressHydrationWarning={true}>
           &copy;{new Date().getFullYear()} by Hiremind AI. Built with ❤️ by
           Nikhil Kumar Singh
         </h3>

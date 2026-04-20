@@ -22,13 +22,18 @@ function Form() {
     setInputValue((prevFormData) => ({ ...prevFormData, [name]: value }));
   };
   return (
-    <div className="p-5 rounded-lg backdrop-blur-md bg-white/70 border border-white/20 shadow-2xl">
-      <form className="flex flex-col gap-3 p-2" onSubmit={handleSubmit}>
+    <div className="p-2 md:p-5 rounded-lg backdrop-blur-md bg-white/70 border border-white/20 shadow-2xl">
+      <form
+        className="flex flex-col gap-3 p-2"
+        onSubmit={handleSubmit}
+        suppressHydrationWarning={true}
+      >
         <div className="flex flex-col gap-1  px-1 py-1 overflow-hidden">
           <label htmlFor="full-name" className="text-[#555]">
             Full name
           </label>
           <input
+            suppressHydrationWarning={true}
             id="full-name"
             value={inputValue.name}
             onChange={handleChange}
@@ -45,6 +50,7 @@ function Form() {
               Email
             </label>
             <input
+              suppressHydrationWarning={true}
               id="mail"
               name="email"
               value={inputValue.email}
@@ -59,6 +65,7 @@ function Form() {
               Phone
             </label>
             <input
+              suppressHydrationWarning={true}
               id="phone"
               name="mobile"
               value={inputValue.mobile}
@@ -75,6 +82,7 @@ function Form() {
             Message
           </label>
           <textarea
+            suppressHydrationWarning={true}
             className="bg-white/50 text-[#444] border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 resize-none py-1 px-3 w-full rounded-md "
             id="message"
             name="notes"
@@ -86,7 +94,11 @@ function Form() {
           ></textarea>
         </div>
         <div className="pt-2">
-          <button className="w-full bg-green-600 text-white font-semibold py-3 rounded-xl hover:bg-green-700 transition flex items-center justify-center gap-2">
+          <button
+            type="submit"
+            suppressHydrationWarning={true}
+            className="w-full bg-green-600 text-white font-semibold py-3 rounded-xl hover:bg-green-700 transition flex items-center justify-center gap-2"
+          >
             Submit
           </button>
         </div>

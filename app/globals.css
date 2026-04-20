@@ -1,7 +1,91 @@
 @import "tailwindcss";
 
-body {
+/* TOP OF globals.css - BEFORE EVERYTHING ELSE */
+@layer base {
+  * {
+    touch-action: manipulation !important;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  button,
+  a,
+  [role="button"] {
+    touch-action: manipulation !important;
+    -webkit-user-select: auto;
+    user-select: auto;
+  }
+
+  /* DISABLE ALL MOTION ON MOBILE */
+  @media (hover: none) and (pointer: coarse) {
+    * {
+      animation: none !important;
+      transition: none !important;
+      transform: none !important;
+    }
+
+    /* Kill Lenis completely */
+    .lenis {
+      pointer-events: none !important;
+    }
+  }
+}
+
+body,
+html {
   overflow-x: hidden;
+  touch-action: manipulation;
+  /* overscroll-behavior-y: none; */
+}
+
+* {
+  pointer-events: auto !important;
+}
+
+/* MOBILE TOUCH ESSENTIALS */
+* {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  /* MOBILE ONLY - Disable hover effects */
+  * {
+    &:hover {
+      transform: none !important;
+    }
+  }
+
+  /* Disable problematic animations */
+  [data-motion*="whileHover"] {
+    transform: none !important;
+  }
+}
+
+/* Prevent double-tap zoom */
+html {
+  touch-action: manipulation;
+}
+
+/* Swiper mobile fix */
+.swiper {
+  touch-action: pan-y pan-x !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+.swiper-container {
+  touch-action: pan-y !important;
+}
+
+[data-rht-toaster] {
+  pointer-events: none !important;
+}
+
+[data-rht-toaster] * {
+  pointer-events: auto;
 }
 
 .swiper {
@@ -18,10 +102,10 @@ body {
 
 @layer base {
   html {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
   html::-webkit-scrollbar {
-    display: none; /* Chrome, Safari and Opera */
+    display: none;
   }
 }

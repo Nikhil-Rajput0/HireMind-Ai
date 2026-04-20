@@ -1,44 +1,47 @@
 "use client";
-
 import { useEffect } from "react";
 import Lenis from "@studio-freight/lenis";
 
 export default function SmoothScroll() {
   useEffect(() => {
+    // PROPER MOBILE DISABLE - Check touch support, not just width
+    if (
+      window.matchMedia("(pointer: coarse)").matches ||
+      "ontouchstart" in window ||
+      navigator.maxTouchPoints > 0
+    ) {
+      return; // NO LENIS ON MOBILE - CRITICAL
+    }
+
     const lenis = new Lenis({
       duration: 1.2,
       smoothWheel: true,
-      smoothTouch: false,
+      smoothTouch: false, // Already good
+      touchMultiplier: 0, // EXTRA SAFETY
       easing: (t) => 1 - Math.pow(1 - t, 3),
     });
 
-    // make globally accessible
     window.lenis = lenis;
 
     function raf(time) {
       lenis.raf(time);
       requestAnimationFrame(raf);
     }
-
     requestAnimationFrame(raf);
 
-    let timeout;
-
+    // Iframe fix improved
     const iframe = document.getElementById("hero-video");
-
     lenis.on("scroll", () => {
-      // disable iframe while scrolling
       if (iframe) iframe.style.pointerEvents = "none";
-
-      clearTimeout(timeout);
-
-      // enable after scroll stops
-      timeout = setTimeout(() => {
+      clearTimeout(window.iframeTimeout);
+      window.iframeTimeout = setTimeout(() => {
         if (iframe) iframe.style.pointerEvents = "auto";
       }, 150);
     });
+
     return () => {
-      lenis.destroy();
+      if (lenis) lenis.destroy();
+      window.lenis = null;
     };
   }, []);
 

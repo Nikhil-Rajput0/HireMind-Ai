@@ -17,6 +17,14 @@ const UserContextProvider = ({ children }) => {
     passwordConfirm: "",
   });
   const [otp, setOtp] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    interviewType: "",
+    role: "",
+    difficulty: "",
+  });
+
+  const [interview, setInterview] = useState(null);
   useEffect(() => {
     const getData = async () => {
       try {
@@ -26,15 +34,29 @@ const UserContextProvider = ({ children }) => {
         );
 
         setUserData(res.data.user);
+        console.log(res.data?.user?.interviews);
+        setInterview(res.data?.user?.interviews);
       } catch (err) {
         toast.error(err.response?.data?.message);
       }
     };
     getData();
   }, [setUserData]);
+
   return (
     <userContext.Provider
-      value={{ inputValue, setInputValue, otp, setOtp, userData, setUserData }}
+      value={{
+        inputValue,
+        setInputValue,
+        otp,
+        setOtp,
+        userData,
+        setUserData,
+        formData,
+        setFormData,
+        interview,
+        setInterview,
+      }}
     >
       {children}
     </userContext.Provider>

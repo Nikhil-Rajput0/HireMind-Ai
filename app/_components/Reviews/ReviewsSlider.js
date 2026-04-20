@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 function ReviewsSlider() {
   return (
     <motion.div
+      suppressHydrationWarning={true}
       initial={{ x: 0 }}
       animate={{ x: "-100%" }}
       transition={{ ease: "linear", repeat: Infinity, duration: "25" }}
@@ -18,7 +19,7 @@ function ReviewsSlider() {
         src={reviews}
         height="auto"
         width={"auto"}
-        className="h-80 min-w-100 rounded-lg ring-1 ring-gray-500/50 shadow-lg/50"
+        className="lg:h-80 h-60 min-w-60 lg:min-w-100 rounded-lg ring-1 ring-gray-500/50 shadow-lg/50"
       />
     </motion.div>
   );

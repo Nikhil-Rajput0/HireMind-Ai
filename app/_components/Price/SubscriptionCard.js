@@ -17,14 +17,14 @@ function SubscriptionCard({
 }) {
   return (
     <motion.div
+      suppressHydrationWarning={true}
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: delay || 0 }}
-      whileHover={{
-        y: -20,
-        transition: { duration: 0.2, type: "spring", stiffness: 400 },
-      }}
+      whileHover={{ y: -20 }} // Keep hover for desktop
+      whileTap={{ scale: 0.95 }} // ADD THIS - CRITICAL FOR MOBILE
+      transition={{ duration: 0.2, type: "spring" }}
       className={`${bgColor} rounded-lg flex flex-col items-center justify-center py-6 border-none ring-1 ring-gray-300 shadow-xl px-4`}
+      style={{ touchAction: "manipulation" }}
     >
       <div>
         <BsThreeDotsVertical className="text-[30px] text-shadow-green-950" />
@@ -56,7 +56,11 @@ function SubscriptionCard({
       </div>
       <div>
         <button
-          className={`w-50 py-3 cursor-pointer text-cente font-medium bg-green-700 rounded-full  ${btnColor} ${textColor ? textColor : "text-white"} `}
+          className={`w-50 py-3 cursor-pointer font-medium bg-green-700 rounded-full ${btnColor} ${textColor || "text-white"} touch-manipulation active:scale-[0.97]`}
+          style={{ touchAction: "manipulation" }}
+          onClick={(e) => {
+            e.preventDefault();
+          }}
         >
           {btnText}
           <span className={`${textColor} pl-2 font-bold`}>&rarr;</span>
