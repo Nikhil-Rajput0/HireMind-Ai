@@ -93,6 +93,9 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="icon" href="/favicon.ico"></link>
+      </head>
       <body
         className={`bg-[#e0e0e0] ${inter.className}`}
         suppressHydrationWarning

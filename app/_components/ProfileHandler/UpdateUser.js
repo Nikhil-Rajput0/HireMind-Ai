@@ -53,7 +53,7 @@ function UpdateUser() {
         value={userData.name}
         placeholder="loading..."
         onChange={(e) => setUserData({ ...userData, name: e.target.value })}
-        className="bg-gray-300 px-3 py-1 w-[25vw] shadow-xl focus:outline-green-400 rounded-2xl "
+        className="bg-gray-300 px-3 py-1 w-full lg:w-[25vw] shadow-xl focus:outline-green-400 rounded-2xl "
       />
 
       {/* EMAIL */}
@@ -62,7 +62,7 @@ function UpdateUser() {
         value={userData.email}
         disabled
         placeholder="loading..."
-        className="bg-gray-300 px-3 py-1 w-[25vw] shadow-xl focus:outline-green-400 rounded-2xl "
+        className="bg-gray-300 px-3 py-1 w-full lg:w-[25vw] shadow-xl focus:outline-green-400 rounded-2xl "
       />
 
       {/* IMAGE */}
@@ -100,7 +100,7 @@ function UpdateUser() {
       <div className="flex items-end justify-end pt-3">
         <button
           disabled={loading}
-          className={`w-[25vw] text-center py-2 ${loading ? "bg-gray-300" : "bg-green-400"}  rounded-full ${loading ? "" : "hover:bg-green-500"}  font-medium ${loading ? "cursor-not-allowed" : "cursor-pointer"}`}
+          className={`w-full lg:w-[25vw] text-center py-2 ${loading ? "bg-gray-300" : "bg-green-400"}  rounded-full ${loading ? "" : "hover:bg-green-500"}  font-medium ${loading ? "cursor-not-allowed" : "cursor-pointer"}`}
         >
           {loading ? "Uploading..." : "Save Changes"}
         </button>

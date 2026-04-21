@@ -9,7 +9,7 @@ function UserProfile() {
   const { userData } = useContext(userContext);
 
   return (
-    <div className="relative flex items-start justify-center">
+    <div className="relative hidden md:flex items-start justify-center">
       {userData.email ? (
         <div className="flex items-start justify-center">
           <Image
@@ -23,7 +23,7 @@ function UserProfile() {
           />
         </div>
       ) : (
-        <div className="absolute pt-13 inset-0 flex items-start justify-center">
+        <div className="hidden absolute pt-13 inset-0 md:flex items-start justify-center">
           <div className="w-20 h-20 border-4 border-gray-300 border-t-green-500 rounded-full animate-spin"></div>
         </div>
       )}

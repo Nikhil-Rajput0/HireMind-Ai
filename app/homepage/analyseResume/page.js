@@ -4,7 +4,7 @@ export const metadata = {
 };
 
 function Page() {
-  return <section className="pl-10 pt-10 ">Resume analyser</section>;
+  return <section className="pl-15 pt-10 mb-70">Resume analyser</section>;
 }
 
 export default Page;

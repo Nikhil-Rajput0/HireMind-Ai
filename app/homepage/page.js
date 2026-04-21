@@ -9,7 +9,7 @@ import Contact from "../_components/Contacts/Contact";
 function Page() {
   return (
     <>
-      <div className="pl-9">
+      <div className="lg:pl-9 lg:-mt-25 -mt-15">
         <Hero />
       </div>
       <OurFeatures />

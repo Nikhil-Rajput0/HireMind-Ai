@@ -50,7 +50,7 @@ function InterviewDetailsForm({ interviewType }) {
 
   return (
     <form
-      className="z-50 mr-5 absolute top-35 right-0 flex flex-col gap-2 w-[35vw] bg-gray-900 py-10 px-8 rounded-xl"
+      className="z-50 lg:mr-5 mr-0 absolute top-45 lg:top-43 right-0 flex flex-col gap-2 w-[90vw] lg:w-[35vw] bg-gray-900 py-10 px-8 rounded-xl"
       onSubmit={handleSubmit}
     >
       <div className="flex flex-col gap-1">

@@ -12,7 +12,7 @@ import profile from "@/public/profile.png";
 function HeaderMain() {
   const { userData } = useContext(userContext);
   return (
-    <div>
+    <div className="hidden lg:block">
       <ul className="flex items-center justify-between gap-10 text-lg font-medium">
         <li>
           <Link href={"/homepage"} className="flex gap-1 items-center">
