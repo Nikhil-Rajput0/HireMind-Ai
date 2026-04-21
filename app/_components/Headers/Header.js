@@ -84,7 +84,7 @@ function Header() {
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              transition={{ ease: "linear", duration: 1 }}
+              transition={{ ease: "linear", duration: 0.4 }}
               style={{
                 touchAction: "manipulation",
                 WebkitOverflowScrolling: "touch",
@@ -92,7 +92,7 @@ function Header() {
               onAnimationComplete={() => {
                 if (!active) document.body.style.overflow = "auto";
               }}
-              className="absolute top-12 -right-10 w-[80vw] min-h-screen bg-green-300 flex flex-col items-center gap-8 py-10 z-50 shadow-lg"
+              className="absolute top-9 -right-10 w-[80vw] min-h-[80vh] bg-green-300 flex flex-col items-center gap-8 py-10 z-50 shadow-lg"
             >
               <Link
                 href={"/homepage"}

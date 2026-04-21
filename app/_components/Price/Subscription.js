@@ -10,7 +10,7 @@ function Subscription() {
   const [activeTab, setActiveTab] = useState("credits");
 
   const tabs = [
-    { id: "credits", label: "Credits Only", icon: <BsCoin size={20} /> },
+    { id: "credits", label: "Credits", icon: <BsCoin size={20} /> },
     { id: "subscription", label: "Subscription", icon: <TbReload size={20} /> },
     { id: "lifetime", label: "Lifetime", icon: <FaInfinity size={20} /> },
   ];

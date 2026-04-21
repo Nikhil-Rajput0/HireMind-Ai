@@ -20,11 +20,14 @@ function SubscriptionCard({
       suppressHydrationWarning={true}
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
-      whileHover={{ y: -20 }} // Keep hover for desktop
-      whileTap={{ scale: 0.95 }} // ADD THIS - CRITICAL FOR MOBILE
-      transition={{ duration: 0.2, type: "spring" }}
-      className={`${bgColor} rounded-lg flex flex-col items-center justify-center py-6 border-none ring-1 ring-gray-300 shadow-xl px-4`}
+      transition={{ duration: 0.5, delay: delay || 0 }}
+      whileHover={{
+        y: -20,
+        transition: { duration: 0.2, type: "spring", stiffness: 400 },
+      }}
       style={{ touchAction: "manipulation" }}
+      className={`${bgColor} rounded-lg flex flex-col items-center justify-center py-6 border-none ring-1 ring-gray-300 shadow-xl px-4`}
+      whileTap={{ scale: 0.95 }}
     >
       <div>
         <BsThreeDotsVertical className="text-[30px] text-shadow-green-950" />

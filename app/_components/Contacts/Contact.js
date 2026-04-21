@@ -17,10 +17,10 @@ function Contact() {
       </div>
       <motion.div
         suppressHydrationWarning={true}
-        initial={{ opacity: 0, scale: 0.95 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        viewport={{ once: true, margin: "100px" }}
+        initial={{ opacity: 0, y: 80 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, ease: "linear" }}
+        viewport={{ once: true }}
         className=" lg:px-32 lg:py-4"
       >
         <div className=" px-10">

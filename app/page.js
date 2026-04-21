@@ -16,7 +16,7 @@ export default function Page() {
     <>
       <header
         style={{ zIndex: 400 }}
-        className="fixed top-0 z-50 bg-linear-to-r from-green-100 to-green-300 backdrop-blur-xl w-full px-4 md:px-10 py-4"
+        className="fixed top-0 bg-transparent backdrop-blur-xs w-full px-4 md:px-10 py-4"
       >
         <nav className="flex w-full px-4 py-2 bg-white justify-between items-center rounded-full relative z-50 shadow-sm">
           <Image alt="Logo" src={logo} width={120} height={120} />

@@ -11,7 +11,7 @@ function SliderPlaceholder() {
     <motion.div
       suppressHydrationWarning={true}
       animate={{ x: ["0%", "-100%"] }}
-      transition={{ ease: "linear", repeat: Infinity, duration: 25 }}
+      transition={{ ease: "linear", repeat: Infinity, duration: 30 }}
       className="flex items-center font-bold text-xl min-w-max"
     >
       <h3 className="flex gap-1 items-center  pr-18">

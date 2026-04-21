@@ -7,12 +7,12 @@ import { FaTwitter } from "react-icons/fa";
 function FooterBar() {
   return (
     <>
-      <div className="bg-gray-900 px-10 md:px-40 h-full py-20 grid grid-cols-[2fr_1fr] lg:grid-cols-[2fr_1fr_1fr] gap-10">
+      <div className="bg-gray-900 px-10 md:px-40 h-full pt-20 pb-8 @max-xs:pb-20 grid grid-cols-[2fr_1fr] lg:grid-cols-[2fr_1fr_1fr] gap-2 @max-xs:gap-10">
         <div className="row-start-1 col-start-1">
           <h3 className="pb-3 text-md lg:text-[22px] text-green-600">
             About Us
           </h3>
-          <p className=" text-sm lg:text-[15px] font-normal text-gray-300">
+          <p className=" text-[12px] lg:text-[15px] font-normal text-gray-300">
             These platform is made up for students and freshers to get there
             dream job. start with free version and then upgarde to premium
             version like lifetime Subscription at just 3000.
@@ -59,7 +59,7 @@ function FooterBar() {
           </div>
         </div>
       </div>
-      <div className="py-4 flex justify-center bg-gray-900 text-[#fafafa]">
+      <div className="py-4 flex justify-center bg-gray-900 text-[#fafafa] px-4 text-[10px] @max-xs:text-md">
         <h3 suppressHydrationWarning={true}>
           &copy;{new Date().getFullYear()} by Hiremind AI. Built with ❤️ by
           Nikhil Kumar Singh

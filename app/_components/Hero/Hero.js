@@ -17,7 +17,9 @@ function Hero() {
             </p>
           </div>
           <div className="flex gap-3 items-center">
-            <h1 className="text-3xl sm:text-4xl font-bold">Your Real-Time</h1>
+            <h1 className="text-[28px] @max-xs::text-4xl font-bold">
+              Your Real-Time
+            </h1>
             <SiAnswer className="w-13 h-13 text-gray-400" />
           </div>
           <h1 className="text-3xl sm:text-4xl font-bold leading-10 ">
@@ -35,7 +37,7 @@ function Hero() {
           <div className="flex gap-3 sm:gap-5 items-center pt-2">
             <Link
               href={"/homepage"}
-              className="border-none flex items-center justify-center py-4 z-0 w-full hover:bg-green-600 cursor-pointer bg-green-700 rounded-full font-medium text-white"
+              className="text-sm @max-xs:text-md border-none flex items-center justify-center py-4 z-0 w-full hover:bg-green-600 cursor-pointer bg-green-700 rounded-full font-medium text-white"
             >
               Try For Free &rarr;
             </Link>
@@ -58,19 +60,19 @@ function Hero() {
               <CiFaceSmile className="text-[40px] z-3" />
             </div>
             <div>
-              <p>
+              <p className="text-sm @max-xs:text-md">
                 Used By <span className="font-bold ">10,000+</span> peoples
               </p>
               <div className="flex items-center gap-1 bg-white rounded-full px-2 py-1">
                 <div className="flex items-center">
-                  <MdOutlineStarPurple500 className="text-yellow-500 text-[13px]" />
-                  <MdOutlineStarPurple500 className="text-yellow-500 text-[13px]" />
-                  <MdOutlineStarPurple500 className="text-yellow-500 text-[13px]" />
-                  <MdOutlineStarPurple500 className="text-yellow-500 text-[13px]" />
-                  <MdOutlineStarPurple500 className="text-yellow-500 text-[13px]" />
+                  <MdOutlineStarPurple500 className="text-yellow-500 text-[12px] @max-xs:text-[13px]" />
+                  <MdOutlineStarPurple500 className="text-yellow-500 text-[12px] @max-xs:text-[13px]" />
+                  <MdOutlineStarPurple500 className="text-yellow-500 text-[12px] @max-xs:text-[13px]" />
+                  <MdOutlineStarPurple500 className="text-yellow-500 text-[12px] @max-xs:text-[13px]" />
+                  <MdOutlineStarPurple500 className="text-yellow-500 text-[12px] @max-xs:text-[13px]" />
                 </div>
                 <div>
-                  <p className="text-gray-800 text-[12px] sm:text-[13px] font-medium">
+                  <p className="text-gray-800 text-[10px] @max-xs:text-[13px] font-medium">
                     <span className="text-black font-bold">4.86</span>/5000+
                     reviews
                   </p>
