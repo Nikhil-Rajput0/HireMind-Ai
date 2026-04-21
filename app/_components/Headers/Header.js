@@ -62,7 +62,6 @@ function Header() {
           style={{
             position: "fixed",
             top: "20px",
-            right: "20px",
             zIndex: 999999,
             padding: "10px",
             touchAction: "manipulation",
@@ -72,7 +71,7 @@ function Header() {
             e.stopPropagation();
             setActive(!active);
           }}
-          className="text-[30px] cursor-pointer relative touch-manipulation "
+          className="text-[30px] cursor-pointer touch-manipulation right-5 md:right-10"
         >
           {active ? <IoClose /> : <IoMenu />}
         </button>

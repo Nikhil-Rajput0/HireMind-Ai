@@ -77,13 +77,13 @@ function Subscription() {
   };
 
   return (
-    <section id="price" className="py-10 lg:px-40 px-12">
+    <section id="price" className="py-10 lg:px-40">
       <div className="text-center text-lg lg:text-3xl pb-6 text-[#40650c] font-semibold">
         Buy Your Plan
       </div>
       <div className="flex flex-col gap-5  items-center">
-        <div className="flex border border-gray-300 bg-gray-200 rounded-full items-center justify-between lg:w-120 w-full">
-          <div className="lg:flex-1 flex items-center lg:justify-center justify-between text-xs lg:text-md">
+        <div className="flex border border-gray-300 bg-gray-200 rounded-full items-center justify-between  w-auto">
+          <div className="lg:flex-1 flex items-center lg:justify-center justify-between text-xs lg:text-md w-full">
             {tabs.map((tab) => (
               <button
                 suppressHydrationWarning={true}
@@ -123,7 +123,7 @@ function Subscription() {
           </div>
         </div>
         <div className="pt-3">
-          <div className="grid grid-cols-1 lg:flex items-center lg:justify-center lg:gap-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 justify-center md:flex items-center lg:justify-center lg:gap-4 gap-8">
             {plans[activeTab].map((plan, index) => (
               <SubscriptionCard
                 key={index}
