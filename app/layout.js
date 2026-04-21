@@ -18,6 +18,9 @@ export const metadata = {
   creator: "HireMind AI",
   publisher: "HireMind AI",
   robots: "index, follow",
+  verification: {
+    google: "2hQYmh2OwwmU8z9KbFtNF3TiR7QnjZVJ3mI6qmneDhQ",
+  },
 };
 
 export const viewport = {
