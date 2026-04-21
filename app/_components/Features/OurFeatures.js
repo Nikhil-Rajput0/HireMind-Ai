@@ -33,7 +33,7 @@ function OurFeatures() {
           stretch: 0,
           depth: 200,
           modifier: 2.5,
-          slideShadows: true,
+          slideShadows: false,
         }}
         modules={[EffectCoverflow]}
         className="w-full py-10 perspective-distant"
