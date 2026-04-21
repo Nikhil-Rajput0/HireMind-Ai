@@ -46,7 +46,11 @@ function SignIn() {
   };
 
   return (
-    <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
+    <form
+      suppressHydrationWarning={true}
+      className="flex flex-col gap-2"
+      onSubmit={handleSubmit}
+    >
       <div className="flex flex-col gap-1">
         <label htmlFor="email" className=" text-gray-600">
           Your Email
@@ -78,7 +82,9 @@ function SignIn() {
         />
       </div>
       <div className="flex items-center gap-3">
-        <p className="text-[14px]">Don&apos;t remember Password</p>
+        <p className="text-[12px] sm:text-[14px]">
+          Don&apos;t remember Password
+        </p>
         <Link
           href={"/authentication/forgetPassword"}
           className="text-[14px] underline text-green-600"
@@ -98,7 +104,7 @@ function SignIn() {
         <label htmlFor="check">Remember me</label>
       </div>
       <div className="flex items-center gap-2">
-        <p>Don&apos;t have an account?</p>
+        <p className="text-sm sm:text-md">Don&apos;t have an account?</p>
         <Link
           href={"/authentication/signUp"}
           className="text-green-600 underline"

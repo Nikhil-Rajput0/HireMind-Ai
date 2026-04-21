@@ -40,7 +40,11 @@ function ResetPassword() {
   };
 
   return (
-    <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
+    <form
+      suppressHydrationWarning={true}
+      className="flex flex-col gap-2"
+      onSubmit={handleSubmit}
+    >
       <div className="flex flex-col gap-1">
         <label htmlFor="otp" className="text-gray-300">
           OTP

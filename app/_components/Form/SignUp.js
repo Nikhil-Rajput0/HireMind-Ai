@@ -55,7 +55,11 @@ function SignUp() {
   };
 
   return (
-    <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
+    <form
+      suppressHydrationWarning={true}
+      className="flex flex-col gap-2"
+      onSubmit={handleSubmit}
+    >
       <div className="flex flex-col gap-1">
         <label htmlFor="UserName" className=" text-gray-600">
           Username
@@ -132,7 +136,7 @@ function SignUp() {
         </label>
       </div>
       <div className="flex items-center gap-2">
-        <p>Already have an account?</p>
+        <p className="text-sm sm:text-md">Already have an account?</p>
         <Link
           href={"/authentication/signIn"}
           className="text-green-600 underline"

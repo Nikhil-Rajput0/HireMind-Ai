@@ -50,7 +50,7 @@ function OurFeatures() {
           />
         </SwiperSlide>
         <SwiperSlide
-          className="lg:w-100! w-80! !h-[450px]"
+          className="lg:w-100! w-80! h-112.5!"
           suppressHydrationWarning={true}
         >
           <FeaturesCard
@@ -83,7 +83,7 @@ function OurFeatures() {
           />
         </SwiperSlide>
         <SwiperSlide
-          className="lg:w-100! w-80! !h-[450px]"
+          className="lg:w-100! w-80! h-112.5!"
           suppressHydrationWarning={true}
         >
           <FeaturesCard

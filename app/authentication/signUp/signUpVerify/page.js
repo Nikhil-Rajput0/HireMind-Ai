@@ -8,6 +8,7 @@ import userContext from "@/app/contexts/UserContext";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import FooterBar from "@/app/_components/Footer/FooterBar";
 
 function Page() {
   const router = useRouter();
@@ -65,43 +66,48 @@ function Page() {
   };
 
   return (
-    <section className="bg-[#d5d2d2] pb-20 px-40">
-      <header className=" py-10 flex items-center justify-between">
-        <div>
-          <Image alt="Logo" src={logo} height={120} width={120} />
-        </div>
-        <Link
-          href={"/"}
-          className="px-5 py-3 ring-1 bg-green-500 text-white ring-green-400 hover:ring-green-300 cursor-pointer shadow-2xl rounded-full"
-        >
-          &larr;Back to home
-        </Link>
-      </header>
-      <main className="flex flex-col gap-1 w-100 ring-1 mx-auto bg-white ring-green-300 shadow-2xl px-10 py-5 backdrop-blur-3xl">
-        <h3 className="text-xl font bold text-green-500 text-center">
-          Hello {userData.email}
-        </h3>
-        <h3 className="text-xl pb-3 font bold text-red-500 text-center">
-          Your otp👇
-        </h3>
-        <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
-          <input
-            type="text"
-            placeholder="otp..."
-            name="otp"
-            value={otp}
-            onChange={(e) => setOtp(e.target.value)}
-            className="bg-gray-200 px-3 py-1 shadow-2xl/50 focus:outline-green-400 rounded-2xl ring-1 ring-green-400 w-full"
-          />
-          <button
-            disabled={loading}
-            type="submit"
-            className={`w-full text-center py-2 ${loading ? "bg-gray-300" : "bg-green-400"}  rounded-full ${loading ? "" : "hover:bg-green-500"}  font-medium ${loading ? "cursor-not-allowed" : "cursor-pointer"}`}
+    <section>
+      <div className="bg-[#d5d2d2] pb-20 lg:px-40 w-full px-5">
+        <header className=" py-10 flex items-center justify-between sm:w-[60vw] sm:mx-auto sm:px-0">
+          <div>
+            <Image alt="Logo" src={logo} height={120} width={120} />
+          </div>
+          <Link
+            href={"/"}
+            className="px-5 py-3 ring-1 bg-green-500 text-white ring-green-400 hover:ring-green-300 cursor-pointer shadow-2xl rounded-full"
           >
-            {loading ? "Submitting..." : <span>Submit&rarr;</span>}
-          </button>
-        </form>
-      </main>
+            &larr;Back to home
+          </Link>
+        </header>
+        <main className="flex flex-col gap-1 w-full sm:w-100 ring-1 mx-auto bg-white ring-green-300 shadow-2xl px-5 sm:px-10 py-5 backdrop-blur-3xl">
+          <h3 className="text-xl font bold text-green-500 text-center">
+            Hello {userData.email}
+          </h3>
+          <h3 className="text-xl pb-3 font bold text-red-500 text-center">
+            Your otp👇
+          </h3>
+          <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
+            <input
+              type="text"
+              placeholder="otp..."
+              name="otp"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+              className="bg-gray-200 px-3 py-1 shadow-2xl/50 focus:outline-green-400 rounded-2xl ring-1 ring-green-400 w-full"
+            />
+            <button
+              disabled={loading}
+              type="submit"
+              className={`w-full text-center py-2 ${loading ? "bg-gray-300" : "bg-green-400"}  rounded-full ${loading ? "" : "hover:bg-green-500"}  font-medium ${loading ? "cursor-not-allowed" : "cursor-pointer"}`}
+            >
+              {loading ? "Submitting..." : <span>Submit&rarr;</span>}
+            </button>
+          </form>
+        </main>
+      </div>
+      <footer>
+        <FooterBar />
+      </footer>
     </section>
   );
 }
