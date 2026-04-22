@@ -37,7 +37,7 @@ function Header() {
 
   return (
     <>
-      <ul className="hidden lg:flex gap-8 flex-1 mx-auto justify-center items-center">
+      <ul className="hidden lg:flex gap-8 flex-1 mx-auto justify-center items-center text-black">
         {headerLink.map((el) => (
           <li key={el.href}>
             <a
@@ -55,7 +55,7 @@ function Header() {
         ))}
       </ul>
 
-      <div className="relative lg:hidden">
+      <div className="relative lg:hidden text-black">
         <button
           type="button"
           suppressHydrationWarning={true}

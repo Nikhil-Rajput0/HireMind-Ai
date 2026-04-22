@@ -37,7 +37,7 @@ function Form() {
             id="full-name"
             value={inputValue.name}
             onChange={handleChange}
-            className="bg-white/50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 py-1 px-3 rounded-md"
+            className="bg-white/50 text-black border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 py-1 px-3 rounded-md"
             type="text"
             name="name"
             placeholder="Enter your name"
@@ -55,7 +55,7 @@ function Form() {
               name="email"
               value={inputValue.email}
               onChange={handleChange}
-              className="bg-white/50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 py-1 px-3 rounded-md"
+              className="bg-white/50 text-black border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 py-1 px-3 rounded-md"
               placeholder="Enter your Mail"
               required
             />
@@ -70,7 +70,7 @@ function Form() {
               name="mobile"
               value={inputValue.mobile}
               onChange={handleChange}
-              className="bg-white/50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 py-1 px-3 rounded-md"
+              className="bg-white/50 text-black border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 py-1 px-3 rounded-md"
               type="tel"
               placeholder="Enter your Mobile No."
               required

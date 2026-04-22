@@ -71,6 +71,8 @@ html {
 }
 
 .swiper {
+  transform: translateZ(0);
+  will-change: transform;
   padding-top: 50px;
   padding-bottom: 50px;
 }
@@ -89,5 +91,77 @@ html {
   }
   html::-webkit-scrollbar {
     display: none;
+  }
+}
+
+/* Animated gradient background */
+.bg-gradient {
+  background: linear-gradient(-45deg, #16a34a, #22c55e, #15803d, #4ade80);
+  background-size: 300% 300%;
+  animation: gradientMove 6s ease infinite;
+}
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Logo glow */
+.logo-glow {
+  animation: pulseGlow 2s infinite ease-in-out;
+}
+
+@keyframes pulseGlow {
+  0% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
+  }
+  50% {
+    transform: scale(1.08);
+    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.7));
+  }
+  100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
+  }
+}
+
+/* Fade */
+.animate-fadeIn {
+  animation: fadeIn 1s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Progress bar */
+.progress-bar {
+  width: 0%;
+  height: 100%;
+  background: white;
+  animation: loadBar 2s ease forwards;
+}
+
+@keyframes loadBar {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
   }
 }

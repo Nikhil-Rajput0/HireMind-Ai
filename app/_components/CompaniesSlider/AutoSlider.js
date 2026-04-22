@@ -9,7 +9,7 @@ function AutoSlider() {
         </h2>
       </div>
 
-      <div className="flex w-full">
+      <div className="flex w-full text-black">
         <SliderPlaceholder />
         <SliderPlaceholder />
         <SliderPlaceholder />

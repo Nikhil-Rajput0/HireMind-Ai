@@ -9,7 +9,7 @@ import robotImage from "@/public/robotInterview.png";
 
 function Hero() {
   return (
-    <section className="px-10 py-10 pt-25 lg:pt-35 bg-linear-to-r from-green-100 to-green-300">
+    <section className="px-10 py-10 pt-25 lg:pt-35 bg-linear-to-r from-green-100 to-green-300 text-black">
       <div className="grid grid-cols-1 lg:grid-cols-[1.25fr_2fr] gap-5">
         <div className="relative">
           <div className="flex items-center gap-1">

@@ -2,6 +2,7 @@ import { Toaster } from "react-hot-toast";
 import UserContextProvider from "./contexts/UserContextProvider";
 import "./globals.css";
 import { Inter } from "next/font/google";
+import SplashWrapper from "./_components/Loader/SplashWrapper";
 
 const inter = Inter({
   subsets: ["latin", "sans-serif"],
@@ -187,7 +188,7 @@ export default function RootLayout({ children }) {
         suppressHydrationWarning
       >
         <UserContextProvider>
-          {children}
+          <SplashWrapper>{children}</SplashWrapper>
           <Toaster
             position="top-right"
             containerStyle={{

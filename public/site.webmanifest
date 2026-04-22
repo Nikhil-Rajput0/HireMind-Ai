@@ -1,6 +1,7 @@
 {
   "name": "HireMind Ai",
   "short_name": "HireMind",
+  "start_url": "/",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
@@ -13,7 +14,7 @@
       "type": "image/png"
     }
   ],
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff",
+  "theme_color": "#16a34a",
+  "background_color": "#16a34a",
   "display": "standalone"
 }

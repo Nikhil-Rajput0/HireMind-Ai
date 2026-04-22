@@ -77,7 +77,7 @@ function Subscription() {
   };
 
   return (
-    <section id="price" className="py-10 lg:px-40">
+    <section id="price" className="py-10 lg:px-40 text-gray-800">
       <div className="text-center text-lg lg:text-3xl pb-6 text-[#40650c] font-semibold">
         Buy Your Plan
       </div>

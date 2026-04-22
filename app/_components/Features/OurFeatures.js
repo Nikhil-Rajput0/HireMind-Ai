@@ -13,8 +13,8 @@ function OurFeatures() {
   return (
     <section
       id="features"
-      className="pb-6 lg:py-15 pt-6 lg:pt-15 lg:px-40"
-      suppressHydrationWarning
+      className="pb-6 lg:py-15 pt-6 lg:pt-15 lg:px-40 text-gray-800"
+      suppressHydrationWarning={true}
     >
       <div>
         <h1 className="text-center text-lg lg:text-3xl pb-4 text-[#40650c] font-semibold">
@@ -22,9 +22,10 @@ function OurFeatures() {
         </h1>
       </div>
       <Swiper
-        suppressHydrationWarning={true}
         effect="coverflow"
+        touchStartPreventDefault={false}
         grabCursor={true}
+        simulateTouch={true}
         centeredSlides={true}
         slidesPerView="auto"
         loop={true}
@@ -36,7 +37,7 @@ function OurFeatures() {
           slideShadows: false,
         }}
         modules={[EffectCoverflow]}
-        className="w-full py-10 perspective-distant"
+        className="w-full py-10 perspective-none"
       >
         <SwiperSlide
           className="lg:w-100! w-80! py-2"
