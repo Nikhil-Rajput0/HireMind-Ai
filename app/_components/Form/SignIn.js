@@ -63,7 +63,7 @@ function SignIn() {
           value={inputValue.email}
           onChange={handleChange}
           required
-          className="bg-gray-200 px-3 py-1 shadow-2xl/50 focus:outline-green-400 rounded-2xl ring-1 ring-green-400"
+          className="bg-gray-200 text-black px-3 py-1 shadow-2xl/50 focus:outline-green-400 rounded-2xl ring-1 ring-green-400"
         />
       </div>
       <div className="flex flex-col gap-1 pb-3">
@@ -78,11 +78,11 @@ function SignIn() {
           value={inputValue.password}
           onChange={handleChange}
           required
-          className="bg-gray-200 px-3 py-1 shadow-2xl/50 focus:outline-green-400 ring-1 ring-green-400 rounded-2xl"
+          className="bg-gray-200 text-black px-3 py-1 shadow-2xl/50 focus:outline-green-400 ring-1 ring-green-400 rounded-2xl"
         />
       </div>
       <div className="flex items-center gap-3">
-        <p className="text-[12px] sm:text-[14px]">
+        <p className="text-[12px] sm:text-[14px] text-black">
           Don&apos;t remember Password
         </p>
         <Link
@@ -101,9 +101,9 @@ function SignIn() {
       </button>
       <div className="flex items-center gap-2 pt-3 pb-3">
         <input id="check" type="checkbox" name="remember-me" />
-        <label htmlFor="check">Remember me</label>
+        <label htmlFor="check text-black">Remember me</label>
       </div>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 text-black">
         <p className="text-sm sm:text-md">Don&apos;t have an account?</p>
         <Link
           href={"/authentication/signUp"}

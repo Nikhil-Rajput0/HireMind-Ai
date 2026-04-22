@@ -39,11 +39,11 @@ function ForgetPassword() {
           placeholder="example@gmail.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="bg-gray-200 px-3 py-1 shadow-2xl/50 focus:outline-green-400 ring-1 ring-green-400 rounded-2xl"
+          className="bg-gray-200 text-black px-3 py-1 shadow-2xl/50 focus:outline-green-400 ring-1 ring-green-400 rounded-2xl"
         />
       </div>
       <div className="flex items-center gap-5">
-        <h3 className="text-[16px]">Know your password?</h3>
+        <h3 className="text-[16px] text-black">Know your password?</h3>
         <Link
           href={"/authentication/signIn"}
           className="text-[16px] underline text-green-600"

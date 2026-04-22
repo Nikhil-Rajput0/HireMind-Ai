@@ -56,7 +56,7 @@ function ResetPassword() {
           value={otp}
           onChange={(e) => setOtp(e.target.value)}
           placeholder="otp.."
-          className="bg-gray-300 px-3 py-1 shadow-xl focus:outline-green-400 rounded-2xl "
+          className="bg-gray-300 text-black px-3 py-1 shadow-xl focus:outline-green-400 rounded-2xl "
         />
       </div>
       <div className="flex flex-col gap-1">
@@ -70,7 +70,7 @@ function ResetPassword() {
           value={userData.password}
           onChange={handleChange}
           placeholder="***********"
-          className="bg-gray-300 px-3 py-1 shadow-xl focus:outline-green-400 rounded-2xl "
+          className="bg-gray-300 text-black px-3 py-1 shadow-xl focus:outline-green-400 rounded-2xl "
         />
       </div>
       <div className="flex flex-col gap-1">
@@ -84,7 +84,7 @@ function ResetPassword() {
           value={userData.passwordConfirm}
           onChange={handleChange}
           placeholder="***********"
-          className="bg-gray-300 px-3 py-1 shadow-xl focus:outline-green-400 rounded-2xl "
+          className="bg-gray-300 px-3 text-black py-1 shadow-xl focus:outline-green-400 rounded-2xl "
         />
       </div>
       <div className="pt-5">

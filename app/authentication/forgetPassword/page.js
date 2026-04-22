@@ -7,7 +7,7 @@ import FooterBar from "@/app/_components/Footer/FooterBar";
 
 function Page() {
   return (
-    <section>
+    <section className="text-black">
       <div className="bg-[#d5d2d2] pb-20 lg:px-40 w-full px-5">
         <header className=" py-10 flex items-center justify-between sm:w-[60vw] sm:mx-auto sm:px-0">
           <div>

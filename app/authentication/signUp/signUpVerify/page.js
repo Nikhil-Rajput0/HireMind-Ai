@@ -66,7 +66,7 @@ function Page() {
   };
 
   return (
-    <section>
+    <section className="text-black">
       <div className="bg-[#d5d2d2] pb-20 lg:px-40 w-full px-5">
         <header className=" py-10 flex items-center justify-between sm:w-[60vw] sm:mx-auto sm:px-0">
           <div>
@@ -93,7 +93,7 @@ function Page() {
               name="otp"
               value={otp}
               onChange={(e) => setOtp(e.target.value)}
-              className="bg-gray-200 px-3 py-1 shadow-2xl/50 focus:outline-green-400 rounded-2xl ring-1 ring-green-400 w-full"
+              className="bg-gray-200 text-black px-3 py-1 shadow-2xl/50 focus:outline-green-400 rounded-2xl ring-1 ring-green-400 w-full"
             />
             <button
               disabled={loading}

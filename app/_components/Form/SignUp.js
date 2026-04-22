@@ -67,12 +67,12 @@ function SignUp() {
         <input
           id="UserName"
           type="text"
-          placeholder="nikhil"
+          placeholder="Adam"
           value={inputValue.name}
           name="name"
           onChange={handleChange}
           required
-          className="bg-gray-200 px-3 py-1 shadow-2xl/50 focus:outline-green-400 rounded-2xl ring-1 ring-green-400"
+          className="bg-gray-200 text-black px-3 py-1 shadow-2xl/50 focus:outline-green-400 rounded-2xl ring-1 ring-green-400"
         />
       </div>
       <div className="flex flex-col gap-1">
@@ -87,7 +87,7 @@ function SignUp() {
           name="email"
           onChange={handleChange}
           required
-          className="bg-gray-200 px-3 py-1 shadow-2xl/50 focus:outline-green-400 rounded-2xl ring-1 ring-green-400"
+          className="bg-gray-200 text-black px-3 py-1 shadow-2xl/50 focus:outline-green-400 rounded-2xl ring-1 ring-green-400"
         />
       </div>
       <div className="flex flex-col gap-1 pb-3">
@@ -103,7 +103,7 @@ function SignUp() {
           name="password"
           autoComplete="new-password"
           required
-          className="bg-gray-200 px-3 py-1 shadow-2xl/50 focus:outline-green-400 ring-1 ring-green-400 rounded-2xl"
+          className="bg-gray-200 text-black px-3 py-1 shadow-2xl/50 focus:outline-green-400 ring-1 ring-green-400 rounded-2xl"
         />
       </div>
       <div className="flex flex-col gap-1 pb-3">
@@ -119,7 +119,7 @@ function SignUp() {
           name="passwordConfirm"
           autoComplete="new-password"
           required
-          className="bg-gray-200 px-3 py-1 shadow-2xl/50 focus:outline-green-400 ring-1 ring-green-400 rounded-2xl"
+          className="bg-gray-200 px-3 text-black py-1 shadow-2xl/50 focus:outline-green-400 ring-1 ring-green-400 rounded-2xl"
         />
       </div>
       <button
@@ -131,12 +131,14 @@ function SignUp() {
       </button>
       <div className="flex items-center gap-2 pt-3 pb-3 text-[11px]">
         <input id="check" type="checkbox" required name="checked" />
-        <label htmlFor="check">
+        <label htmlFor="check" className="text-black">
           By clicking you are agree with all terms and conditions.
         </label>
       </div>
       <div className="flex items-center gap-2">
-        <p className="text-sm sm:text-md">Already have an account?</p>
+        <p className="text-sm sm:text-md text-black">
+          Already have an account?
+        </p>
         <Link
           href={"/authentication/signIn"}
           className="text-green-600 underline"
