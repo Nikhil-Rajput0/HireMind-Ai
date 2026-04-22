@@ -14,8 +14,61 @@ function Page() {
   const [questions, setQuestions] = useState("");
   const [answer, setAnswer] = useState("");
   const [loading, setLoading] = useState(false);
+  const [listening, setListening] = useState(false);
+  const [speaking, setSpeaking] = useState(false);
+  const [processing, setProcessing] = useState(false);
+  const [isFinished, setIsFinished] = useState(false);
+
+  const speakText = (text, callback) => {
+    const utterance = new SpeechSynthesisUtterance(text);
+
+    utterance.rate = 0.9;
+
+    utterance.onstart = () => setSpeaking(true);
+
+    utterance.onend = () => {
+      setSpeaking(false);
+      if (callback) callback(); // start listening after speaking
+    };
+
+    window.speechSynthesis.cancel(); // stop previous
+    window.speechSynthesis.speak(utterance);
+  };
+
+  const startListening = () => {
+    const SpeechRecognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+      alert("Speech Recognition not supported");
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+
+    recognition.continuous = false;
+    recognition.lang = "en-US";
+
+    recognition.start();
+    setListening(true);
+
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+      setAnswer(transcript);
+
+      // 🔥 Auto submit after speaking
+      setTimeout(() => {
+        submitAnswer(transcript);
+      }, 500);
+    };
+
+    recognition.onend = () => {
+      setListening(false);
+    };
+  };
 
   const getQuestions = async () => {
+    if (isFinished) return;
     setLoading(true);
 
     try {
@@ -24,7 +77,13 @@ function Page() {
         { id },
         { withCredentials: true },
       );
-      setQuestions(res.data.question);
+      if (!isFinished) {
+        const q = res.data.question;
+        setQuestions(q);
+        speechSynthesis.cancel();
+        speechSynthesis.speak(new SpeechSynthesisUtterance(q));
+      }
+      speakText(q, startListening);
     } catch (error) {
       toast.error(error.response?.data?.message);
     } finally {
@@ -36,13 +95,17 @@ function Page() {
     getQuestions();
   }, []);
 
-  const submitAnswer = async (e) => {
-    if (!answer) return;
-    e.preventDefault();
+  const submitAnswer = async (finalAnswer) => {
+    if (!questions || !finalAnswer) {
+      toast.error("Question or answer missing.");
+    }
+
+    if (!finalAnswer) return;
+    setProcessing(true);
     try {
       const evalRes = await axios.post(
         `${process.env.NEXT_PUBLIC_SERVER_UI}api/v1/interviews/evaluate`,
-        { questions, answer },
+        { question: questions, answer: finalAnswer },
         { withCredentials: true },
       );
 
@@ -51,7 +114,7 @@ function Page() {
         {
           interviewId: id,
           question: questions,
-          answer,
+          answer: finalAnswer,
           feedback: evalRes.data.feedback,
           score: evalRes.data.score,
         },
@@ -62,10 +125,14 @@ function Page() {
       toast.success(evalRes.data?.message);
     } catch (error) {
       toast.error(error.response?.data?.message);
+    } finally {
+      setProcessing(false);
     }
   };
 
   const finishInterview = async (e) => {
+    setIsFinished(true);
+    speechSynthesis.cancel();
     e.preventDefault();
     try {
       const finishRes = await axios.post(
@@ -90,7 +157,9 @@ function Page() {
           <HeaderMain />
         </nav>
       </header>
+
       <div className="flex flex-col w-3xl m-auto h-screen py-8">
+        {/* QUESTION AREA */}
         <div className="flex flex-1 text-gray-100 pt-18">
           <div className="w-screen">
             <div className="text-center text-lg pb-8">
@@ -99,27 +168,62 @@ function Page() {
                   <div className="w-20 h-20 border-4 border-gray-300 border-t-green-500 rounded-full animate-spin"></div>
                 </div>
               ) : (
-                <p>{questions}</p>
+                <>
+                  <p>{questions}</p>
+
+                  {/* 🔥 STATUS INDICATORS */}
+                  <div className="mt-3 text-sm text-gray-400">
+                    {speaking && <p>🔊 AI speaking...</p>}
+                    {listening && <p>🎤 Listening...</p>}
+                    {processing && <p>⚙️ Evaluating...</p>}
+                  </div>
+                </>
               )}
             </div>
           </div>
         </div>
+
+        {/* INPUT AREA */}
         <div className="flex items-end sticky right-0 left-0 bottom-0">
           <div className="flex items-center w-full gap-2">
             <textarea
+              disabled={listening}
               value={answer}
               onChange={(e) => setAnswer(e.target.value)}
               className="w-full h-[15vh] resize-none rounded-lg overflow-hidden ring-1 ring-green-300 focus:outline-green-500 text-gray-100 px-8 py-4"
+              placeholder="Your answer will appear here..."
             />
+
+            {/* 🎤 MIC BUTTON */}
             <button
-              onClick={submitAnswer}
-              className="py-2 rounded-full cursor-pointer hover:bg-green-600 px-4 flex items-center justify-center border-none bg-green-500 font-medium"
+              onClick={startListening}
+              className={`py-2 px-4 rounded-full text-white ${
+                listening ? "bg-red-500" : "bg-purple-600"
+              }`}
+            >
+              {listening ? "🎤 Listening..." : "🎤 Speak"}
+            </button>
+
+            {/* 🔊 REPLAY BUTTON */}
+            <button
+              onClick={() => speakText(questions, startListening)}
+              className="py-2 px-4 rounded-full bg-blue-500 text-white"
+            >
+              🔊 Replay
+            </button>
+
+            {/* SUBMIT */}
+            <button
+              onClick={() => submitAnswer(answer)}
+              className="py-2 rounded-full cursor-pointer hover:bg-green-600 px-4 flex items-center justify-center bg-green-500 font-medium"
             >
               Submit
             </button>
+
+            {/* FINISH */}
             <button
               onClick={finishInterview}
-              className="py-2 px-4 cursor-pointer hover:bg-green-600 rounded-full flex items-center justify-center border-none bg-green-500 font-medium"
+              className="py-2 px-4 cursor-pointer hover:bg-red-600 rounded-full flex items-center justify-center bg-red-500 font-medium text-white"
             >
               Finish
             </button>

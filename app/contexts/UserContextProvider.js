@@ -24,24 +24,23 @@ const UserContextProvider = ({ children }) => {
     difficulty: "",
   });
 
-  const [interview, setInterview] = useState(null);
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const res = await axios.get(
-          "http://localhost:8000/api/v1/users/getMe",
-          { withCredentials: true },
-        );
+  const [interview, setInterview] = useState([]);
+  const getData = async () => {
+    try {
+      const res = await axios.get("http://localhost:8000/api/v1/users/getMe", {
+        withCredentials: true,
+      });
 
-        setUserData(res.data.user);
-        console.log(res.data?.user?.interviews);
-        setInterview(res.data?.user?.interviews);
-      } catch (err) {
-        toast.error(err.response?.data?.message);
-      }
-    };
+      setUserData(res.data.user);
+      console.log(res.data?.user?.interviews);
+      setInterview(res.data?.user?.interviews);
+    } catch (err) {
+      toast.error(err.response?.data?.message);
+    }
+  };
+  useEffect(() => {
     getData();
-  }, [setUserData]);
+  }, [setUserData, interview]);
 
   return (
     <userContext.Provider

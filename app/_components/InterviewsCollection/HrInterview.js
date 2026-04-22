@@ -39,12 +39,12 @@ function HrInterview() {
     );
   }
   return (
-    <>
+    <div className="mb-60 ">
       {interview.map((interview) => {
         return (
           <div
             key={interview._id}
-            className="w-full flex flex-col items-center mb-60 px-13 py-2 mt-5 bg-slate-100 border border-slate-200 shadow-xl font-medium text-slate-900"
+            className="w-full flex flex-col items-center px-13 py-2 mt-5 bg-slate-100 border border-slate-200 shadow-xl font-medium text-slate-900"
           >
             <div className="flex items-center justify-between w-full">
               <div className="flex flex-col items-center pl-7">
@@ -101,7 +101,7 @@ function HrInterview() {
           </div>
         );
       })}
-    </>
+    </div>
   );
 }
 
