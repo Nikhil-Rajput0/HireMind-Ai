@@ -14,7 +14,7 @@ function SideBar() {
   const { userData } = useContext(userContext);
 
   return (
-    <div className="flex flex-col justify-between h-[90%]">
+    <div className="flex flex-col justify-between h-[90%] text-black">
       <div className="flex flex-col gap-6 z-120">
         <div className="px-3 ">
           <div className="inline-flex gap-1 items-center text-lg bg-[#90EE90] text-black rounded-full px-3 py-2">

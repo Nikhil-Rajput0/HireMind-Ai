@@ -4,7 +4,9 @@ export const metadata = {
 };
 
 function Page() {
-  return <section className="pl-15 pt-10 mb-70">Resume Generator</section>;
+  return (
+    <section className="pl-15 pt-10 mb-70 text-black">Resume Generator</section>
+  );
 }
 
 export default Page;

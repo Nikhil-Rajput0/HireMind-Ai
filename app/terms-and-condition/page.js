@@ -5,8 +5,8 @@ import FooterBar from "../_components/Footer/FooterBar";
 
 function Page() {
   return (
-    <section className="bg-[#c0bfbf] pb-20">
-      <header className="px-40 py-10 flex items-center justify-between">
+    <section className="bg-[#c0bfbf]">
+      <header className="lg:px-40 px-5 py-10 flex items-center justify-between">
         <div>
           <Image alt="Logo" src={logo} height={120} width={120} />
         </div>
@@ -17,9 +17,9 @@ function Page() {
           &larr;Back to home
         </Link>
       </header>
-      <main className="px-40 flex flex-col gap-5 pt-10">
+      <main className="lg:px-40 px-5 flex flex-col gap-5 pt-10 text-black pb-10">
         <div className="flex flex-col gap-2">
-          <h3 className="text-3xl font-bold">
+          <h3 className="text-2xl lg:text-3xl font-bold">
             HireMind Ai: Terms and condition
           </h3>
           <p className="text-[15px]">

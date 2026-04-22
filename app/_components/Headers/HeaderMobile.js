@@ -18,7 +18,7 @@ function HeaderMobile() {
   const { userData } = useContext(userContext);
   const [active, setActive] = useState(false);
   return (
-    <div className="relative lg:hidden">
+    <div className="relative lg:hidden text-black">
       <button
         type="button"
         suppressHydrationWarning={true}

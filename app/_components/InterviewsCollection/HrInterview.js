@@ -30,7 +30,7 @@ function HrInterview() {
 
   if (!interview) {
     return (
-      <div className="mb-60">
+      <div className="mb-60 text-black">
         <p className="pl-10 text-lg pt-10 lg:pt-5 lg:pl-20">
           You have not attend any interview. Please proceed to start a new
           interview😃.{" "}

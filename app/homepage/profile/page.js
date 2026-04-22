@@ -13,7 +13,7 @@ export const metadata = {
 
 function Page() {
   return (
-    <section className="grid grid-cols-1 md:grid-cols-[1fr_2fr] lg:pl-10 lg:pt-10 pt-15 px-5 lg:px-40">
+    <section className="grid text-black grid-cols-1 md:grid-cols-[1fr_2fr] lg:pl-10 lg:pt-10 pt-15 px-5 lg:px-40">
       <UserProfile />
       <div className="flex flex-col bg-gray-800 rounded-lg px-2">
         <div>
