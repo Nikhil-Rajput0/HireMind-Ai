@@ -92,9 +92,95 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning={true}>
       <head>
-        <link rel="icon" href="/favicon.ico"></link>
+        {/* Essential Mobile Meta Tags */}
+        <meta charSet="UTF-8" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover"
+        />
+
+        {/* Theme and Display */}
+        <meta
+          name="theme-color"
+          content="#ffffff"
+          media="(prefers-color-scheme: light)"
+        />
+        <meta
+          name="theme-color"
+          content="#1a1a1a"
+          media="(prefers-color-scheme: dark)"
+        />
+        <meta name="color-scheme" content="light dark" />
+        <meta name="display" content="standalone" />
+
+        {/* Mobile Web App */}
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta
+          name="apple-mobile-web-app-status-bar-style"
+          content="black-translucent"
+        />
+        <meta name="apple-mobile-web-app-title" content="HireMind AI" />
+
+        {/* SEO */}
+        <title>HireMind AI - AI Powered Interview Preparation</title>
+        <meta
+          name="description"
+          content="HireMind AI is the best AI-powered interview preparation platform helping students and professionals ace their job interviews."
+        />
+        <meta
+          name="keywords"
+          content="interview preparation, AI interview, job interview, mock interview, career preparation"
+        />
+        <meta name="author" content="HireMind AI" />
+        <meta name="robots" content="index, follow" />
+
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://hiremind.ai/" />
+        <meta
+          property="og:title"
+          content="HireMind AI - AI Interview Preparation"
+        />
+        <meta
+          property="og:description"
+          content="Practice interviews with AI and ace your dream job"
+        />
+        <meta property="og:image" content="/og-image.png" />
+
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content="https://hiremind.ai/" />
+        <meta
+          name="twitter:title"
+          content="HireMind AI - AI Interview Preparation"
+        />
+        <meta
+          name="twitter:description"
+          content="Practice interviews with AI and ace your dream job"
+        />
+        <meta name="twitter:image" content="/twitter-image.png" />
+
+        {/* Icons */}
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link
+          rel="icon"
+          href="/favicon-32x32.png"
+          type="image/png"
+          sizes="32x32"
+        />
+        <link rel="apple-touch-icon" href="/apple-icon.png" sizes="180x180" />
+        <link rel="manifest" href="/site.webmanifest" />
+
+        {/* Preconnect for performance */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
       </head>
       <body
         className={`bg-[#e0e0e0] ${inter.className}`}
