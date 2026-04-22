@@ -120,7 +120,7 @@ This project is licensed under the MIT License.
 👨‍💻 Author
 Nikhil Kumar Singh
 🌐 Portfolio: https://nikhil-next-dev.vercel.app
-💼 LinkedIn: https://linkedin.com/in/your-profile⁠�
+💼 LinkedIn: https://linkedin.com/in/nikhil-rajput-a14716275
 📧 Email: nikhilrajpu236@gmail.com
 
 ⭐ Support
