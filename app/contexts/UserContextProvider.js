@@ -25,6 +25,7 @@ const UserContextProvider = ({ children }) => {
   });
 
   const [interview, setInterview] = useState([]);
+  const [generatedResume, setGeneratedResume] = useState([]);
   const getData = async () => {
     try {
       const res = await axios.get("http://localhost:8000/api/v1/users/getMe", {
@@ -32,15 +33,15 @@ const UserContextProvider = ({ children }) => {
       });
 
       setUserData(res.data.user);
-      console.log(res.data?.user?.interviews);
       setInterview(res.data?.user?.interviews);
+      setGeneratedResume(res.data?.user?.resumes);
     } catch (err) {
       toast.error(err.response?.data?.message);
     }
   };
   useEffect(() => {
     getData();
-  }, [setUserData, interview]);
+  }, []);
 
   return (
     <userContext.Provider
@@ -55,6 +56,8 @@ const UserContextProvider = ({ children }) => {
         setFormData,
         interview,
         setInterview,
+        generatedResume,
+        setGeneratedResume,
       }}
     >
       {children}

@@ -15,7 +15,7 @@ export default function HomeLayout({ children }) {
   return (
     <>
       <header
-        style={{ zIndex: 9999 }}
+        style={{ zIndex: 700 }}
         className="fixed top-0 mb-4 bg-transparent backdrop-blur-md ring-1 z-100 ring-gray-200 shadow-xl w-full lg:px-0 py-3 lg:py-3 px-5"
       >
         <nav className="flex px-5 w-full py-2 justify-between items-center bg-white rounded-full lg:rounded-none">

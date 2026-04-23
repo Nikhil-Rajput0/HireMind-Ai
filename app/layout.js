@@ -206,7 +206,7 @@ export default function RootLayout({ children }) {
             containerStyle={{
               pointerEvents: "none",
 
-              zIndex: 100,
+              zIndex: 800,
             }}
             toastOptions={{
               duration: 3000,
@@ -215,7 +215,7 @@ export default function RootLayout({ children }) {
                 color: "#fff",
                 borderRadius: "10px",
                 padding: "12px 16px",
-                pointerEvents: "auto", // ✅ allow click inside toast only
+                pointerEvents: "auto",
               },
               success: {
                 style: {

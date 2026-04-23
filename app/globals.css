@@ -165,3 +165,8 @@ html {
     width: 100%;
   }
 }
+
+#resume * {
+  color: #000 !important;
+  background-color: #fff !important;
+}
