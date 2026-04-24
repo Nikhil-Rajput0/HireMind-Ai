@@ -8,7 +8,7 @@ export const metadata = {
 
 function Page() {
   return (
-    <section className="pl-15 mb-70 text-black">
+    <section className="lg:pl-15  text-black">
       <header className="flex bg-gray-900 justify-between items-center pt-8 pb-6 px-5">
         <h1 className="text-gray-200 font-medium">💼Generate Resume</h1>
         <Link

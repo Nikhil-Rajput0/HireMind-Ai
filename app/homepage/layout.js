@@ -15,21 +15,22 @@ export default function HomeLayout({ children }) {
   return (
     <>
       <header
-        style={{ zIndex: 700 }}
-        className="fixed top-0 mb-4 bg-transparent backdrop-blur-md ring-1 z-100 ring-gray-200 shadow-xl w-full lg:px-0 py-3 lg:py-3 px-5"
+        className="fixed top-0 left-0 w-full z-[700] 
+          backdrop-blur-xl bg-white/50 border-b border-white/10 
+          shadow-[0_8px_30px_rgba(0,0,0,0.3)]"
       >
-        <nav className="flex px-5 w-full py-2 justify-between items-center bg-white rounded-full lg:rounded-none">
-          <Link href={"/"}>
-            <Image alt="Logo" src={logo} width={120} height={120} />
+        <nav className="flex items-center justify-between bg-gray-900 px-6 lg:px-16 py-4">
+          <Link href="/" className="flex items-center gap-2">
+            <Image src={logo} alt="Logo" width={180} />
           </Link>
           <HeaderMain />
           <HeaderMobile />
         </nav>
       </header>
-      <aside className="hidden lg:block fixed top-18 h-[90%] w-44 ring-1 ring-gray-200 shadow-xl z-100 bg-gray-100 py-8">
+      <aside className="hidden lg:block fixed top-10 h-[90%] w-44 ring-1 ring-gray-200 shadow-xl z-100 bg-gray-100 py-8">
         <SideBar />
       </aside>
-      <main className="py-18 lg:ml-30">{children}</main>
+      <main className="pt-18 lg:ml-50">{children}</main>
       <footer className="lg:ml-38">
         <FooterBar />
       </footer>

@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 /* TOP OF globals.css - BEFORE EVERYTHING ELSE */
+
 @layer base {
   * {
     touch-action: manipulation !important;

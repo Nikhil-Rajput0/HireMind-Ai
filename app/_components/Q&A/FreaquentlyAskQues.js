@@ -1,58 +1,86 @@
 "use client";
 
 import { useState } from "react";
-import { FaChevronUp } from "react-icons/fa";
 import { FaChevronDown } from "react-icons/fa";
 import questions from "./Questions";
+import { motion, AnimatePresence } from "framer-motion";
 
-function FreaquentlyAskQues() {
+function FrequentlyAskQues() {
   const [activeIndex, setActiveIndex] = useState(null);
 
   const toggleQuestions = (index) => {
-    setActiveIndex(activeIndex == index ? null : index);
+    setActiveIndex(activeIndex === index ? null : index);
   };
 
   return (
-    <section
-      id="help"
-      className="flex flex-col items-center justify-center max-w-3xl mx-auto lg:py-8 py-5"
-    >
-      <div>
-        <h3 className="text-center text-md lg:text-3xl pb-4 text-[#40650c] font-semibold">
+    <section id="help" className="relative py-20 px-4 lg:px-20 bg-[#e0e0e0]">
+      <div className="text-center mb-12">
+        <p className="text-sm uppercase tracking-widest text-gray-500">
+          Support
+        </p>
+        <h3 className="text-3xl md:text-4xl font-semibold text-gray-900 mt-3">
           Frequently Asked Questions
         </h3>
       </div>
-      <div>
-        {questions.map((item, index) => (
-          <div
-            key={index}
-            className="pb-2 lg:px-0 px-10 text-sm lg:text-[16px]"
-          >
+
+      <div className="max-w-3xl mx-auto space-y-4">
+        {questions.map((item, index) => {
+          const isOpen = activeIndex === index;
+
+          return (
             <div
-              suppressHydrationWarning={true}
-              onClick={() => toggleQuestions(index)}
-              className="flex items-center cursor-pointer justify-between lg:w-125 w-full px-3 py-2 bg-white border border-gray-400 shadow-xl rounded-t-lg text-gray-900 font-medium"
+              key={index}
+              className="
+                group
+                bg-white/70 backdrop-blur-xl
+                border border-gray-200/60
+                rounded-xl
+                shadow-sm
+                hover:shadow-md
+                transition-all duration-300 cursor-pointer
+              "
             >
-              <span className="font-medium">{item.heading}</span>
               <button
                 onClick={() => toggleQuestions(index)}
-                aria-label="Expand menu"
-                className="lg:w-8 w-4 cursor-pointer"
-                suppressHydrationWarning={true}
+                className="
+                  w-full flex items-center justify-between
+                  px-5 py-4 text-left cursor-pointer
+                "
               >
-                {activeIndex === index ? <FaChevronUp /> : <FaChevronDown />}
-              </button>
-            </div>
+                <span className="text-sm cursor-pointer md:text-base font-medium text-gray-900">
+                  {item.heading}
+                </span>
 
-            {activeIndex === index && (
-              <div className="px-3  text-xs lg:text-[16px] py-2 lg:w-125 w-full bg-white border border-gray-400 shadow-xl text-gray-900 transition-all duration-700">
-                {item.text}
-              </div>
-            )}
-          </div>
-        ))}
+                <FaChevronDown
+                  className={`
+                    transition-transform duration-300
+                    ${isOpen ? "rotate-180 text-green-500" : "text-gray-400"}
+                  `}
+                />
+              </button>
+
+              <AnimatePresence initial={false}>
+                {isOpen && (
+                  <motion.div
+                    key="content"
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.35 }}
+                    className="overflow-hidden"
+                  >
+                    <div className="px-5 pb-4 text-sm md:text-base text-gray-600 leading-relaxed">
+                      {item.text}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          );
+        })}
       </div>
     </section>
   );
 }
-export default FreaquentlyAskQues;
+
+export default FrequentlyAskQues;

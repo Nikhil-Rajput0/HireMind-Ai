@@ -8,100 +8,122 @@ import toast from "react-hot-toast";
 
 function HrInterview() {
   const { interview, setInterview } = useContext(userContext);
-  const [loading, setLoading] = useState(false);
+  const [loadingId, setLoadingId] = useState(null);
 
   const handleDelete = async (id) => {
-    setLoading(true);
+    setLoadingId(id);
     try {
       await axios.delete(
         `${process.env.NEXT_PUBLIC_SERVER_UI}api/v1/interviews/${id}`,
         { withCredentials: true },
       );
-      setInterview((prevInterviews) =>
-        prevInterviews.filter((interview) => interview._id !== id),
-      );
-      toast.success("Data successfully deleted");
-    } catch (error) {
-      toast.error(error.response?.data?.message);
+
+      setInterview((prev) => prev.filter((i) => i._id !== id));
+      toast.success("Interview deleted");
+    } catch (err) {
+      toast.error(err.response?.data?.message);
     } finally {
-      setLoading(false);
+      setLoadingId(null);
     }
   };
 
-  if (!interview) {
+  if (!interview || interview.length === 0) {
     return (
-      <div className="mb-60 text-black">
-        <p className="pl-10 text-lg pt-10 lg:pt-5 lg:pl-20">
-          You have not attend any interview. Please proceed to start a new
-          interview😃.{" "}
-        </p>
+      <div className="h-[60vh] flex flex-col justify-center items-center text-gray-400">
+        <h2 className="text-2xl mb-2">No Interviews Yet</h2>
+        <p>Start your first AI interview 🚀</p>
       </div>
     );
   }
+
   return (
-    <div className="mb-60 ">
-      {interview.map((interview) => {
-        return (
-          <div
-            key={interview._id}
-            className="w-full flex flex-col items-center px-13 py-2 mt-5 bg-slate-100 border border-slate-200 shadow-xl font-medium text-slate-900"
-          >
-            <div className="flex items-center justify-between w-full">
-              <div className="flex flex-col items-center pl-7">
-                <h3 className="text-blue-600">Name</h3>
-                <p>{interview.name}</p>
+    <section className="px-20 py-10 bg-linear-to-br from-black via-gray-900 to-black min-h-screen text-white">
+      {/* 🔥 HEADER */}
+      <div className="mb-10 text-center">
+        <h1 className="text-4xl font-bold bg-linear-to-r from-green-400 to-blue-500 bg-clip-text text-transparent">
+          My Interviews
+        </h1>
+        <p className="text-gray-400 mt-2">Track your performance & progress</p>
+      </div>
+
+      {/* 🔥 GRID */}
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {interview.map((item) => {
+          const scoreColor =
+            item.score >= 80
+              ? "text-green-400"
+              : item.score >= 50
+                ? "text-yellow-400"
+                : "text-red-400";
+
+          return (
+            <div
+              key={item._id}
+              className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-5 shadow-xl hover:scale-105 transition-all duration-300 group"
+            >
+              {/* 🔥 TOP */}
+              <div className="flex justify-between items-center mb-4">
+                <span
+                  className={`text-xs px-3 py-1 rounded-full ${
+                    item.status === "completed"
+                      ? "bg-green-500/20 text-green-400"
+                      : "bg-yellow-500/20 text-yellow-400"
+                  }`}
+                >
+                  {item.status || "pending"}
+                </span>
+
+                <span className={`font-bold ${scoreColor}`}>
+                  {item.score ? `${item.score}%` : "--"}
+                </span>
               </div>
-              <div className="flex flex-col items-center">
-                <h3 className="text-blue-600">Type</h3>
-                <p>{interview.interviewType}</p>
+
+              {/* 🔥 TITLE */}
+              <h2 className="text-lg font-semibold mb-1">
+                {item.name || "Interview"}
+              </h2>
+
+              <p className="text-sm text-gray-400 mb-3">
+                {item.role || "Role not defined"}
+              </p>
+
+              {/* 🔥 META */}
+              <div className="flex justify-between text-xs text-gray-400 mb-4">
+                <span>{item.interviewType}</span>
+                <span>{item.difficulty}</span>
               </div>
-              <div className="flex flex-col items-center">
-                <h3 className="text-blue-600">Role</h3>
-                <p>{interview.role}</p>
-              </div>
-              <div className="flex flex-col items-center">
-                <h3 className="text-blue-600">Status</h3>
-                <p className="flex items-center">
-                  {interview.status === "pending" ? (
-                    <span>⌛</span>
-                  ) : (
-                    <span>✅</span>
-                  )}
-                  {interview.status}
-                </p>
-              </div>
-              <div className="flex flex-col items-center">
-                <h3 className="text-blue-600">Score</h3>
-                <p className="text-green-600 font-bold">
-                  {interview.totalScore}
-                </p>
-              </div>
-              <div className="flex flex-col items-center">
-                <h3 className="text-blue-600">Feedback</h3>
-                <p className="text-green-600 font-bold">
-                  {interview.overallFeedback}
-                </p>
-              </div>
-              <div className="flex items-center gap-3">
+
+              {/* 🔥 DATE */}
+              <p className="text-xs text-gray-500 mb-4">
+                {new Date(item.createdAt).toLocaleDateString()}
+              </p>
+
+              {/* 🔥 ACTIONS */}
+              <div className="flex gap-2">
                 <Link
-                  aria-disabled={loading}
-                  href={`/homepage/result/${interview._id}`}
-                  className="bg-green-500 cursor-pointer px-3 py-2 flex items-center rounded-full "
+                  href={`/homepage/result/${item._id}`}
+                  className="flex-1 text-center bg-linear-to-r from-green-500 to-green-600 py-2 rounded-full text-sm font-medium hover:opacity-90 transition"
                 >
-                  View Score
+                  View Full
                 </Link>
+
                 <button
-                  onClick={() => handleDelete(interview._id)}
-                  className={`${loading ? "bg-gray-200" : "bg-red-500"} ${loading ? "cursor-not-allowed" : "cursor-pointer"} px-3 text-gray-100  py-2 flex items-center rounded-full `}
+                  onClick={() => handleDelete(item._id)}
+                  disabled={loadingId === item._id}
+                  className={`px-3 py-2 rounded-full cursor-pointer ${
+                    loadingId === item._id
+                      ? "bg-gray-700 cursor-not-allowed"
+                      : "bg-red-500 hover:bg-red-600"
+                  }`}
                 >
-                  <IoTrashBin /> Delete
+                  <IoTrashBin />
                 </button>
               </div>
             </div>
-          </div>
-        );
-      })}
-    </div>
+          );
+        })}
+      </div>
+    </section>
   );
 }
 

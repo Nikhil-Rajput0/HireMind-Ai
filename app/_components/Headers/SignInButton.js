@@ -1,14 +1,22 @@
 import Link from "next/link";
-import React from "react";
 
 function SignInButton() {
   return (
     <Link
-      suppressHydrationWarning={true}
-      href={"/homepage"}
-      className="hidden text-black lg:block px-3 py-2 border rounded-full border-gray-400 cursor-pointer hover:bg-gray-100"
+      href="/homepage"
+      className="
+        hidden lg:inline-flex items-center gap-2
+        px-5 py-2.5
+        rounded-full
+        bg-gray-900 text-white
+        text-sm font-medium
+        shadow-sm
+        hover:bg-black
+        hover:shadow-md
+        transition-all
+      "
     >
-      Sign In &rarr;
+      Sign In →
     </Link>
   );
 }

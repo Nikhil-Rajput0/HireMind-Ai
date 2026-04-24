@@ -39,47 +39,61 @@ export default function Page() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-950 text-white p-6">
+    <div className="min-h-screen bg-gray-950 text-white px-4 sm:px-6 lg:px-10 py-6">
       {/* HEADER */}
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Resume Builder</h1>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+        <h1 className="text-xl sm:text-2xl font-bold">Resume Builder</h1>
 
-        <div className="flex gap-3">
+        <div className="flex flex-wrap gap-2 sm:gap-3">
           <Link
             href={"/homepage"}
-            className="px-3 py-1 bg-blue-600 rounded cursor-pointer"
+            className="px-3 py-1 bg-blue-600 rounded text-sm sm:text-base"
           >
             Home
           </Link>
+
           <button
             onClick={() => setTemplate("modern")}
-            className="px-3 py-1 bg-green-600 rounded cursor-pointer"
+            className="px-3 py-1 bg-green-600 rounded text-sm sm:text-base"
           >
             Modern
           </button>
+
           <button
             onClick={() => setTemplate("minimal")}
-            className="px-3 py-1 bg-gray-700 rounded cursor-pointer"
+            className="px-3 py-1 bg-gray-700 rounded text-sm sm:text-base"
           >
             Minimal
           </button>
 
           <button
             onClick={downloadPDF}
-            className="bg-blue-600 px-4 py-1 rounded-full cursor-pointer"
+            className="bg-blue-600 px-4 py-1 rounded-full text-sm sm:text-base"
           >
             Download PDF
           </button>
         </div>
       </div>
 
-      {/* MAIN */}
-      <div className="grid grid-cols-2 gap-6">
-        <ResumeForm resume={resume} setResume={setResume} setScore={setScore} />
+      {/* MAIN LAYOUT */}
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-6">
+        {/* FORM */}
+        <div className="bg-gray-900 p-4 sm:p-5 rounded-xl shadow-lg">
+          <ResumeForm
+            resume={resume}
+            setResume={setResume}
+            setScore={setScore}
+          />
+        </div>
 
-        <div>
+        {/* PREVIEW */}
+        <div className="space-y-4">
           <ATSScore score={score} />
-          <ResumePreview resume={resume} template={template} />
+
+          {/* Sticky preview on desktop */}
+          <div className="bg-white text-black rounded-xl p-3 sm:p-4 shadow-xl lg:sticky lg:top-24 overflow-auto max-h-[80vh]">
+            <ResumePreview resume={resume} template={template} />
+          </div>
         </div>
       </div>
     </div>

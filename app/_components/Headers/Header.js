@@ -37,31 +37,43 @@ function Header() {
 
   return (
     <>
-      <ul className="hidden lg:flex gap-8 flex-1 mx-auto justify-center items-center text-black">
+      {/*Desktop*/}
+      <ul className="hidden lg:flex gap-8 flex-1 justify-center items-center">
         {headerLink.map((el) => (
           <li key={el.href}>
             <a
-              suppressHydrationWarning={true}
               href={el.href}
               onClick={(e) => handleScroll(e, el.href)}
-              className={`flex items-center gap-1 text-[16px] font-medium ${
-                activeLink === el.href ? "text-[#19ca09]" : ""
-              }`}
+              className={`
+          relative flex items-center gap-2 text-sm font-medium
+          text-gray-600 hover:text-gray-900
+          transition
+        `}
             >
               {el.ico}
               {el.type}
+
+              <span
+                className={`
+            absolute -bottom-1 left-0 h-0.5 w-0
+            bg-green-500
+            transition-all duration-300
+            ${activeLink === el.href ? "w-full" : "group-hover:w-full"}
+          `}
+              />
             </a>
           </li>
         ))}
       </ul>
 
+      {/* Mobile*/}
       <div className="relative lg:hidden text-black">
         <button
           type="button"
           suppressHydrationWarning={true}
           style={{
             position: "fixed",
-            top: "20px",
+            top: "8px",
             zIndex: 999999,
             padding: "10px",
             touchAction: "manipulation",

@@ -10,7 +10,7 @@ function Page() {
   return (
     <section>
       <div>
-        <InterviewHeader type="Technical Interview" interviewType="technical" />
+        <InterviewHeader type="Technical " interviewType="technical" />
         <HrInterview />
       </div>
     </section>

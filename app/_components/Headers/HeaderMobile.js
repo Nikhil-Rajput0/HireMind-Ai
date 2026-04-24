@@ -1,7 +1,8 @@
 "use client";
-import React, { useContext, useState } from "react";
-import { IoClose, IoHomeOutline, IoMenu } from "react-icons/io5";
-import { motion } from "framer-motion";
+
+import React, { useContext, useState, useEffect } from "react";
+import { IoClose, IoMenu, IoHomeOutline } from "react-icons/io5";
+import { motion, AnimatePresence } from "framer-motion";
 import { FaCruzeiroSign } from "react-icons/fa6";
 import userContext from "@/app/contexts/UserContext";
 import { PiGogglesBold } from "react-icons/pi";
@@ -13,120 +14,149 @@ import { BiSolidAnalyse } from "react-icons/bi";
 import Image from "next/image";
 import { CgProfile } from "react-icons/cg";
 import { CiDollar } from "react-icons/ci";
+import { useRouter } from "next/navigation";
 
 function HeaderMobile() {
   const { userData } = useContext(userContext);
   const [active, setActive] = useState(false);
+  const router = useRouter();
+
+  // 🔥 Prevent background scroll
+  useEffect(() => {
+    document.body.style.overflow = active ? "hidden" : "auto";
+  }, [active]);
+
+  const goToSection = (hash) => {
+    setActive(false);
+    router.push(`/homepage${hash}`);
+  };
+
   return (
-    <div className="relative lg:hidden text-black">
-      <button
-        type="button"
-        suppressHydrationWarning={true}
-        style={{
-          position: "fixed",
-          top: "20px",
-          zIndex: 999999,
-          padding: "10px",
-          touchAction: "manipulation",
-        }}
-        onClick={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          setActive(!active);
-        }}
-        className="text-[30px] cursor-pointer touch-manipulation right-5 md:right-10"
+    <div className="lg:hidden">
+      {/* 🔥 MENU BUTTON (FIXED + ALWAYS VISIBLE) */}
+      <motion.button
+        whileTap={{ scale: 0.9 }}
+        whileHover={{ scale: 1.1 }}
+        onClick={() => setActive(!active)}
+        className="fixed top-5 right-8 z-[99999] text-white text-3xl bg-black/40 p-2 rounded-full backdrop-blur-md "
       >
         {active ? <IoClose /> : <IoMenu />}
-      </button>
+      </motion.button>
 
-      {active && (
-        <motion.div
-          initial={{ x: "100%" }}
-          animate={{ x: 0 }}
-          exit={{ x: "100%" }}
-          transition={{ ease: "linear", duration: 0.4 }}
-          className="lg:hidden absolute top-12 bg-green-400 -right-10 w-[70vw] flex flex-col items-start  h-[90vh]"
-        >
-          <div className="flex flex-col gap-6 z-120 pt-5 pl-8 mb-2">
-            <div className="px-3 ">
-              <div className="inline-flex gap-1 items-center text-lg bg-[#90EE90] text-black rounded-full px-3 py-2">
-                <FaCruzeiroSign />:<p>{userData?.credits || 100}</p>
+      {/* 🔥 EDGE SWIPE TRIGGER */}
+      {!active && (
+        <div
+          className="fixed top-0 right-0 h-full w-4 z-[998]"
+          onTouchStart={() => setActive(true)}
+        />
+      )}
+
+      <AnimatePresence>
+        {active && (
+          <>
+            {/* 🔥 BACKDROP */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setActive(false)}
+              className="fixed inset-0 bg-black/40 backdrop-blur-md z-[999]"
+            />
+
+            {/* 🔥 SIDEBAR */}
+            <motion.div
+              drag="x"
+              dragConstraints={{ left: 0, right: 300 }}
+              dragElastic={0.2}
+              onDragEnd={(e, info) => {
+                if (info.offset.x > 100) setActive(false);
+              }}
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", stiffness: 120, damping: 20 }}
+              className="fixed top-0 right-0 h-screen w-[80%] z-[5000]
+                backdrop-blur-2xl bg-gray-800 backdrop-saturate-150
+                border-l border-white/10
+                shadow-[0_8px_32px_rgba(0,0,0,0.25)]
+                p-6 flex flex-col justify-between text-white"
+            >
+              {/* 🔥 TOP */}
+              <div>
+                {/* Credits */}
+                <div className="pb-5 pt-10">
+                  <div className="flex items-center gap-2  bg-white/10 px-4 py-2 rounded-full border border-white/10">
+                    <FaCruzeiroSign className="text-green-400" />
+                    <span>{userData?.credits || 0}</span>
+                  </div>
+                </div>
+
+                {/* NAV LINKS */}
+                <ul className="space-y-3 text-sm">
+                  {[
+                    {
+                      href: "/homepage/interviewHr",
+                      icon: <PiGogglesBold />,
+                      label: "HR Interview",
+                    },
+                    {
+                      href: "/homepage/interviewTech",
+                      icon: <MdLaptopChromebook />,
+                      label: "Technical",
+                    },
+                    {
+                      href: "/homepage/interviewStrict",
+                      icon: <GiClawString />,
+                      label: "Strict Mode",
+                    },
+                    {
+                      href: "/homepage/generateResume",
+                      icon: <RiAiGenerate2 />,
+                      label: "Resume Generator",
+                    },
+                    {
+                      href: "/homepage/analyseResume",
+                      icon: <BiSolidAnalyse />,
+                      label: "ATS Analyzer",
+                    },
+                  ].map((item, i) => (
+                    <motion.li key={i} whileHover={{ scale: 1.05 }}>
+                      <Link
+                        href={item.href}
+                        onClick={() => setActive(false)}
+                        className="flex gap-2 items-center px-3 py-2 rounded-lg 
+                        hover:bg-white/10 transition-all duration-200 
+                        hover:translate-x-1"
+                      >
+                        {item.icon}
+                        {item.label}
+                      </Link>
+                    </motion.li>
+                  ))}
+                </ul>
               </div>
-            </div>
-            <ul className="flex flex-col text-[17px] gap-1 text-black font-medium">
-              <li>
+
+              {/* 🔥 BOTTOM */}
+              <div className="border-t border-white/10 pt-6 space-y-4">
                 <Link
+                  href="/homepage"
                   onClick={() => setActive(false)}
-                  href={"/homepage/interviewHr"}
-                  className="gap-1 px-2 flex items-center py-2 cursor-pointer"
+                  className="flex gap-2 items-center hover:text-green-400"
                 >
-                  <PiGogglesBold /> Hr Interview
+                  <IoHomeOutline /> Home
                 </Link>
-              </li>
-              <li>
+
                 <Link
+                  href="/homepage/profile"
                   onClick={() => setActive(false)}
-                  href={"/homepage/interviewTech"}
-                  className="gap-1 px-2 flex items-center py-2 cursor-pointer"
-                >
-                  <MdLaptopChromebook /> Technical Interview
-                </Link>
-              </li>
-              <li>
-                <Link
-                  onClick={() => setActive(false)}
-                  href={"/homepage/interviewStrict"}
-                  className="gap-1 px-2 flex items-center py-2 cursor-pointer"
-                >
-                  <GiClawString /> Strict Interview
-                </Link>
-              </li>
-              <li>
-                <Link
-                  onClick={() => setActive(false)}
-                  href={"/homepage/generateResume"}
-                  className="gap-1 px-2 flex items-center py-2 cursor-pointer"
-                >
-                  <RiAiGenerate2 /> Resume Generator
-                </Link>
-              </li>
-              <li>
-                <Link
-                  onClick={() => setActive(false)}
-                  href={"/homepage/analyseResume"}
-                  className="gap-1 px-2 flex items-center py-2 cursor-pointer"
-                >
-                  <BiSolidAnalyse /> Resume Analyzer
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div className="border-t w-full border-white">
-            <ul className="flex flex-col gap-6 pl-10 pt-6 text-xl font-medium">
-              <li>
-                <Link
-                  onClick={() => setActive(false)}
-                  href={"/homepage"}
-                  className="flex gap-1 items-center"
-                >
-                  <IoHomeOutline />
-                  Home
-                </Link>
-              </li>
-              <li className="flex gap-1 items-center">
-                <Link
-                  onClick={() => setActive(false)}
-                  href={"/homepage/profile"}
-                  className="flex gap-1 items-center"
+                  className="flex gap-2 items-center hover:text-green-400"
                 >
                   {userData?.photo ? (
                     <Image
-                      quality={75}
-                      loading="eager"
-                      src={userData?.photo}
-                      height={24}
+                      src={userData.photo}
                       width={24}
-                      alt="User Profile"
+                      height={24}
+                      alt="profile"
                       className="rounded-full"
                     />
                   ) : (
@@ -134,30 +164,35 @@ function HeaderMobile() {
                   )}
                   Profile
                 </Link>
-              </li>
-              <li>
-                <Link
-                  onClick={() => setActive(false)}
-                  href={"/homepage#price"}
-                  className="flex gap-1 items-center"
+
+                <button
+                  onClick={() => goToSection("#price")}
+                  className="flex gap-2 items-center hover:text-green-400"
                 >
                   <CiDollar /> Buy Plan
-                </Link>
-              </li>
-              <li>
-                <Link
-                  onClick={() => setActive(false)}
-                  href={"/homepage#support"}
-                  className="flex gap-1 items-center"
+                </button>
+
+                <button
+                  onClick={() => goToSection("#support")}
+                  className="flex gap-2 items-center hover:text-green-400"
                 >
-                  <MdSupportAgent />
-                  Contact
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </motion.div>
-      )}
+                  <MdSupportAgent /> Contact
+                </button>
+
+                {/* 🔥 CTA */}
+                <motion.button
+                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ scale: 1.05 }}
+                  onClick={() => goToSection("#price")}
+                  className="w-full mt-4 bg-linear-to-r from-green-500 to-emerald-400 text-black py-2 rounded-lg font-semibold"
+                >
+                  Upgrade 🚀
+                </motion.button>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

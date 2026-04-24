@@ -1,114 +1,130 @@
-export default function TemplateModern({ resume }) {
+export default function TemplateModern({ resume = {} }) {
+  // 🔒 Helpers (bulletproof)
+  const toArray = (val) => {
+    if (!val) return [];
+    if (Array.isArray(val)) return val;
+    if (typeof val === "string") {
+      // split comma/newline strings
+      return val
+        .split(/,|\n/)
+        .map((s) => s.trim())
+        .filter(Boolean);
+    }
+    if (typeof val === "object") {
+      // flatten object values
+      return Object.values(val).flatMap((v) => toArray(v));
+    }
+    return [String(val)];
+  };
+
+  const safeText = (val) => {
+    if (val == null) return "";
+    if (typeof val === "string") return val;
+    if (Array.isArray(val)) return val.join(", ");
+    if (typeof val === "object") return JSON.stringify(val);
+    return String(val);
+  };
+
+  const renderList = (items) => {
+    const arr = toArray(items);
+    if (arr.length === 0) return null;
+    return (
+      <ul className="list-disc ml-5 text-sm mt-1">
+        {arr.map((item, idx) => (
+          <li key={idx}>{safeText(item)}</li>
+        ))}
+      </ul>
+    );
+  };
+
+  // 🔥 Normalize top-level fields
+  const skillsArray = toArray(resume.skills);
+
   return (
     <div>
-      <h1 className="text-2xl font-bold">{resume.name}</h1>
-      <div className="flex gap-2">
-        <h2 className="font-medium">Role:</h2>
-        <p className="text-gray-600">{resume.role}</p>
+      {/* 🔥 HEADER */}
+      <div className="border-b pb-4 mb-4">
+        <h1 className="text-3xl font-bold">{safeText(resume.name)}</h1>
+        <p className="text-gray-700">{safeText(resume.role)}</p>
       </div>
-      <p>{resume.summary}</p>
 
-      <h2 className="mt-4 font-bold">Skills</h2>
+      {/* 🔥 SUMMARY */}
+      {resume.summary && (
+        <div className="mb-4">
+          <h2 className="text-lg font-semibold border-b pb-1">Summary</h2>
+          <p className="text-sm mt-2 leading-relaxed">
+            {safeText(resume.summary)}
+          </p>
+        </div>
+      )}
 
-      <ul className="flex flex-wrap gap-2">
-        {/* CASE 1: Simple array ["React", "Node"] */}
-        {Array.isArray(resume.skills) && typeof resume.skills[0] === "string"
-          ? resume.skills.map((skill, i) => (
-              <li key={i} className="bg-gray-400 px-2 py-1 rounded">
-                {skill}
-              </li>
-            ))
-          : null}
+      {/* 🔥 SKILLS */}
+      <div className="mb-4">
+        <h2 className="text-lg font-semibold border-b pb-1">Skills</h2>
 
-        {/* CASE 2: Array of objects [{category, skills}] */}
-        {Array.isArray(resume.skills) && typeof resume.skills[0] === "object"
-          ? resume.skills.map((group, i) => (
-              <div key={i} className="w-full">
-                <p className="font-semibold">{group.category}</p>
-                <div className="flex flex-wrap gap-2 mt-1">
-                  {group.skills?.map((s, idx) => (
-                    <span key={idx} className="bg-gray-400 px-2 py-1 rounded">
-                      {s}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))
-          : null}
+        <div className="mt-2 text-sm">
+          {skillsArray.length > 0 ? (
+            <p>{skillsArray.join(", ")}</p>
+          ) : (
+            <p>No skills added</p>
+          )}
+        </div>
+      </div>
 
-        {!Array.isArray(resume.skills) &&
-          typeof resume.skills === "object" &&
-          Object.entries(resume.skills).map(([key, val], i) => (
-            <div key={i} className="w-full">
-              <p className="font-semibold capitalize">{key}</p>
-              <div className="flex flex-wrap gap-2 mt-1">
-                {val?.map((s, idx) => (
-                  <span key={idx} className="bg-gray-400 px-2 py-1 rounded">
-                    {s}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ))}
-      </ul>
+      {/* 🔥 EXPERIENCE */}
+      {Array.isArray(resume.experience) && resume.experience.length > 0 && (
+        <div className="mb-4">
+          <h2 className="text-lg font-semibold border-b pb-1">Experience</h2>
 
-      <h2 className="mt-4 font-bold">Experience</h2>
-      {resume.experience?.length > 0 && (
-        <div>
           {resume.experience.map((exp, i) => (
-            <div key={i} className="mt-2">
-              <p className="font-normal">{exp.title || exp.role}</p>
-
-              <p className="text-sm text-gray-600">
-                {exp.company} • {exp.duration}
+            <div key={i} className="mt-3">
+              <p className="font-semibold">
+                {safeText(exp.title || exp.role)} – {safeText(exp.company)}
               </p>
+              <p className="text-xs text-gray-600">{safeText(exp.duration)}</p>
 
-              {exp.responsibilities && (
-                <ul className="ml-5 text-sm">
-                  {exp.responsibilities.map((r, idx) => (
-                    <li key={idx}>{r}</li>
-                  ))}
-                </ul>
-              )}
-
-              {/* Achievements */}
-              {exp.achievements && (
-                <ul className=" ml-5 text-sm mt-1">
-                  {exp.achievements.map((a, idx) => (
-                    <li key={idx}>{a}</li>
-                  ))}
-                </ul>
-              )}
+              {renderList([
+                ...(toArray(exp.responsibilities) || []),
+                ...(toArray(exp.achievements) || []),
+              ])}
             </div>
           ))}
         </div>
       )}
 
-      <h2 className="mt-4 font-bold">Projects</h2>
-      {resume.projects.map((proj, i) => {
-        if (typeof proj === "string") {
-          return <p key={i}>{proj}</p>;
-        }
+      {/* 🔥 PROJECTS */}
+      {Array.isArray(resume.projects) && resume.projects.length > 0 && (
+        <div>
+          <h2 className="text-lg font-semibold border-b pb-1">Projects</h2>
 
-        const title =
-          proj.title ||
-          proj["Project Name"] ||
-          proj["Name"] ||
-          "Untitled Project";
+          {resume.projects.map((proj, i) => {
+            const title =
+              proj?.title ||
+              proj?.["Project Name"] ||
+              proj?.["Name"] ||
+              "Untitled";
 
-        const description = proj.description || proj["Description"] || "";
+            const description =
+              proj?.description || proj?.["Description"] || "";
 
-        const tech = proj.techStack || proj["Technologies Used"] || [];
+            const tech = proj?.techStack || proj?.["Technologies Used"] || [];
 
-        return (
-          <div key={i}>
-            <p className="text-[15px]">Name: {title}</p>
-            <p className="text-[15px]">
-              Description: <span className="text-sm">{description}</span>
-            </p>
-          </div>
-        );
-      })}
+            return (
+              <div key={i} className="mt-3">
+                <p className="font-semibold">{safeText(title)}</p>
+
+                {renderList(description)}
+
+                {toArray(tech).length > 0 && (
+                  <p className="text-xs text-gray-600 mt-1">
+                    Tech: {toArray(tech).join(", ")}
+                  </p>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
