@@ -1,4 +1,5 @@
 "use client";
+
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import axios from "axios";
@@ -25,12 +26,10 @@ function SignIn() {
     try {
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_SERVER_UI}api/v1/users/login`,
-        {
-          email: inputValue.email,
-          password: inputValue.password,
-        },
+        inputValue,
         { withCredentials: true },
       );
+
       toast.success(res.data.message);
       window.location.href = "/homepage";
     } catch (error) {
@@ -42,77 +41,93 @@ function SignIn() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setInputValue((prevData) => ({ ...prevData, [name]: value }));
+    setInputValue((prev) => ({ ...prev, [name]: value }));
   };
 
   return (
-    <form
-      suppressHydrationWarning={true}
-      className="flex flex-col gap-2"
-      onSubmit={handleSubmit}
-    >
+    <form onSubmit={handleSubmit} className="flex flex-col gap-5">
       <div className="flex flex-col gap-1">
-        <label htmlFor="email" className=" text-gray-600">
-          Your Email
-        </label>
+        <label className="text-sm text-gray-400">Email</label>
         <input
-          id="email"
           type="email"
-          placeholder="example@gmail.com"
           name="email"
+          required
           value={inputValue.email}
           onChange={handleChange}
-          required
-          className="bg-gray-200 text-black px-3 py-1 shadow-2xl/50 focus:outline-green-400 rounded-2xl ring-1 ring-green-400"
+          placeholder="you@example.com"
+          className="
+            px-4 py-2 rounded-xl
+            bg-white/5
+            border border-white/10
+            text-white
+            focus:outline-none
+            focus:border-blue-400
+            focus:ring-2 focus:ring-blue-400/30
+            transition
+          "
         />
       </div>
-      <div className="flex flex-col gap-1 pb-3">
-        <label htmlFor="password" className=" text-gray-600">
-          Your password
-        </label>
+
+      <div className="flex flex-col gap-1">
+        <label className="text-sm text-gray-400">Password</label>
         <input
-          id="password"
           type="password"
-          placeholder="pass@123"
           name="password"
+          required
           value={inputValue.password}
           onChange={handleChange}
-          required
-          className="bg-gray-200 text-black px-3 py-1 shadow-2xl/50 focus:outline-green-400 ring-1 ring-green-400 rounded-2xl"
+          placeholder="••••••••"
+          className="
+            px-4 py-2 rounded-xl
+            bg-white/5
+            border border-white/10
+            text-white
+            focus:outline-none
+            focus:border-blue-400
+            focus:ring-2 focus:ring-blue-400/30
+            transition
+          "
         />
       </div>
-      <div className="flex items-center gap-3">
-        <p className="text-[12px] sm:text-[14px] text-black">
-          Don&apos;t remember Password
-        </p>
+
+      <div className="flex justify-between text-sm">
+        <label className="flex items-center gap-2 text-gray-400">
+          <input type="checkbox" />
+          Remember me
+        </label>
+
         <Link
-          href={"/authentication/forgetPassword"}
-          className="text-[14px] underline text-green-600"
+          href="/authentication/forgetPassword"
+          className="text-blue-400 hover:underline"
         >
-          Forget Password
+          Forgot password?
         </Link>
       </div>
+
       <button
         disabled={loading}
-        type="submit"
-        className={`w-full text-center py-2 ${loading ? "bg-gray-300" : "bg-green-400"}  rounded-full ${loading ? "" : "hover:bg-green-500"}  font-medium ${loading ? "cursor-not-allowed" : "cursor-pointer"}`}
+        className="
+          mt-2 py-2 rounded-xl
+          bg-linear-to-r from-blue-500 to-purple-500
+          text-white font-medium
+          shadow-lg
+          hover:scale-[1.02]
+          transition
+          disabled:opacity-50 cursor-pointer
+        "
       >
-        {loading ? "Submitting..." : <span>Sign in&rarr;</span>}
+        {loading ? "Signing in..." : "Sign In →"}
       </button>
-      <div className="flex items-center gap-2 pt-3 pb-3">
-        <input id="check" type="checkbox" name="remember-me" />
-        <label htmlFor="check text-black">Remember me</label>
-      </div>
-      <div className="flex items-center gap-2 text-black">
-        <p className="text-sm sm:text-md">Don&apos;t have an account?</p>
+
+      <p className="text-sm text-center text-gray-400">
+        Don’t have an account?{" "}
         <Link
-          href={"/authentication/signUp"}
-          className="text-green-600 underline"
+          href="/authentication/signUp"
+          className="text-blue-400 hover:underline"
         >
-          {" "}
-          Sign Up now{" "}
+          Sign up
         </Link>
-      </div>
+      </p>
     </form>
   );
 }

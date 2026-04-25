@@ -1,40 +1,57 @@
-import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "../../../public/logo.png";
 import SignIn from "@/app/_components/Form/SignIn";
-import FooterBar from "@/app/_components/Footer/FooterBar";
 
 export const metadata = {
-  title: `HireMind Ai | Sign In`,
+  title: `Sign In`,
   description: "Sign in on Hiremind Ai platform to continue.",
 };
 
 function Page() {
   return (
-    <section className="text-black">
-      <div className="bg-[#d5d2d2] pb-20 lg:px-40 w-full px-5">
-        <header className=" py-10 flex items-center justify-between sm:w-[60vw] sm:mx-auto sm:px-0">
-          <div>
-            <Image alt="Logo" src={logo} height={120} width={120} />
-          </div>
-          <Link
-            href={"/"}
-            className="px-5 py-3 ring-1 bg-green-500 text-white ring-green-400 hover:ring-green-300 cursor-pointer shadow-2xl rounded-full"
-          >
-            &larr;Back to home
-          </Link>
-        </header>
-        <main className="flex flex-col gap-3 w-full sm:w-100 ring-1 mx-auto bg-white ring-green-300 shadow-2xl px-5 sm:px-10 py-5 backdrop-blur-3xl rounded-lg">
-          <h3 className="text-2xl sm:text-3xl font bold text-green-500 text-center">
-            Sign In
-          </h3>
-          <SignIn />
-        </main>
+    <section className="min-h-screen flex bg-[#020617] text-white">
+      <div className="hidden lg:flex flex-col justify-between w-1/2 p-12 bg-gradient-to-br from-blue-900/20 to-purple-900/20">
+        <div>
+          <Image alt="Logo" src={logo} width={140} />
+        </div>
+
+        <div className="max-w-md">
+          <h1 className="text-4xl font-semibold leading-tight">
+            Crack Interviews with AI 🚀
+          </h1>
+          <p className="text-gray-400 mt-4">
+            Practice interviews, improve your resume, and land your dream job
+            faster with AI-powered tools.
+          </p>
+        </div>
+
+        <p className="text-sm text-gray-500">© 2026 HireMind AI</p>
       </div>
-      <footer>
-        <FooterBar />
-      </footer>
+
+      <div className="flex flex-col justify-center w-full lg:w-1/2 px-6 sm:px-10">
+        <div className="max-w-md w-full mx-auto">
+          <Link
+            href="/"
+            className="text-sm text-gray-400 hover:text-white transition"
+          >
+            ← Back to home
+          </Link>
+
+          <div
+            className="
+            mt-6 p-8 rounded-2xl
+            bg-white/5 backdrop-blur-xl
+            border border-white/10
+            shadow-[0_0_40px_rgba(0,0,0,0.3)]
+          "
+          >
+            <h2 className="text-2xl font-semibold mb-6">Welcome back 👋</h2>
+
+            <SignIn />
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

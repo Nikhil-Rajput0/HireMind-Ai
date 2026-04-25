@@ -39,8 +39,8 @@ function Page() {
     return (
       <div className="text-black flex items-center justify-center">
         {" "}
-        <div className="pt-30 inset-0 flex items-center justify-center">
-          <div className="w-40 h-40 border-4 border-gray-300 border-t-green-500 rounded-full animate-spin"></div>
+        <div className="py-30 inset-0 flex items-center justify-center">
+          <div className="w-20 h-20 border-4 border-gray-300 border-t-green-500 rounded-full animate-spin"></div>
         </div>
       </div>
     );

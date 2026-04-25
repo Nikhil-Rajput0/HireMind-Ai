@@ -21,17 +21,15 @@ function Page() {
 
   const speakText = (text, callback) => {
     const utterance = new SpeechSynthesisUtterance(text);
-
     utterance.rate = 0.9;
 
     utterance.onstart = () => setSpeaking(true);
-
     utterance.onend = () => {
       setSpeaking(false);
-      if (callback) callback(); // start listening after speaking
+      if (callback) callback();
     };
 
-    window.speechSynthesis.cancel(); // stop previous
+    window.speechSynthesis.cancel();
     window.speechSynthesis.speak(utterance);
   };
 
@@ -45,7 +43,6 @@ function Page() {
     }
 
     const recognition = new SpeechRecognition();
-
     recognition.continuous = false;
     recognition.lang = "en-US";
 
@@ -56,7 +53,6 @@ function Page() {
       const transcript = event.results[0][0].transcript;
       setAnswer(transcript);
 
-      // 🔥 Auto submit after speaking
       setTimeout(() => {
         submitAnswer(transcript);
       }, 500);
@@ -77,13 +73,13 @@ function Page() {
         { id },
         { withCredentials: true },
       );
+
       if (!isFinished) {
         const q = res.data.question;
         setQuestions(q);
         speechSynthesis.cancel();
-        speechSynthesis.speak(new SpeechSynthesisUtterance(q));
+        speakText(q, startListening);
       }
-      speakText(q, startListening);
     } catch (error) {
       toast.error(error.response?.data?.message);
     } finally {
@@ -98,9 +94,9 @@ function Page() {
   const submitAnswer = async (finalAnswer) => {
     if (!questions || !finalAnswer) {
       toast.error("Question or answer missing.");
+      return;
     }
 
-    if (!finalAnswer) return;
     setProcessing(true);
     try {
       const evalRes = await axios.post(
@@ -120,6 +116,7 @@ function Page() {
         },
         { withCredentials: true },
       );
+
       setAnswer("");
       getQuestions();
       toast.success(evalRes.data?.message);
@@ -134,12 +131,14 @@ function Page() {
     setIsFinished(true);
     speechSynthesis.cancel();
     e.preventDefault();
+
     try {
       const finishRes = await axios.post(
         `${process.env.NEXT_PUBLIC_SERVER_UI}api/v1/interviews/finish`,
         { interviewId: id },
         { withCredentials: true },
       );
+
       toast.success(finishRes.data.message);
       router.push(`/homepage/result/${id}`);
     } catch (error) {
@@ -148,30 +147,33 @@ function Page() {
   };
 
   return (
-    <section className="bg-gray-900">
-      <header className="fixed top-0 right-0 mb-4 left-0 backdrop-blur-md text-white bg-gray-700 w-full px-10 py-1">
-        <nav className="flex px-5 w-full py-2 justify-between items-center">
+    <section className="bg-black min-h-screen">
+      {/* HEADER */}
+      <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md text-white bg-gray-700 px-4 sm:px-6 md:px-10 py-2">
+        <nav className="flex justify-between items-center">
           <Link href={"/"}>
-            <Image alt="Logo" src={logo} width={120} height={120} />
+            <Image
+              alt="Logo"
+              src={logo}
+              className="w-20 sm:w-24 md:w-28 h-auto"
+            />
           </Link>
           <HeaderMain />
         </nav>
       </header>
 
-      <div className="flex flex-col w-3xl m-auto h-screen py-8">
-        {/* QUESTION AREA */}
-        <div className="flex flex-1 text-gray-100 pt-18">
-          <div className="w-screen">
-            <div className="text-center text-lg pb-8">
+      <div className="flex flex-col max-w-4xl w-full mx-auto min-h-screen px-4 sm:px-6 md:px-8 py-6 pt-24 sm:pt-28">
+        <div className="flex flex-1 text-gray-100">
+          <div className="w-full">
+            <div className="text-center text-base sm:text-lg md:text-xl pb-6 sm:pb-8">
               {loading ? (
-                <div className="absolute pt-13 inset-0 flex items-start justify-center">
-                  <div className="w-20 h-20 border-4 border-gray-300 border-t-green-500 rounded-full animate-spin"></div>
+                <div className="flex justify-center items-start pt-10">
+                  <div className="w-16 h-16 border-4 border-gray-300 border-t-green-500 rounded-full animate-spin"></div>
                 </div>
               ) : (
                 <>
                   <p>{questions}</p>
 
-                  {/* 🔥 STATUS INDICATORS */}
                   <div className="mt-3 text-sm text-gray-400">
                     {speaking && <p>🔊 AI speaking...</p>}
                     {listening && <p>🎤 Listening...</p>}
@@ -183,50 +185,69 @@ function Page() {
           </div>
         </div>
 
-        {/* INPUT AREA */}
-        <div className="flex items-end sticky right-0 left-0 bottom-0">
-          <div className="flex items-center w-full gap-2">
-            <textarea
-              disabled={listening}
-              value={answer}
-              onChange={(e) => setAnswer(e.target.value)}
-              className="w-full h-[15vh] resize-none rounded-lg overflow-hidden ring-1 ring-green-300 focus:outline-green-500 text-gray-100 px-8 py-4"
-              placeholder="Your answer will appear here..."
-            />
+        <div className="sticky bottom-0 left-0 right-0 mt-auto pb-4">
+          <div className="relative">
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 rounded-2xl blur-sm opacity-75"></div>
 
-            {/* 🎤 MIC BUTTON */}
-            <button
-              onClick={startListening}
-              className={`py-2 px-4 rounded-full text-white ${
-                listening ? "bg-red-500" : "bg-purple-600"
-              }`}
-            >
-              {listening ? "🎤 Listening..." : "🎤 Speak"}
-            </button>
+            <div className="relative bg-slate-900/90 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl p-4 sm:p-6">
+              <div className="relative group mb-4">
+                <div
+                  className={`absolute -inset-0.5 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-xl blur transition duration-1000 ${listening ? "opacity-75 animate-pulse" : "opacity-25 group-hover:opacity-50"}`}
+                ></div>
 
-            {/* 🔊 REPLAY BUTTON */}
-            <button
-              onClick={() => speakText(questions, startListening)}
-              className="py-2 px-4 rounded-full bg-blue-500 text-white"
-            >
-              🔊 Replay
-            </button>
+                <textarea
+                  disabled={listening}
+                  value={answer}
+                  onChange={(e) => setAnswer(e.target.value)}
+                  className="relative w-full min-h-[120px] sm:min-h-[160px] md:min-h-[180px] resize-none rounded-xl bg-slate-800 border border-slate-600 text-gray-100 px-4 sm:px-6 py-4 focus:outline-none"
+                  placeholder="✨ Your answer will appear here..."
+                />
 
-            {/* SUBMIT */}
-            <button
-              onClick={() => submitAnswer(answer)}
-              className="py-2 rounded-full cursor-pointer hover:bg-green-600 px-4 flex items-center justify-center bg-green-500 font-medium"
-            >
-              Submit
-            </button>
+                {listening && (
+                  <div className="absolute top-3 right-3 text-red-400 text-xs">
+                    🎤 Recording...
+                  </div>
+                )}
+              </div>
 
-            {/* FINISH */}
-            <button
-              onClick={finishInterview}
-              className="py-2 px-4 cursor-pointer hover:bg-red-600 rounded-full flex items-center justify-center bg-red-500 font-medium text-white"
-            >
-              Finish
-            </button>
+              {/* BUTTONS */}
+              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3">
+                <button
+                  onClick={startListening}
+                  disabled={listening}
+                  className="bg-purple-600 cursor-pointer text-white rounded-xl px-3 sm:px-5 py-2.5 sm:py-3.5"
+                >
+                  🎤 {listening ? "Listening..." : "Speak"}
+                </button>
+
+                <button
+                  onClick={() => speakText(questions, startListening)}
+                  className="bg-blue-500 cursor-pointer text-white rounded-xl px-3 sm:px-5 py-2.5 sm:py-3.5"
+                >
+                  🔊 Replay
+                </button>
+
+                <button
+                  onClick={() => submitAnswer(answer)}
+                  disabled={!answer.trim()}
+                  className="bg-green-500 cursor-pointer text-white rounded-xl px-3 sm:px-5 py-2.5 sm:py-3.5 disabled:opacity-50"
+                >
+                  ✅ Submit
+                </button>
+
+                <button
+                  onClick={finishInterview}
+                  className="bg-red-500 cursor-pointer text-white rounded-xl px-3 sm:px-5 py-2.5 sm:py-3.5"
+                >
+                  ❌ Finish
+                </button>
+              </div>
+
+              <div className="mt-4 flex flex-col sm:flex-row justify-between text-xs text-gray-400 gap-2">
+                <span>{listening ? "Mic Active" : "Ready"}</span>
+                <span>{new Date().toLocaleTimeString()}</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>

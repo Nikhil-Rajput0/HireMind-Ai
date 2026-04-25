@@ -7,7 +7,11 @@ import { FaCruzeiroSign } from "react-icons/fa6";
 import userContext from "@/app/contexts/UserContext";
 import { PiGogglesBold } from "react-icons/pi";
 import Link from "next/link";
-import { MdLaptopChromebook, MdSupportAgent } from "react-icons/md";
+import {
+  MdLaptopChromebook,
+  MdOutlineLogout,
+  MdSupportAgent,
+} from "react-icons/md";
 import { GiClawString } from "react-icons/gi";
 import { RiAiGenerate2 } from "react-icons/ri";
 import { BiSolidAnalyse } from "react-icons/bi";
@@ -15,13 +19,14 @@ import Image from "next/image";
 import { CgProfile } from "react-icons/cg";
 import { CiDollar } from "react-icons/ci";
 import { useRouter } from "next/navigation";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 function HeaderMobile() {
   const { userData } = useContext(userContext);
   const [active, setActive] = useState(false);
   const router = useRouter();
 
-  // 🔥 Prevent background scroll
   useEffect(() => {
     document.body.style.overflow = active ? "hidden" : "auto";
   }, [active]);
@@ -31,9 +36,22 @@ function HeaderMobile() {
     router.push(`/homepage${hash}`);
   };
 
+  const loggedOut = async () => {
+    try {
+      const res = await axios.patch(
+        `${process.env.NEXT_PUBLIC_SERVER_UI}api/v1/users/logout`,
+        {},
+        { withCredentials: true },
+      );
+      toast.success(res.data?.message);
+      router.push("/");
+    } catch (error) {
+      toast.error(error.response?.data?.message);
+    }
+  };
+
   return (
     <div className="lg:hidden">
-      {/* 🔥 MENU BUTTON (FIXED + ALWAYS VISIBLE) */}
       <motion.button
         whileTap={{ scale: 0.9 }}
         whileHover={{ scale: 1.1 }}
@@ -81,9 +99,7 @@ function HeaderMobile() {
                 shadow-[0_8px_32px_rgba(0,0,0,0.25)]
                 p-6 flex flex-col justify-between text-white"
             >
-              {/* 🔥 TOP */}
               <div>
-                {/* Credits */}
                 <div className="pb-5 pt-10">
                   <div className="flex items-center gap-2  bg-white/10 px-4 py-2 rounded-full border border-white/10">
                     <FaCruzeiroSign className="text-green-400" />
@@ -91,7 +107,6 @@ function HeaderMobile() {
                   </div>
                 </div>
 
-                {/* NAV LINKS */}
                 <ul className="space-y-3 text-sm">
                   {[
                     {
@@ -136,7 +151,6 @@ function HeaderMobile() {
                 </ul>
               </div>
 
-              {/* 🔥 BOTTOM */}
               <div className="border-t border-white/10 pt-6 space-y-4">
                 <Link
                   href="/homepage"
@@ -179,12 +193,19 @@ function HeaderMobile() {
                   <MdSupportAgent /> Contact
                 </button>
 
-                {/* 🔥 CTA */}
+                <div
+                  onClick={loggedOut}
+                  className="text-white flex items-center justify-center gap-3 font-semibold bg-red-700 px-3 py-2 rounded-md cursor-pointer hover:-translate-y-px hover:bg-red-600"
+                >
+                  <button className="cursor-pointer">Logout</button>
+                  <MdOutlineLogout />
+                </div>
+
                 <motion.button
                   whileTap={{ scale: 0.95 }}
                   whileHover={{ scale: 1.05 }}
                   onClick={() => goToSection("#price")}
-                  className="w-full mt-4 bg-linear-to-r from-green-500 to-emerald-400 text-black py-2 rounded-lg font-semibold"
+                  className="w-full mt-2 bg-linear-to-r from-green-500 to-emerald-400 text-black py-2 rounded-lg font-semibold"
                 >
                   Upgrade 🚀
                 </motion.button>

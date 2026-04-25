@@ -58,7 +58,7 @@ function UpdatePassword() {
           value={userData.passwordCurrent}
           onChange={handleChange}
           placeholder="***********"
-          className="bg-gray-300 px-3 py-1 w-full lg:w-[25vw] shadow-xl focus:outline-green-400 rounded-2xl "
+          className="bg-gray-300 text-black px-3 py-1 w-full lg:w-[25vw] shadow-xl focus:outline-green-400 rounded-2xl "
         />
       </div>
       <div className="flex flex-col gap-1">
@@ -72,7 +72,7 @@ function UpdatePassword() {
           value={userData.password}
           onChange={handleChange}
           placeholder="***********"
-          className="bg-gray-300 px-3 py-1 w-full lg:w-[25vw] shadow-xl focus:outline-green-400 rounded-2xl "
+          className="bg-gray-300 text-black px-3 py-1 w-full lg:w-[25vw] shadow-xl focus:outline-green-400 rounded-2xl "
         />
       </div>
       <div className="flex flex-col gap-1">
@@ -86,7 +86,7 @@ function UpdatePassword() {
           value={userData.passwordConfirm}
           onChange={handleChange}
           placeholder="***********"
-          className="bg-gray-300 px-3 py-1 w-full lg:w-[25vw] shadow-xl focus:outline-green-400 rounded-2xl "
+          className="bg-gray-300 text-black px-3 py-1 w-full lg:w-[25vw] shadow-xl focus:outline-green-400 rounded-2xl "
         />
       </div>
 
@@ -94,7 +94,7 @@ function UpdatePassword() {
         <button
           disabled={loading}
           type="submit"
-          className={`w-full lg:w-[25vw] text-center py-2 ${loading ? "bg-gray-300" : "bg-green-400"}  rounded-full ${loading ? "" : "hover:bg-green-500"}  font-medium ${loading ? "cursor-not-allowed" : "cursor-pointer"}`}
+          className={`w-full lg:w-[25vw] text-black text-center py-2 ${loading ? "bg-gray-300" : "bg-green-400"}  rounded-full ${loading ? "" : "hover:bg-green-500"}  font-medium ${loading ? "cursor-not-allowed" : "cursor-pointer"}`}
         >
           {loading ? "Submitting..." : <span>Save Changes&rarr;</span>}
         </button>

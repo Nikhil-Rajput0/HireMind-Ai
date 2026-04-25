@@ -1,11 +1,13 @@
 "use client";
+
 import axios from "axios";
-import React, { useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
 function ResetPassword() {
   const router = useRouter();
+
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
   const [userData, setUserData] = useState({
@@ -15,7 +17,14 @@ function ResetPassword() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (userData.password !== userData.passwordConfirm) {
+      toast.error("Passwords do not match");
+      return;
+    }
+
     setLoading(true);
+
     try {
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_SERVER_UI}api/v1/users/resetPassword/${otp}`,
@@ -25,6 +34,7 @@ function ResetPassword() {
         },
         { withCredentials: true },
       );
+
       toast.success(res.data.message);
       router.push("/authentication/signIn");
     } catch (error) {
@@ -36,66 +46,73 @@ function ResetPassword() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUserData((prevData) => ({ ...prevData, [name]: value }));
+    setUserData((prev) => ({ ...prev, [name]: value }));
   };
 
   return (
-    <form
-      suppressHydrationWarning={true}
-      className="flex flex-col gap-2"
-      onSubmit={handleSubmit}
-    >
+    <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+      {/* OTP */}
       <div className="flex flex-col gap-1">
-        <label htmlFor="otp" className="text-gray-300">
-          OTP
-        </label>
+        <label className="text-sm text-gray-400">OTP</label>
         <input
-          id="otp"
           type="text"
-          name="otp"
+          maxLength={6}
           value={otp}
           onChange={(e) => setOtp(e.target.value)}
-          placeholder="otp.."
-          className="bg-gray-300 text-black px-3 py-1 shadow-xl focus:outline-green-400 rounded-2xl "
+          placeholder="••••••"
+          className="
+            text-center tracking-[8px]
+            px-4 py-2 rounded-xl
+            bg-white/5 border border-white/10
+            focus:outline-none
+            focus:border-blue-400
+            focus:ring-2 focus:ring-blue-400/30
+          "
         />
       </div>
+
+      {/* Password */}
       <div className="flex flex-col gap-1">
-        <label htmlFor="password" className="text-gray-300">
-          New Password
-        </label>
+        <label className="text-sm text-gray-400">New Password</label>
         <input
-          id="password"
-          type="text"
+          type="password"
           name="password"
           value={userData.password}
           onChange={handleChange}
-          placeholder="***********"
-          className="bg-gray-300 text-black px-3 py-1 shadow-xl focus:outline-green-400 rounded-2xl "
+          required
+          placeholder="••••••••"
+          className="input-style"
         />
       </div>
+
+      {/* Confirm */}
       <div className="flex flex-col gap-1">
-        <label htmlFor="passwordConfirm" className="text-gray-300">
-          Confirm password
-        </label>
+        <label className="text-sm text-gray-400">Confirm Password</label>
         <input
-          id="passwordConfirm"
-          type="text"
+          type="password"
           name="passwordConfirm"
           value={userData.passwordConfirm}
           onChange={handleChange}
-          placeholder="***********"
-          className="bg-gray-300 px-3 text-black py-1 shadow-xl focus:outline-green-400 rounded-2xl "
+          required
+          placeholder="••••••••"
+          className="input-style"
         />
       </div>
-      <div className="pt-5">
-        <button
-          disabled={loading}
-          type="submit"
-          className={` w-full text-center py-2 ${loading ? "bg-gray-300" : "bg-green-400"}  rounded-full ${loading ? "" : "hover:bg-green-500"}  font-medium ${loading ? "cursor-not-allowed" : "cursor-pointer"}`}
-        >
-          {loading ? "Submitting..." : <span>Submit&rarr;</span>}
-        </button>
-      </div>
+
+      {/* Button */}
+      <button
+        disabled={loading}
+        className="
+          mt-2 py-2 rounded-xl
+          bg-linear-to-r from-purple-500 to-blue-500
+          font-medium
+          hover:scale-[1.02]
+          transition
+          disabled:opacity-50 cursor-pointer
+        "
+      >
+        {loading ? "Updating..." : "Reset Password →"}
+      </button>
     </form>
   );
 }

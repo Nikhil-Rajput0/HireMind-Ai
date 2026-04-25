@@ -1,6 +1,7 @@
 "use client";
+
 import Link from "next/link";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -9,16 +10,19 @@ function ForgetPassword() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       setLoading(true);
+
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_SERVER_UI}api/v1/users/forgetPassword`,
         { email },
         { withCredentials: true },
       );
+
       toast.success(res.data.message);
       router.push("/authentication/resetPassword");
     } catch (error) {
@@ -27,39 +31,47 @@ function ForgetPassword() {
       setLoading(false);
     }
   };
+
   return (
-    <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
-      <div className="flex flex-col gap-1 pb-3">
-        <label htmlFor="email" className=" text-gray-600">
-          Your Email
-        </label>
+    <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+      {/* Email */}
+      <div className="flex flex-col gap-1">
+        <label className="text-sm text-gray-400">Email</label>
         <input
-          id="email"
           type="email"
-          placeholder="example@gmail.com"
+          required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="bg-gray-200 text-black px-3 py-1 shadow-2xl/50 focus:outline-green-400 ring-1 ring-green-400 rounded-2xl"
+          placeholder="you@example.com"
+          className="input-style"
         />
       </div>
-      <div className="flex items-center gap-5">
-        <h3 className="text-[16px] text-black">Know your password?</h3>
+
+      {/* Button */}
+      <button
+        disabled={loading}
+        className="
+          mt-2 py-2 rounded-xl
+          bg-linear-to-r from-purple-500 to-blue-500
+          text-white font-medium
+          shadow-lg
+          hover:scale-[1.02]
+          transition
+          disabled:opacity-50 cursor-pointer
+        "
+      >
+        {loading ? "Sending..." : "Send Reset Link →"}
+      </button>
+
+      <p className="text-sm text-center text-gray-400">
+        Remember your password?{" "}
         <Link
-          href={"/authentication/signIn"}
-          className="text-[16px] underline text-green-600"
+          href="/authentication/signIn"
+          className="text-blue-400 hover:underline"
         >
-          Sign In &rarr;
+          Sign in
         </Link>
-      </div>
-      <div className="pt-5">
-        <button
-          disabled={loading}
-          type="submit"
-          className={` w-full text-center py-2 ${loading ? "bg-gray-300" : "bg-green-400"}  rounded-full ${loading ? "" : "hover:bg-green-500"}  font-medium ${loading ? "cursor-not-allowed" : "cursor-pointer"}`}
-        >
-          {loading ? "Sending..." : <span>Send Otp&rarr;</span>}
-        </button>
-      </div>
+      </p>
     </form>
   );
 }
