@@ -7,7 +7,8 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
 function InterviewDetailsForm({ interviewType }) {
-  const { formData, setFormData } = useContext(userContext);
+  const { formData, setFormData, userData, setUserData } =
+    useContext(userContext);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -36,6 +37,14 @@ function InterviewDetailsForm({ interviewType }) {
       );
       router.push(`/interview/${res.data.data.interview._id}`);
       toast.success(res.data?.message);
+
+      const userRes = await axios.patch(
+        `${process.env.NEXT_PUBLIC_SERVER_UI}api/v1/users/updateCredits`,
+        { credits: userData.credits },
+        { withCredentials: true },
+      );
+
+      setUserData(userRes.data.user);
     } catch (error) {
       toast.error(error.response?.data?.message);
     } finally {

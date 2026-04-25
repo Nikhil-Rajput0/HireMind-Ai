@@ -18,26 +18,6 @@ export default function Page() {
   const [template, setTemplate] = useState("modern");
   const [score, setScore] = useState(0);
 
-  const downloadPDF = async () => {
-    const html2pdf = (await import("html2pdf.js")).default;
-
-    const element = document.getElementById("resume");
-
-    html2pdf()
-      .set({
-        margin: 0,
-        filename: "resume.pdf",
-        image: { type: "jpeg", quality: 0.98 },
-        html2canvas: {
-          scale: 2,
-          useCORS: true,
-          backgroundColor: "#ffffff",
-        },
-      })
-      .from(element)
-      .save();
-  };
-
   return (
     <div className="min-h-screen bg-gray-950 text-white px-4 sm:px-6 lg:px-10 py-6">
       {/* HEADER */}
@@ -65,17 +45,9 @@ export default function Page() {
           >
             Minimal
           </button>
-
-          <button
-            onClick={downloadPDF}
-            className="bg-blue-600 px-4 py-1 rounded-full text-sm sm:text-base"
-          >
-            Download PDF
-          </button>
         </div>
       </div>
 
-      {/* MAIN LAYOUT */}
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-6">
         {/* FORM */}
         <div className="bg-gray-900 p-4 sm:p-5 rounded-xl shadow-lg">

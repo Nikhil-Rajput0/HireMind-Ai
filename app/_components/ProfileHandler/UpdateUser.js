@@ -11,9 +11,6 @@ function UpdateUser() {
   const [photo, setPhoto] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  //  Get user data
-
-  //  Handle submit
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -27,7 +24,7 @@ function UpdateUser() {
       }
 
       const res = await axios.patch(
-        "http://localhost:8000/api/v1/users/updateMe",
+        `${process.env.NEXT_PUBLIC_SERVER_UI}api/v1/users/updateMe`,
         formData,
         {
           withCredentials: true,

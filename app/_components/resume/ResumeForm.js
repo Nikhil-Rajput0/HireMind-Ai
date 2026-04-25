@@ -1,10 +1,12 @@
 "use client";
+import userContext from "@/app/contexts/UserContext";
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import toast from "react-hot-toast";
 
 export default function ResumeForm({ resume, setResume, setScore }) {
   const [loading, setLoading] = useState(false);
+  const { setUserData, userData } = useContext(userContext);
 
   const handleChange = (e) => {
     setResume({ ...resume, [e.target.name]: e.target.value });
@@ -45,14 +47,22 @@ export default function ResumeForm({ resume, setResume, setScore }) {
 
       setScore(res.data?.resume?.score);
       toast.success(res.data?.message);
-      setResume({
-        name: "",
-        role: "",
-        skills: [],
-        experience: [],
-        projects: [],
-        summary: "",
-      });
+
+      const userRes = await axios.patch(
+        `${process.env.NEXT_PUBLIC_SERVER_UI}api/v1/users/updateCredits`,
+        { credits: userData.credits },
+        { withCredentials: true },
+      );
+
+      setUserData(userRes.data.user);
+      // setResume({
+      //   name: "",
+      //   role: "",
+      //   skills: [],
+      //   experience: [],
+      //   projects: [],
+      //   summary: "",
+      // });
     } catch (err) {
       toast.error(err.response?.data?.message);
     } finally {

@@ -1,13 +1,15 @@
 "use client";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import userContext from "@/app/contexts/UserContext";
 
 export default function ATSAnalyzer() {
   const [file, setFile] = useState(null);
   const [job, setJob] = useState("");
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
+  const { setUserData, userData } = useContext(userContext);
 
   // Validate DOCX file
   const isValidDocx = (file) => {
@@ -80,6 +82,14 @@ export default function ATSAnalyzer() {
           id: loadingToast,
         });
       }
+
+      const userRes = await axios.patch(
+        `${process.env.NEXT_PUBLIC_SERVER_UI}api/v1/users/updateCredits`,
+        { credits: userData.credits },
+        { withCredentials: true },
+      );
+
+      setUserData(userRes.data.user);
     } catch (err) {
       toast.error(err.response?.data?.message || "Analysis failed", {
         id: loadingToast,
@@ -98,7 +108,6 @@ export default function ATSAnalyzer() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white p-8">
-      {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">ATS Resume Analyzer</h1>
         {result && (
@@ -113,7 +122,6 @@ export default function ATSAnalyzer() {
 
       {!result ? (
         <>
-          {/* Hidden file input */}
           <input
             id="file-input"
             type="file"
@@ -122,7 +130,6 @@ export default function ATSAnalyzer() {
             className="hidden"
           />
 
-          {/* Drag & Drop Area */}
           <div
             onDrop={handleDrop}
             onDragOver={(e) => e.preventDefault()}
@@ -157,7 +164,6 @@ export default function ATSAnalyzer() {
             )}
           </div>
 
-          {/* Job Description */}
           <div className="mt-6">
             <label className="block text-gray-300 mb-2 font-medium">
               Job Description *
@@ -174,7 +180,6 @@ export default function ATSAnalyzer() {
             </p>
           </div>
 
-          {/* Analyze Button */}
           <button
             onClick={handleUpload}
             disabled={loading || !file || !job.trim()}
@@ -210,11 +215,9 @@ export default function ATSAnalyzer() {
           </button>
         </>
       ) : (
-        /* RESULTS SECTION */
         <div className="mt-8 space-y-6">
-          {/* Scores */}
           <div className="grid grid-cols-2 gap-4">
-            <div className="bg-gradient-to-br from-green-600 to-green-800 p-6 rounded-xl text-center">
+            <div className="bg-linear-to-br from-green-600 to-green-800 p-6 rounded-xl text-center">
               <p className="text-green-200 text-sm">ATS Score</p>
               <p className="text-3xl font-bold">{result.atsScore || 0}%</p>
               <div className="w-full bg-green-900 rounded-full h-2 mt-2">
@@ -224,7 +227,7 @@ export default function ATSAnalyzer() {
                 />
               </div>
             </div>
-            <div className="bg-gradient-to-br from-blue-600 to-blue-800 p-6 rounded-xl text-center">
+            <div className="bg-linear-to-br from-blue-600 to-blue-800 p-6 rounded-xl text-center">
               <p className="text-blue-200 text-sm">Match Score</p>
               <p className="text-3xl font-bold">{result.matchScore || 0}%</p>
               <div className="w-full bg-blue-900 rounded-full h-2 mt-2">
@@ -236,7 +239,6 @@ export default function ATSAnalyzer() {
             </div>
           </div>
 
-          {/* Sections */}
           {result.sections && (
             <div className="bg-gray-800 p-6 rounded-xl">
               <h3 className="font-bold text-lg mb-4">Section Scores</h3>
@@ -259,7 +261,6 @@ export default function ATSAnalyzer() {
             </div>
           )}
 
-          {/* Missing Keywords */}
           {result.missingKeywords?.length > 0 && (
             <div className="bg-red-500/10 border border-red-500/30 p-6 rounded-xl">
               <h3 className="text-red-400 font-bold text-lg mb-3">
@@ -278,7 +279,6 @@ export default function ATSAnalyzer() {
             </div>
           )}
 
-          {/* Strengths */}
           {result.strengths?.length > 0 && (
             <div className="bg-green-500/10 border border-green-500/30 p-6 rounded-xl">
               <h3 className="text-green-400 font-bold text-lg mb-3">
@@ -292,7 +292,6 @@ export default function ATSAnalyzer() {
             </div>
           )}
 
-          {/* Improvements */}
           {result.improvements?.length > 0 && (
             <div className="bg-blue-500/10 border border-blue-500/30 p-6 rounded-xl">
               <h3 className="text-blue-400 font-bold text-lg mb-3">

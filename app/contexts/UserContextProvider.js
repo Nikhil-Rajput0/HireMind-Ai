@@ -5,11 +5,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 
 const UserContextProvider = ({ children }) => {
-  const [userData, setUserData] = useState({
-    name: "",
-    email: "",
-    photo: "",
-  });
+  const [userData, setUserData] = useState({});
   const [inputValue, setInputValue] = useState({
     name: "",
     email: "",
@@ -26,6 +22,7 @@ const UserContextProvider = ({ children }) => {
 
   const [interview, setInterview] = useState([]);
   const [generatedResume, setGeneratedResume] = useState([]);
+
   const getData = async () => {
     try {
       const res = await axios.get("http://localhost:8000/api/v1/users/getMe", {
