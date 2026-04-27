@@ -11,7 +11,9 @@ export default function ResumeForm({ resume, setResume, setScore }) {
   const handleChange = (e) => {
     setResume({ ...resume, [e.target.name]: e.target.value });
   };
-  // name, role, skills, experience, projects
+
+  if (userData.credits < 20) return null;
+
   const handleAI = async () => {
     setLoading(true);
     try {
@@ -55,14 +57,6 @@ export default function ResumeForm({ resume, setResume, setScore }) {
       );
 
       setUserData(userRes.data.user);
-      // setResume({
-      //   name: "",
-      //   role: "",
-      //   skills: [],
-      //   experience: [],
-      //   projects: [],
-      //   summary: "",
-      // });
     } catch (err) {
       toast.error(err.response?.data?.message);
     } finally {

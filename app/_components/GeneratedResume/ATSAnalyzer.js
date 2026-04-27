@@ -67,6 +67,8 @@ export default function ATSAnalyzer() {
     formData.append("resume", file);
     formData.append("jobDescription", job);
 
+    if (userData.credits < 20) return null;
+
     try {
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_SERVER_UI}api/v1/resume/analyze`,

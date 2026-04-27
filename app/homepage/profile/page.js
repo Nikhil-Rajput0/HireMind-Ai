@@ -7,9 +7,12 @@ import UpdatePassword from "@/app/_components/ProfileHandler/UpdatePassword";
 import { MdOutlineLogout } from "react-icons/md";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useState } from "react";
 
 export default function Page() {
+  const [loading, setLoading] = useState(false);
   const loggedOut = async () => {
+    setLoading(true);
     try {
       const res = await axios.patch(
         `${process.env.NEXT_PUBLIC_SERVER_UI}api/v1/users/logout`,
@@ -20,6 +23,8 @@ export default function Page() {
       window.location.href = "/";
     } catch (error) {
       toast.error(error.response?.data?.message);
+    } finally {
+      setLoading(false);
     }
   };
   return (
@@ -42,10 +47,13 @@ export default function Page() {
             <UserProfile />
           </motion.div>
           <div
+            aria-disabled={loading}
             onClick={loggedOut}
-            className="text-white flex items-center justify-center gap-3 font-semibold bg-red-700 px-3 py-2 rounded-md cursor-pointer hover:-translate-y-px hover:bg-red-600"
+            className={`${loading ? "text-black" : "text-white"} flex items-center justify-center gap-3 font-semibold ${loading ? "bg-gray-200" : "bg-red-700 "} px-3 py-2 rounded-md ${loading ? "cursor-not-allowed" : "cursor-pointer"} hover:-translate-y-px ${loading ? "hover:bg-gray-200" : "hover:bg-red-600"} `}
           >
-            <button className="cursor-pointer">Logout</button>
+            <button className="cursor-pointer">
+              {loading ? "Submitting.." : "LogOut"}
+            </button>
             <MdOutlineLogout />
           </div>
         </div>
