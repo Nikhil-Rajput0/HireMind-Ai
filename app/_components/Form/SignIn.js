@@ -31,6 +31,7 @@ function SignIn() {
       );
 
       toast.success(res.data.message);
+      console.log(res.status);
       setTimeout(() => {
         document.cookie;
         window.location.href = "/homepage";
