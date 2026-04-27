@@ -29,7 +29,6 @@ const UserContextProvider = ({ children }) => {
   const router = useRouter();
   const pathname = usePathname();
 
-  // 🔐 Auth check + user data fetch
   const getData = async () => {
     try {
       const res = await axios.get(

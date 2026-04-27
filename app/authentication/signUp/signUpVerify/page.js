@@ -55,7 +55,7 @@ function Page() {
       if (res.status === 200) {
         toast.success(signup.data.message);
         Cookies.remove("inputValue");
-        window.location.href = "/homepage";
+        router.push("/homepage");
       }
     } catch (err) {
       toast.error(err.response?.data?.message);

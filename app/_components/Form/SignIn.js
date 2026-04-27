@@ -32,7 +32,7 @@ function SignIn() {
 
       if (res.status === 200) {
         toast.success(res.data.message);
-        window.location.href = "/homepage";
+        router.push("/homepage");
       }
     } catch (error) {
       toast.error(error.response?.data?.message);
