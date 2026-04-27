@@ -31,7 +31,10 @@ function SignIn() {
       );
 
       toast.success(res.data.message);
-      window.location.href = "/homepage";
+      setTimeout(() => {
+        document.cookie;
+        window.location.href = "/homepage";
+      }, 200);
     } catch (error) {
       toast.error(error.response?.data?.message);
     } finally {
