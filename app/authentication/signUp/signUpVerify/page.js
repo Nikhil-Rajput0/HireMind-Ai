@@ -52,10 +52,11 @@ function Page() {
         },
         { withCredentials: true },
       );
-
-      toast.success(signup.data.message);
-      Cookies.remove("inputValue");
-      window.location.href = "/homepage";
+      if (res.status === 200) {
+        toast.success(signup.data.message);
+        Cookies.remove("inputValue");
+        window.location.href = "/homepage";
+      }
     } catch (err) {
       toast.error(err.response?.data?.message);
     } finally {
