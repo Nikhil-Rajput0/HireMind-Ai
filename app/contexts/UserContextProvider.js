@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import userContext from "./UserContext";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { useRouter, usePathname } from "next/navigation";
 
 const UserContextProvider = ({ children }) => {
   const [userData, setUserData] = useState({});
@@ -23,6 +24,12 @@ const UserContextProvider = ({ children }) => {
   const [interview, setInterview] = useState([]);
   const [generatedResume, setGeneratedResume] = useState([]);
 
+  const [loading, setLoading] = useState(true);
+
+  const router = useRouter();
+  const pathname = usePathname();
+
+  // 🔐 Auth check + user data fetch
   const getData = async () => {
     try {
       const res = await axios.get(
@@ -33,15 +40,22 @@ const UserContextProvider = ({ children }) => {
       );
 
       setUserData(res.data.user);
-      setInterview(res.data?.user?.interviews);
-      setGeneratedResume(res.data?.user?.resumes);
+      setInterview(res.data?.user?.interviews || []);
+      setGeneratedResume(res.data?.user?.resumes || []);
     } catch (err) {
-      toast.error(err.response?.data?.message);
+      if (pathname.startsWith("/homepage")) {
+        router.push("/authentication/signIn");
+      }
+    } finally {
+      setLoading(false);
     }
   };
+
   useEffect(() => {
     getData();
-  }, []);
+  }, [pathname]);
+
+  if (loading) return null;
 
   return (
     <userContext.Provider
