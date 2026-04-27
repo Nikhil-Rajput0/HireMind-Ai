@@ -15,7 +15,7 @@ export const metadata = {
 
 export default function HomeLayout({ children }) {
   const cookieStore = cookies();
-  const refreshToken = cookieStore.get("refreshToken");
+  const refreshToken = cookieStore.get("refreshToken")?.value;
 
   if (!refreshToken) {
     redirect("/authentication/signIn");
