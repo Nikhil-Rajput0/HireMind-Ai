@@ -7,10 +7,8 @@ import UpdatePassword from "@/app/_components/ProfileHandler/UpdatePassword";
 import { MdOutlineLogout } from "react-icons/md";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
 
 export default function Page() {
-  const router = useRouter();
   const loggedOut = async () => {
     try {
       const res = await axios.patch(
@@ -19,7 +17,7 @@ export default function Page() {
         { withCredentials: true },
       );
       toast.success(res.data?.message);
-      router.push("/");
+      window.location.href = "/";
     } catch (error) {
       toast.error(error.response?.data?.message);
     }
