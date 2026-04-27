@@ -5,6 +5,8 @@ import HeaderMain from "../_components/Headers/HeaderMain";
 import SideBar from "../_components/Headers/SideBar";
 import FooterBar from "../_components/Footer/FooterBar";
 import HeaderMobile from "../_components/Headers/HeaderMobile";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export const metadata = {
   title: "Welcome | HireMind Ai",
@@ -12,6 +14,13 @@ export const metadata = {
 };
 
 export default function HomeLayout({ children }) {
+  const cookieStore = cookies();
+  const refreshToken = cookieStore.get("refreshToken");
+
+  if (!refreshToken) {
+    redirect("/authentication/signIn");
+  }
+
   return (
     <>
       <header
