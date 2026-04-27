@@ -25,9 +25,12 @@ const UserContextProvider = ({ children }) => {
 
   const getData = async () => {
     try {
-      const res = await axios.get("http://localhost:8000/api/v1/users/getMe", {
-        withCredentials: true,
-      });
+      const res = await axios.get(
+        "https://hiremind-ai-backend.onrender.com/api/v1/users/getMe",
+        {
+          withCredentials: true,
+        },
+      );
 
       setUserData(res.data.user);
       setInterview(res.data?.user?.interviews);
