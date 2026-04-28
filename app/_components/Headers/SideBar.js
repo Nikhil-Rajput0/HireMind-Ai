@@ -109,7 +109,7 @@ function SideBar() {
       <div className="bg-white/5 backdrop-blur-lg p-4 rounded-xl border border-white/10 shadow-lg">
         <p className="text-xs text-gray-400">Plan</p>
         <p className="text-sm font-semibold text-green-400">
-          {userData.role == "admin" ? "Admin" : "Free User"}
+          {userData?.role == "admin" ? "Admin" : "Free User"}
         </p>
 
         <button
