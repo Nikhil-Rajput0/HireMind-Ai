@@ -23,7 +23,11 @@ function InterviewDetailsForm({ interviewType }) {
     e.preventDefault();
     setLoading(true);
 
-    if (userData.credits < 20) return null;
+    if (userData.credits < 20) {
+      toast.error("Not enough credits!");
+      setLoading(false);
+      return;
+    }
 
     try {
       const res = await axios.post(

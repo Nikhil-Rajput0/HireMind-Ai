@@ -12,10 +12,15 @@ export default function ResumeForm({ resume, setResume, setScore }) {
     setResume({ ...resume, [e.target.name]: e.target.value });
   };
 
-  if (userData.credits < 20) return null;
-
   const handleAI = async () => {
     setLoading(true);
+
+    if (userData.credits < 20) {
+      toast.error("Not enough credits!");
+      setLoading(false);
+      return;
+    }
+
     try {
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_SERVER_UI}api/v1/resume/generate`,

@@ -37,7 +37,6 @@ function GeneratedResume() {
 
   return (
     <section className="min-h-screen bg-linear-to-br from-black via-gray-900 to-black text-white px-6 pt-10">
-      {/* 🔥 HEADER */}
       <div className="text-center mb-10">
         <h1 className="text-4xl font-bold bg-linear-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">
           My Resumes
@@ -45,7 +44,6 @@ function GeneratedResume() {
         <p className="text-gray-400 mt-2">Manage & optimize your resumes</p>
       </div>
 
-      {/* 🔥 GRID */}
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {generatedResume.map((resume) => {
           const score = resume.score || 0;
@@ -55,7 +53,6 @@ function GeneratedResume() {
               key={resume._id}
               className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-3xl p-5 shadow-xl hover:scale-105 transition-all duration-300"
             >
-              {/* 🔥 TOP */}
               <div className="flex justify-between items-center mb-4">
                 <span className="text-xs px-3 py-1 rounded-full bg-purple-500/20 text-purple-400">
                   {resume.template}
@@ -66,7 +63,6 @@ function GeneratedResume() {
                 </span>
               </div>
 
-              {/* 🔥 NAME */}
               <h2 className="text-lg font-semibold">
                 {resume.name || "Unnamed"}
               </h2>
@@ -75,7 +71,6 @@ function GeneratedResume() {
                 {resume.role || "No role"}
               </p>
 
-              {/* 🔥 SCORE RING */}
               <div className="flex justify-center mb-4">
                 <div className="relative w-20 h-20">
                   <svg className="w-full h-full -rotate-90">
@@ -104,7 +99,6 @@ function GeneratedResume() {
                 </div>
               </div>
 
-              {/* 🔥 ACTIONS */}
               <div className="flex gap-2 mt-4">
                 <Link
                   href={`/myResume/${resume._id}`}

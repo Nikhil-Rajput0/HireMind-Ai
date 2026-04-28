@@ -61,13 +61,17 @@ export default function ATSAnalyzer() {
     }
 
     setLoading(true);
+
+    if (userData.credits < 20) {
+      toast.error("Not enough credits!");
+      setLoading(false);
+      return;
+    }
     const loadingToast = toast.loading("Analyzing your resume...");
 
     const formData = new FormData();
     formData.append("resume", file);
     formData.append("jobDescription", job);
-
-    if (userData.credits < 20) return null;
 
     try {
       const res = await axios.post(

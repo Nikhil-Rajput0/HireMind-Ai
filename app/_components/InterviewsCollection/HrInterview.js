@@ -37,8 +37,7 @@ function HrInterview() {
   }
 
   return (
-    <section className="px-20 py-10 bg-linear-to-br from-black via-gray-900 to-black min-h-screen text-white">
-      {/* 🔥 HEADER */}
+    <section className="min-h-screen bg-linear-to-br from-black via-gray-900 to-black text-white px-6 pt-10">
       <div className="mb-10 text-center">
         <h1 className="text-4xl font-bold bg-linear-to-r from-green-400 to-blue-500 bg-clip-text text-transparent">
           My Interviews
@@ -46,7 +45,6 @@ function HrInterview() {
         <p className="text-gray-400 mt-2">Track your performance & progress</p>
       </div>
 
-      {/* 🔥 GRID */}
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {interview.map((item) => {
           const scoreColor =
@@ -61,7 +59,6 @@ function HrInterview() {
               key={item._id}
               className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-5 shadow-xl hover:scale-105 transition-all duration-300 group"
             >
-              {/* 🔥 TOP */}
               <div className="flex justify-between items-center mb-4">
                 <span
                   className={`text-xs px-3 py-1 rounded-full ${
@@ -78,7 +75,6 @@ function HrInterview() {
                 </span>
               </div>
 
-              {/* 🔥 TITLE */}
               <h2 className="text-lg font-semibold mb-1">
                 {item.name || "Interview"}
               </h2>
@@ -87,18 +83,15 @@ function HrInterview() {
                 {item.role || "Role not defined"}
               </p>
 
-              {/* 🔥 META */}
               <div className="flex justify-between text-xs text-gray-400 mb-4">
                 <span>{item.interviewType}</span>
                 <span>{item.difficulty}</span>
               </div>
 
-              {/* 🔥 DATE */}
               <p className="text-xs text-gray-500 mb-4">
                 {new Date(item.createdAt).toLocaleDateString()}
               </p>
 
-              {/* 🔥 ACTIONS */}
               <div className="flex gap-2">
                 <Link
                   href={`/homepage/result/${item._id}`}
