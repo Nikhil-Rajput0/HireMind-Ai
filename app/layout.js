@@ -2,7 +2,7 @@ import { Toaster } from "react-hot-toast";
 import UserContextProvider from "./contexts/UserContextProvider";
 import "./globals.css";
 import { Inter } from "next/font/google";
-import SplashWrapper from "./_components/Loader/SplashWrapper";
+// import SplashWrapper from "./_components/Loader/SplashWrapper";
 
 const inter = Inter({
   subsets: ["latin", "sans-serif"],
@@ -95,14 +95,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <head>
-        {/* Essential Mobile Meta Tags */}
         <meta charSet="UTF-8" />
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover"
         />
 
-        {/* Theme and Display */}
         <meta
           name="theme-color"
           content="#ffffff"
@@ -116,7 +114,6 @@ export default function RootLayout({ children }) {
         <meta name="color-scheme" content="light dark" />
         <meta name="display" content="standalone" />
 
-        {/* Mobile Web App */}
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta
@@ -125,7 +122,6 @@ export default function RootLayout({ children }) {
         />
         <meta name="apple-mobile-web-app-title" content="HireMind AI" />
 
-        {/* SEO */}
         <title>HireMind AI - AI Powered Interview Preparation</title>
         <meta
           name="description"
@@ -138,7 +134,6 @@ export default function RootLayout({ children }) {
         <meta name="author" content="HireMind AI" />
         <meta name="robots" content="index, follow" />
 
-        {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://hiremind.ai/" />
         <meta
@@ -197,10 +192,10 @@ export default function RootLayout({ children }) {
       </head>
       <body
         className={`bg-[#e0e0e0] ${inter.className}`}
-        suppressHydrationWarning
+        suppressHydrationWarning={true}
       >
         <UserContextProvider>
-          <SplashWrapper>{children}</SplashWrapper>
+          {children}
           <Toaster
             position="top-right"
             containerStyle={{
