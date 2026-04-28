@@ -25,6 +25,7 @@ import toast from "react-hot-toast";
 function HeaderMobile() {
   const { userData } = useContext(userContext);
   const [active, setActive] = useState(false);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -37,6 +38,7 @@ function HeaderMobile() {
   };
 
   const loggedOut = async () => {
+    setLoading(true);
     try {
       const res = await axios.patch(
         `${process.env.NEXT_PUBLIC_SERVER_UI}api/v1/users/logout`,
@@ -47,6 +49,8 @@ function HeaderMobile() {
       router.push("/");
     } catch (error) {
       toast.error(error.response?.data?.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -61,7 +65,6 @@ function HeaderMobile() {
         {active ? <IoClose /> : <IoMenu />}
       </motion.button>
 
-      {/* 🔥 EDGE SWIPE TRIGGER */}
       {!active && (
         <div
           className="fixed top-0 right-0 h-full w-4 z-[998]"
@@ -72,7 +75,6 @@ function HeaderMobile() {
       <AnimatePresence>
         {active && (
           <>
-            {/* 🔥 BACKDROP */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -81,7 +83,6 @@ function HeaderMobile() {
               className="fixed inset-0 bg-black/40 backdrop-blur-md z-[999]"
             />
 
-            {/* 🔥 SIDEBAR */}
             <motion.div
               drag="x"
               dragConstraints={{ left: 0, right: 300 }}
@@ -194,10 +195,13 @@ function HeaderMobile() {
                 </button>
 
                 <div
+                  aria-disabled={loading}
                   onClick={loggedOut}
-                  className="text-white flex items-center justify-center gap-3 font-semibold bg-red-700 px-3 py-2 rounded-md cursor-pointer hover:-translate-y-px hover:bg-red-600"
+                  className={`${loading ? "text-black" : "text-white"} flex items-center justify-center gap-3 font-semibold ${loading ? "bg-gray-200" : "bg-red-700 "} px-3 py-2 rounded-md ${loading ? "cursor-not-allowed" : "cursor-pointer"} hover:-translate-y-px ${loading ? "hover:bg-gray-200" : "hover:bg-red-600"} `}
                 >
-                  <button className="cursor-pointer">Logout</button>
+                  <button className="cursor-pointer">
+                    {loading ? "Submitting.." : "LogOut"}
+                  </button>
                   <MdOutlineLogout />
                 </div>
 
