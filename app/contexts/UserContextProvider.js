@@ -4,6 +4,7 @@ import userContext from "./UserContext";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { useRouter, usePathname } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
 
 const UserContextProvider = ({ children }) => {
   const [userData, setUserData] = useState({});
@@ -54,7 +55,53 @@ const UserContextProvider = ({ children }) => {
     getData();
   }, [pathname]);
 
-  if (loading) return null;
+  if (loading)
+    return (
+      <AnimatePresence>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#020617]/80 backdrop-blur-md">
+          <div className="flex flex-col items-center gap-6">
+            <motion.div
+              animate={{
+                rotate: 360,
+              }}
+              transition={{
+                repeat: Infinity,
+                duration: 2,
+                ease: "linear",
+              }}
+              className="w-16 h-16 rounded-full border-4 border-green-400 border-t-transparent"
+            />
+
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-white text-lg font-medium"
+            >
+              Preparing your dashboard...
+            </motion.p>
+
+            <div className="w-64 h-2 bg-white/10 rounded-full overflow-hidden">
+              <motion.div
+                className="h-full bg-gradient-to-r from-green-400 via-emerald-300 to-green-400"
+                animate={{
+                  x: ["-100%", "100%"],
+                }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 1.2,
+                  ease: "linear",
+                }}
+              />
+            </div>
+
+            <p className="text-gray-400 text-sm">
+              Waking up server (first visit may take a few seconds)
+            </p>
+          </div>
+        </div>
+      </AnimatePresence>
+    );
 
   return (
     <userContext.Provider

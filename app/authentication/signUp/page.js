@@ -11,7 +11,7 @@ export const metadata = {
 function Page() {
   return (
     <section className="min-h-screen flex bg-[#020617] text-white">
-      <div className="hidden lg:flex flex-col justify-between w-1/2 p-12 bg-gradient-to-br from-purple-900/20 to-blue-900/20">
+      <div className="hidden lg:flex flex-col justify-between w-1/2 p-12 bg-linear-to-br from-purple-900/20 to-blue-900/20">
         <div>
           <Image alt="Logo" src={logo} width={140} />
         </div>

@@ -59,7 +59,7 @@ function Page() {
       );
       toast.success(signup.data.message);
       Cookies.remove("inputValue");
-      window.location.href = "/homepage";
+      router.replace("/homepage");
     } catch (err) {
       toast.error(err.response?.data?.message);
     } finally {

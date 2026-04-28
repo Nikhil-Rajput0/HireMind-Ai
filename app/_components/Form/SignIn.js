@@ -36,7 +36,7 @@ function SignIn() {
       );
 
       toast.success(res.data?.message);
-      window.location.href = "/homepage";
+      router.replace("/homepage");
     } catch (error) {
       toast.error(error.response?.data?.message);
     } finally {
