@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import userContext from "./UserContext";
 import axios from "axios";
 import { useRouter, usePathname } from "next/navigation";
@@ -26,6 +26,12 @@ const UserContextProvider = ({ children }) => {
 
   const [isFetching, setIsFetching] = useState(false);
 
+  const router = useRouter();
+  const pathname = usePathname();
+
+  // 🚫 prevent multiple calls
+  const hasFetched = useRef(false);
+
   // 🔥 rotating messages
   const messages = [
     "Preparing your dashboard...",
@@ -35,10 +41,6 @@ const UserContextProvider = ({ children }) => {
 
   const [messageIndex, setMessageIndex] = useState(0);
 
-  const router = useRouter();
-  const pathname = usePathname();
-
-  // 🔁 rotate messages while fetching
   useEffect(() => {
     if (!isFetching) return;
 
@@ -50,6 +52,9 @@ const UserContextProvider = ({ children }) => {
   }, [isFetching]);
 
   const getData = async () => {
+    if (hasFetched.current) return;
+    hasFetched.current = true;
+
     setIsFetching(true);
 
     try {
@@ -57,7 +62,7 @@ const UserContextProvider = ({ children }) => {
         "https://hiremind-ai-backend.onrender.com/api/v1/users/getMe",
         {
           withCredentials: true,
-          timeout: 5000,
+          timeout: 6000, // 🔥 prevents long freeze
         },
       );
 
@@ -65,13 +70,17 @@ const UserContextProvider = ({ children }) => {
       setInterview(res.data?.user?.interviews || []);
       setGeneratedResume(res.data?.user?.resumes || []);
     } catch (err) {
-      if (err.response?.status === 401) {
-        if (pathname.startsWith("/homepage")) {
-          router.push("/authentication/signIn");
+      const isAuthError = err.response?.status === 401;
+      const isNetworkError = !err.response;
+
+      if (pathname.startsWith("/homepage")) {
+        if (isAuthError) {
+          router.replace("/authentication/signIn"); // 🔥 better than push
+        } else if (isNetworkError) {
+          // ❄️ Cold start → don't redirect
+          console.log("Server waking up...");
         }
       }
-
-      console.log("Auth skipped (cold start / timeout)");
     } finally {
       setIsFetching(false);
     }
@@ -113,7 +122,7 @@ const UserContextProvider = ({ children }) => {
             >
               <motion.div className="h-full relative overflow-hidden">
                 <motion.div
-                  className="absolute inset-0 bg-linear-to-r from-transparent via-cyan-400 to-transparent"
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400 to-transparent"
                   animate={{ x: ["-100%", "400%"] }}
                   transition={{
                     repeat: Infinity,
@@ -122,7 +131,7 @@ const UserContextProvider = ({ children }) => {
                   }}
                 />
                 <motion.div
-                  className="absolute inset-0 bg-linear-to-r from-transparent via-blue-400/30 to-transparent blur-sm"
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-400/30 to-transparent blur-sm"
                   animate={{ x: ["-100%", "400%"] }}
                   transition={{
                     repeat: Infinity,
@@ -146,7 +155,6 @@ const UserContextProvider = ({ children }) => {
                   key={messageIndex}
                   initial={{ opacity: 0, y: 5 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -5 }}
                   transition={{ duration: 0.4 }}
                   className="text-xs text-white tracking-wide"
                 >
