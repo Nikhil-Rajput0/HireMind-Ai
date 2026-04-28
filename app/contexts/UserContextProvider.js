@@ -29,10 +29,8 @@ const UserContextProvider = ({ children }) => {
   const router = useRouter();
   const pathname = usePathname();
 
-  // 🚫 prevent multiple calls
   const hasFetched = useRef(false);
 
-  // 🔥 rotating messages
   const messages = [
     "Preparing your dashboard...",
     "Analyzing your data...",
@@ -62,7 +60,7 @@ const UserContextProvider = ({ children }) => {
         "https://hiremind-ai-backend.onrender.com/api/v1/users/getMe",
         {
           withCredentials: true,
-          timeout: 6000, // 🔥 prevents long freeze
+          timeout: 6000,
         },
       );
 
@@ -75,9 +73,8 @@ const UserContextProvider = ({ children }) => {
 
       if (pathname.startsWith("/homepage")) {
         if (isAuthError) {
-          router.replace("/authentication/signIn"); // 🔥 better than push
+          router.replace("/authentication/signIn");
         } else if (isNetworkError) {
-          // ❄️ Cold start → don't redirect
           console.log("Server waking up...");
         }
       }

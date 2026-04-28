@@ -42,7 +42,7 @@ function SignUp() {
         sameSite: "lax",
       });
 
-      router.push("/authentication/signUp/signUpVerify");
+      router.replace("/authentication/signUp/signUpVerify");
     } catch (error) {
       toast.error(error.response?.data?.message);
     } finally {

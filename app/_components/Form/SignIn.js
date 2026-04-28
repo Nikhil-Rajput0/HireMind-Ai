@@ -30,10 +30,8 @@ function SignIn() {
         { withCredentials: true },
       );
 
-      if (res.status === 200) {
-        toast.success(res.data.message);
-        router.push("/homepage");
-      }
+      toast.success(res.data.message);
+      router.replace("/homepage");
     } catch (error) {
       toast.error(error.response?.data?.message);
     } finally {
