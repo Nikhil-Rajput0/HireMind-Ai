@@ -52,9 +52,14 @@ function Page() {
         },
         { withCredentials: true },
       );
-      toast.success(signup.data.message);
-      Cookies.remove("inputValue");
-      router.replace("/homepage");
+
+      if (res.status === 201) {
+        setTimeout(() => {
+          toast.success(signup.data.message);
+          Cookies.remove("inputValue");
+          window.location.href = "/homepage";
+        }, 300);
+      }
     } catch (err) {
       toast.error(err.response?.data?.message);
     } finally {
