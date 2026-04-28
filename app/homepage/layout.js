@@ -7,7 +7,7 @@ import FooterBar from "../_components/Footer/FooterBar";
 import HeaderMobile from "../_components/Headers/HeaderMobile";
 
 export const metadata = {
-  title: "Welcome | HireMind Ai",
+  title: "Welcome | ",
   description: "Welcome to the Homepage of HireMind Ai.",
 };
 
