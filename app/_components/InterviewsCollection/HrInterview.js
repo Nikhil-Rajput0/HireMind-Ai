@@ -45,7 +45,7 @@ function HrInterview() {
         <p className="text-gray-400 mt-2">Track your performance & progress</p>
       </div>
 
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="lg:px-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {interview.map((item) => {
           const scoreColor =
             item.score >= 80
