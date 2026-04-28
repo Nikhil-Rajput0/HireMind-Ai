@@ -30,12 +30,13 @@ function SignIn() {
         { withCredentials: true },
       );
 
-      if (res.status === 200) {
-        setTimeout(() => {
-          toast.success(res.data?.message);
-          window.location.href = "/homepage";
-        }, 300);
-      }
+      await axios.get(
+        `${process.env.NEXT_PUBLIC_SERVER_UI}api/v1/users/getMe`,
+        { withCredentials: true },
+      );
+
+      toast.success(res.data?.message);
+      window.location.href = "/homepage";
     } catch (error) {
       toast.error(error.response?.data?.message);
     } finally {

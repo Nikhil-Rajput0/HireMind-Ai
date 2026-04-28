@@ -53,13 +53,13 @@ function Page() {
         { withCredentials: true },
       );
 
-      if (res.status === 201) {
-        setTimeout(() => {
-          toast.success(signup.data.message);
-          Cookies.remove("inputValue");
-          window.location.href = "/homepage";
-        }, 300);
-      }
+      await axios.get(
+        `${process.env.NEXT_PUBLIC_SERVER_UI}api/v1/users/getMe`,
+        { withCredentials: true },
+      );
+      toast.success(signup.data.message);
+      Cookies.remove("inputValue");
+      window.location.href = "/homepage";
     } catch (err) {
       toast.error(err.response?.data?.message);
     } finally {
