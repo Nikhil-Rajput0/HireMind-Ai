@@ -14,7 +14,7 @@ function UserProfile() {
       <div className="absolute hidden sm:block inset-0 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 blur-xl opacity-30 group-hover:opacity-60 transition" />
 
       <div className="relative hidden sm:flex items-start justify-center">
-        {userData.email ? (
+        {userData?.email ? (
           <div className="flex items-start justify-center">
             <Image
               quality={75}

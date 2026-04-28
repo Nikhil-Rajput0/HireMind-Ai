@@ -32,8 +32,8 @@ function UpdateUser() {
         },
       );
 
-      toast.success(res.data.message);
-      setUserData(res.data.user);
+      toast.success(res?.data?.message);
+      setUserData(res?.data?.user);
       setPhoto(null);
     } catch (err) {
       toast.error(err.response?.data?.message);
@@ -47,7 +47,7 @@ function UpdateUser() {
       {/* NAME */}
       <input
         type="text"
-        value={userData.name}
+        value={userData?.name}
         placeholder="loading..."
         onChange={(e) => setUserData({ ...userData, name: e.target.value })}
         className="bg-gray-300 text-black px-3 py-1 w-full lg:w-[25vw] shadow-xl focus:outline-green-400 rounded-2xl "
@@ -56,7 +56,7 @@ function UpdateUser() {
       {/* EMAIL */}
       <input
         type="email"
-        value={userData.email}
+        value={userData?.email}
         disabled
         placeholder="loading..."
         className="bg-gray-300 text-black px-3 py-1 w-full lg:w-[25vw] shadow-xl focus:outline-green-400 rounded-2xl "
@@ -64,7 +64,7 @@ function UpdateUser() {
 
       {/* IMAGE */}
       <div className=" flex items-center gap-4">
-        {userData.email ? (
+        {userData?.email ? (
           <Image
             quality={75}
             loading="eager"
