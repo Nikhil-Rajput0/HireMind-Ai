@@ -45,7 +45,6 @@ function Page() {
       </div>
     );
 
-  // 🔥 score calc
   const totalQuestions = data.conversation.length || 1;
   const totalScore = data.conversation.reduce(
     (acc, curr) => acc + (curr.score || 0),
@@ -53,7 +52,6 @@ function Page() {
   );
   const percentage = Math.round((totalScore / totalQuestions) * 10);
 
-  // 🔥 Radar data (fake if not present)
   const radarData = [
     { subject: "Technical", A: Math.min(percentage, 100) },
     { subject: "Communication", A: 70 },
@@ -62,7 +60,7 @@ function Page() {
   ];
 
   return (
-    <section className="bg-black text-white min-h-screen p-6 pl-20">
+    <section className="bg-black text-white min-h-screen p-6 lg:pl-20">
       <div ref={pdfRef}>
         <motion.div
           initial={{ opacity: 0 }}
@@ -77,9 +75,7 @@ function Page() {
           </p>
         </motion.div>
 
-        {/* 🔥 TOP DASHBOARD */}
         <div className="grid md:grid-cols-2 gap-6 mb-10">
-          {/* 🎯 Circular Score */}
           <div className="bg-white/5 p-6 rounded-3xl text-center border border-white/10">
             <h2 className="text-gray-400 mb-3">Overall Score</h2>
 
@@ -131,7 +127,6 @@ function Page() {
           </div>
         </div>
 
-        {/* 🔥 INSIGHTS */}
         <div className="grid md:grid-cols-3 gap-6 mb-10">
           <div className="bg-green-500/10 p-5 rounded-xl">
             <h3 className="text-green-400 font-bold mb-2">Strengths</h3>
@@ -155,7 +150,6 @@ function Page() {
           </div>
         </div>
 
-        {/* 🔥 QUESTIONS */}
         <div className="space-y-6">
           {data.conversation.map((item, i) => (
             <motion.div
@@ -184,7 +178,6 @@ function Page() {
         </div>
       </div>
 
-      {/* 🔥 ACTIONS */}
       <div className="flex justify-center gap-4 mt-10">
         <button
           onClick={() => toast.error("Sorry these logic is not working now.")}
