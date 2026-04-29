@@ -7,7 +7,7 @@ import FooterBar from "../_components/Footer/FooterBar";
 import HeaderMobile from "../_components/Headers/HeaderMobile";
 
 export const metadata = {
-  title: "Welcome | ",
+  title: `Welcome`,
   description: "Welcome to the Homepage of HireMind Ai.",
 };
 
@@ -21,7 +21,7 @@ export default function HomeLayout({ children }) {
       >
         <nav className="flex items-center justify-between bg-gray-900 px-6 lg:px-16 py-4">
           <Link href="/" className="flex items-center gap-2">
-            <Image src={logo} alt="Logo" width={180} />
+            <Image src={logo} alt="Logo" width={180} height={"auto"} />
           </Link>
           <HeaderMain />
           <HeaderMobile />

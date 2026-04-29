@@ -2,7 +2,7 @@ import InterviewHeader from "@/app/_components/Interview Header/InterviewHeader"
 import HrInterview from "@/app/_components/InterviewsCollection/HrInterview";
 
 export const metadata = {
-  title: `HireMind Ai | Tech Interview`,
+  title: `Tech Interview`,
   description: "Give Interview to real Ai Technical Hr.",
 };
 

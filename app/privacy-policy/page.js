@@ -8,7 +8,7 @@ export default function Page() {
   return (
     <section className="min-h-screen bg-gradient-to-br from-[#0f172a] via-[#111827] to-[#020617] text-white">
       <header className="lg:px-40 px-5 py-6 flex items-center justify-between backdrop-blur-md bg-white/5 border-b border-white/10 sticky top-0 z-50">
-        <Image alt="Logo" src={logo} height={90} width={90} />
+        <Image alt="Logo" src={logo} quality={75} height={90} width={90} />
 
         <Link
           href={"/"}

@@ -2,7 +2,7 @@ import GeneratedResume from "@/app/_components/GeneratedResume/GeneratedResume";
 import Link from "next/link";
 
 export const metadata = {
-  title: `HireMind Ai | Generate Resume`,
+  title: `Generate Resume`,
   description: "Generate your resume with HireMind Ai",
 };
 

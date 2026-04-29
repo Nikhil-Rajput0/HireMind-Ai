@@ -2,7 +2,7 @@ import ATSAnalyzer from "@/app/_components/GeneratedResume/ATSAnalyzer";
 import Link from "next/link";
 
 export const metadata = {
-  title: `HireMind Ai | Analyze Resume`,
+  title: `Analyze Resume`,
   description: "Analyze your resume with HireMind Ai",
 };
 

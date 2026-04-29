@@ -155,6 +155,7 @@ function Page() {
             <Image
               alt="Logo"
               src={logo}
+              width={"auto"}
               className="w-20 sm:w-24 md:w-28 h-auto"
             />
           </Link>

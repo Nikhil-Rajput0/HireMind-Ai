@@ -93,7 +93,11 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning={true}>
+    <html
+      lang="en"
+      suppressHydrationWarning={true}
+      data-scroll-behavior="smooth"
+    >
       <head>
         <meta charSet="UTF-8" />
         <meta

@@ -51,7 +51,7 @@ function Page() {
     <>
       <header className="w-full py-4 px-10">
         <nav className="flex items-center justify-between">
-          <Image alt="Logo" src={logo} height={40} />
+          <Image alt="Logo" src={logo} height={40} width={40} />
           <div className="flex gap-4">
             <Link
               href={"/homepage"}

@@ -20,7 +20,6 @@ export default function Page() {
 
   return (
     <div className="min-h-screen bg-gray-950 text-white px-4 sm:px-6 lg:px-10 py-6">
-      {/* HEADER */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
         <h1 className="text-xl sm:text-2xl font-bold">Resume Builder</h1>
 
@@ -49,7 +48,6 @@ export default function Page() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-6">
-        {/* FORM */}
         <div className="bg-gray-900 p-4 sm:p-5 rounded-xl shadow-lg">
           <ResumeForm
             resume={resume}

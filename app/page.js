@@ -26,7 +26,7 @@ export default function Page() {
       shadow-sm
     "
         >
-          <Image alt="Logo" src={logo} width={120} height={120} />
+          <Image alt="Logo" quality={75} src={logo} width={120} height={120} />
 
           <Header />
           <SignInButton />
