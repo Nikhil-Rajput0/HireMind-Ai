@@ -74,8 +74,8 @@ function Page() {
         style={{ fontFamily: "Arial, sans-serif" }}
       >
         <div className="border-b pb-4 mb-4">
-          <h1 className="text-3xl font-bold pb-2">{resume.name}</h1>
-          <p className="text-gray-700 pb-1">{resume.role}</p>
+          <h1 className="text-3xl font-bold pb-3">{resume.name}</h1>
+          <p className="text-gray-700 pb-1 pt-0.5">{resume.role}</p>
         </div>
 
         {resume.summary && (
@@ -142,10 +142,10 @@ function Page() {
               const tech = proj.techStack || proj["Technologies Used"] || [];
 
               return (
-                <div key={i} className="pt-3 pb-2">
+                <div key={i} className="pt-1 pb-3">
                   <p className="font-semibold">{title}</p>
 
-                  <ul className="list-disc pl-5 text-sm">
+                  <ul className="list-disc pl-5 text-sm pt-1">
                     <li className="pb-1">{description}</li>
                   </ul>
 
