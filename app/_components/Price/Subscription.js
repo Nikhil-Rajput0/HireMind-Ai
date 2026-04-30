@@ -1,13 +1,15 @@
 "use client";
-import react, { useState } from "react";
+import react, { useContext, useState } from "react";
 import { BsCoin } from "react-icons/bs";
 import { TbReload } from "react-icons/tb";
 import { FaInfinity } from "react-icons/fa6";
 import { LuAlarmClockOff } from "react-icons/lu";
 import SubscriptionCard from "./SubscriptionCard";
+import userContext from "@/app/contexts/UserContext";
 
 function Subscription() {
   const [activeTab, setActiveTab] = useState("credits");
+  const { plans } = useContext(userContext);
 
   const tabs = [
     { id: "credits", label: "Credits", icon: <BsCoin size={20} /> },
@@ -15,66 +17,66 @@ function Subscription() {
     { id: "lifetime", label: "Lifetime", icon: <FaInfinity size={20} /> },
   ];
 
-  const plans = {
-    credits: [
-      {
-        type: "Basic",
-        priceRs: "3000",
-        priceDollar: "20.0",
-        quantity: "100 credits",
-        btnText: "Get Credits",
-      },
-      {
-        type: "Standard",
-        priceRs: "5000",
-        priceDollar: "35.0",
-        quantity: "200 credits",
-        btnText: "Get Credits",
-        isPopular: true,
-      },
-      {
-        type: "Best Deal",
-        priceRs: "6500",
-        priceDollar: "45.0",
-        quantity: "350 credits",
-        btnText: "Get Credits",
-      },
-    ],
-    subscription: [
-      {
-        type: "Monthly",
-        priceRs: "1500",
-        priceDollar: "10.0",
-        quantity: "Unlimited/month",
-        btnText: "Subscribe",
-      },
-      {
-        type: "Quarterly",
-        priceRs: "4000",
-        priceDollar: "28.0",
-        quantity: "Unlimited/3 months",
-        btnText: "Subscribe",
-      },
-      {
-        type: "Yearly",
-        priceRs: "12000",
-        priceDollar: "85.0",
-        quantity: "Unlimited/year",
-        btnText: "Subscribe",
-        isPopular: true,
-      },
-    ],
-    lifetime: [
-      {
-        type: "Enterprise",
-        priceRs: "30000",
-        priceDollar: "175.0",
-        quantity: "Unlimited + Priority",
-        btnText: "Get Lifetime",
-        isPopular: true,
-      },
-    ],
-  };
+  // const plans = {
+  //   credits: [
+  //     {
+  //       type: "Basic",
+  //       priceRs: "3000",
+  //       priceDollar: "20.0",
+  //       quantity: "100 credits",
+  //       btnText: "Get Credits",
+  //     },
+  //     {
+  //       type: "Standard",
+  //       priceRs: "5000",
+  //       priceDollar: "35.0",
+  //       quantity: "200 credits",
+  //       btnText: "Get Credits",
+  //       isPopular: true,
+  //     },
+  //     {
+  //       type: "Best Deal",
+  //       priceRs: "6500",
+  //       priceDollar: "45.0",
+  //       quantity: "350 credits",
+  //       btnText: "Get Credits",
+  //     },
+  //   ],
+  //   subscription: [
+  //     {
+  //       type: "Monthly",
+  //       priceRs: "1500",
+  //       priceDollar: "10.0",
+  //       quantity: "Unlimited/month",
+  //       btnText: "Subscribe",
+  //     },
+  //     {
+  //       type: "Quarterly",
+  //       priceRs: "4000",
+  //       priceDollar: "28.0",
+  //       quantity: "Unlimited/3 months",
+  //       btnText: "Subscribe",
+  //     },
+  //     {
+  //       type: "Yearly",
+  //       priceRs: "12000",
+  //       priceDollar: "85.0",
+  //       quantity: "Unlimited/year",
+  //       btnText: "Subscribe",
+  //       isPopular: true,
+  //     },
+  //   ],
+  //   lifetime: [
+  //     {
+  //       type: "Enterprise",
+  //       priceRs: "30000",
+  //       priceDollar: "175.0",
+  //       quantity: "Unlimited + Priority",
+  //       btnText: "Get Lifetime",
+  //       isPopular: true,
+  //     },
+  //   ],
+  // };
 
   return (
     <section id="price" className="py-10 lg:px-40 text-gray-800">
@@ -124,20 +126,23 @@ function Subscription() {
         </div>
         <div className="pt-3">
           <div className="grid grid-cols-1 sm:grid-cols-2 justify-center md:flex items-center lg:justify-center lg:gap-4 gap-8">
-            {plans[activeTab].map((plan, index) => (
-              <SubscriptionCard
-                key={index}
-                type={plan.type}
-                priceRs={plan.priceRs}
-                priceDollar={plan.priceDollar}
-                quantity={plan.quantity}
-                btnText={plan.btnText}
-                bgColor={plan.isPopular ? "bg-green-600" : ""}
-                btnColor={plan.isPopular ? "bg-white" : ""}
-                textColor={plan.isPopular ? "text-black" : ""}
-                delay={index * 0.1}
-              />
-            ))}
+            {plans
+              .map((plan) => plan)
+              .filter((plan) => plan.planType === activeTab)
+              .map((plan, index) => (
+                <SubscriptionCard
+                  key={index}
+                  type={plan.type}
+                  price={plan.priceRs}
+                  priceDollar={plan.priceDollar}
+                  quantity={plan.quantity}
+                  btnText={plan.btnText}
+                  bgColor={plan.isPopular ? "bg-green-600" : ""}
+                  btnColor={plan.isPopular ? "bg-white" : ""}
+                  textColor={plan.isPopular ? "text-black" : ""}
+                  delay={index * 0.1}
+                />
+              ))}
           </div>
         </div>
       </div>

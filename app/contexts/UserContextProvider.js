@@ -25,7 +25,7 @@ const UserContextProvider = ({ children }) => {
   const [interview, setInterview] = useState([]);
   const [generatedResume, setGeneratedResume] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [plans, setPlans] = useState({});
+  const [plans, setPlans] = useState([]);
 
   const router = useRouter();
   const pathname = usePathname();
@@ -131,6 +131,8 @@ const UserContextProvider = ({ children }) => {
         interview,
         setInterview,
         generatedResume,
+        plans,
+        setPlans,
         setGeneratedResume,
       }}
     >
