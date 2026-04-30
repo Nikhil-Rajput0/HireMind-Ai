@@ -18,7 +18,7 @@ function Form() {
 
     try {
       const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_SERVER_UI}api/v1/supports/support`,
+        `${process.env.NEXT_PUBLIC_SERVER_UI}api/v1/supports/createSupport`,
         {
           name: inputValue.name,
           email: inputValue.email,
