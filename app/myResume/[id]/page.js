@@ -55,13 +55,13 @@ function Page() {
           <div className="flex gap-4">
             <Link
               href={"/homepage"}
-              className="bg-blue-600 px-3 py-2 rounded cursor-pointer"
+              className="bg-green-500 text-black px-3 py-2 rounded cursor-pointer"
             >
               Home
             </Link>
             <button
               onClick={downloadPDF}
-              className="bg-blue-600 px-4 py-1 rounded-full cursor-pointer"
+              className="bg-green-500 text-black px-4 py-1 rounded-full cursor-pointer"
             >
               Download Pdf
             </button>
@@ -73,30 +73,27 @@ function Page() {
         className="max-w-4xl mx-auto bg-white text-black p-10"
         style={{ fontFamily: "Arial, sans-serif" }}
       >
-        {/* 🔥 HEADER */}
         <div className="border-b pb-4 mb-4">
-          <h1 className="text-3xl font-bold">{resume.name}</h1>
-          <p className="text-gray-700">{resume.role}</p>
+          <h1 className="text-3xl font-bold pb-2">{resume.name}</h1>
+          <p className="text-gray-700 pb-1">{resume.role}</p>
         </div>
 
-        {/* 🔥 SUMMARY */}
         {resume.summary && (
           <div className="mb-4">
             <h2 className="text-lg font-semibold border-b pb-1">Summary</h2>
-            <p className="text-sm mt-2 leading-relaxed">{resume.summary}</p>
+            <p className="text-sm pt-2 leading-relaxed">{resume.summary}</p>
           </div>
         )}
 
-        {/* 🔥 SKILLS */}
         <div className="mb-4">
           <h2 className="text-lg font-semibold border-b pb-1">Skills</h2>
 
-          <div className="mt-2 text-sm">
+          <div className="pt-2 text-sm">
             {Array.isArray(resume.skills) &&
             typeof resume.skills[0] === "string"
               ? resume.skills.join(", ")
               : Object.entries(resume.skills || {}).map(([key, val], i) => (
-                  <p key={i}>
+                  <p key={i} className="pb-1">
                     <span className="font-semibold capitalize">{key}: </span>
                     {val.join(", ")}
                   </p>
@@ -104,24 +101,25 @@ function Page() {
           </div>
         </div>
 
-        {/* 🔥 EXPERIENCE */}
         {resume.experience?.length > 0 && (
-          <div className="mb-4">
+          <div className="pb-4">
             <h2 className="text-lg font-semibold border-b pb-1">Experience</h2>
 
             {resume.experience.map((exp, i) => (
-              <div key={i} className="mt-3">
-                <p className="font-semibold">
+              <div key={i} className="pt-3">
+                <p className="font-semibold pb-1">
                   {exp.title || exp.role} – {exp.company}
                 </p>
-                <p className="text-xs text-gray-600">{exp.duration}</p>
+                <p className="text-xs text-gray-600 pb-1">{exp.duration}</p>
 
-                <ul className="list-disc ml-5 text-sm mt-1">
+                <ul className="list-disc pl-5 text-sm pt-1">
                   {[
                     ...(exp.responsibilities || []),
                     ...(exp.achievements || []),
                   ].map((item, idx) => (
-                    <li key={idx}>{item}</li>
+                    <li key={idx} className="pt-1 pb-px">
+                      {item}
+                    </li>
                   ))}
                 </ul>
               </div>
@@ -129,7 +127,6 @@ function Page() {
           </div>
         )}
 
-        {/* 🔥 PROJECTS */}
         {resume.projects?.length > 0 && (
           <div>
             <h2 className="text-lg font-semibold border-b pb-1">Projects</h2>
@@ -145,15 +142,15 @@ function Page() {
               const tech = proj.techStack || proj["Technologies Used"] || [];
 
               return (
-                <div key={i} className="mt-3">
+                <div key={i} className="pt-3 pb-2">
                   <p className="font-semibold">{title}</p>
 
-                  <ul className="list-disc ml-5 text-sm">
-                    <li>{description}</li>
+                  <ul className="list-disc pl-5 text-sm">
+                    <li className="pb-1">{description}</li>
                   </ul>
 
                   {tech.length > 0 && (
-                    <p className="text-xs text-gray-600 mt-1">
+                    <p className="text-xs text-gray-600 pt-1">
                       Tech: {tech.join(", ")}
                     </p>
                   )}
