@@ -24,8 +24,8 @@ const UserContextProvider = ({ children }) => {
 
   const [interview, setInterview] = useState([]);
   const [generatedResume, setGeneratedResume] = useState([]);
-
   const [loading, setLoading] = useState(true);
+  const [plans, setPlans] = useState({});
 
   const router = useRouter();
   const pathname = usePathname();
@@ -51,8 +51,22 @@ const UserContextProvider = ({ children }) => {
     }
   };
 
+  const getPlans = async () => {
+    try {
+      const res = await axios.get(
+        "https://hiremind-ai-backend.onrender.com/api/v1/plans/plan",
+        { withCredentials: true },
+      );
+      setPlans(res.data?.plan);
+      console.log(res.data?.plan);
+    } catch (err) {
+      return;
+    }
+  };
+
   useEffect(() => {
     getData();
+    getPlans();
   }, [pathname]);
 
   if (loading)
