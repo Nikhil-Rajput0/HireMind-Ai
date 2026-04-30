@@ -16,11 +16,9 @@ function FeaturesCard({ type, heading, text, image }) {
         overflow-hidden
       "
     >
-      {/* subtle gradient glow */}
       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-linear-to-br from-green-100/40 to-transparent" />
 
       <div className="relative flex flex-col gap-5">
-        {/* Tag */}
         <span
           className="
           inline-block w-fit
@@ -35,28 +33,23 @@ function FeaturesCard({ type, heading, text, image }) {
           {type}
         </span>
 
-        {/* Heading */}
         <h2 className="text-xl md:text-2xl font-semibold text-gray-900 leading-snug">
           {heading}
         </h2>
-
-        {/* Image */}
         <div className="relative overflow-hidden rounded-xl">
           <Image
             src={image}
             alt="feature"
+            height={"auto"}
+            width="auto"
             className="
-              w-full h-44 object-cover
+             w-full h-44 object-cover
               transition-transform duration-500
               group-hover:scale-110
             "
           />
-
-          {/* overlay */}
           <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent opacity-60" />
         </div>
-
-        {/* Text */}
         <p className="text-gray-600 text-sm md:text-base leading-relaxed">
           {text}
         </p>

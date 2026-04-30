@@ -1,24 +1,43 @@
 "use client";
+import axios from "axios";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 function Form() {
   const [inputValue, setInputValue] = useState({
     name: "",
     email: "",
-    mobile: "",
+    phone: "",
     notes: "",
   });
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
-    setInputValue({ name: "", email: "", mobile: "", notes: "" });
-    console.log(inputValue);
+    try {
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_SERVER_UI}api/v1/supports/support`,
+        {
+          name: inputValue.name,
+          email: inputValue.email,
+          phone: Number(inputValue.phone),
+          message: inputValue.notes,
+        },
+        { withCredentials: true },
+      );
+      toast.success(res.data?.message);
+      setInputValue({ name: "", email: "", phone: "", notes: "" });
+    } catch (err) {
+      toast.error(err.response?.data?.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    // console.log(e);
     setInputValue((prevFormData) => ({ ...prevFormData, [name]: value }));
   };
   return (
@@ -67,8 +86,8 @@ function Form() {
             <input
               suppressHydrationWarning={true}
               id="phone"
-              name="mobile"
-              value={inputValue.mobile}
+              name="phone"
+              value={inputValue.phone}
               onChange={handleChange}
               className="bg-white/50 text-black border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 py-1 px-3 rounded-md"
               type="tel"
@@ -97,9 +116,9 @@ function Form() {
           <button
             type="submit"
             suppressHydrationWarning={true}
-            className="w-full bg-green-600 text-white font-semibold py-3 rounded-xl hover:bg-green-700 transition flex items-center justify-center gap-2"
+            className={`w-full ${loading ? "bg-gray-200" : "bg-green-600"} ${loading ? "text-black" : "text-white"} font-semibold py-3 rounded-xl ${loading ? "" : "hover:bg-green-700"} transition flex items-center justify-center gap-2 ${loading ? "cursor-not-allowed" : "cursor-pointer"}`}
           >
-            Submit
+            {loading ? "Submitting" : "Submit"}
           </button>
         </div>
       </form>

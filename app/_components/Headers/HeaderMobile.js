@@ -152,11 +152,13 @@ function HeaderMobile() {
                 </ul>
               </div>
 
-              <div className="border-t border-white/10 pt-6 space-y-4">
+              <div className="border-t border-white/10 pt-1 space-y-4">
                 <Link
                   href="/homepage"
                   onClick={() => setActive(false)}
-                  className="flex gap-2 items-center hover:text-green-400"
+                  className="flex gap-2 items-center px-3 py-2 rounded-lg 
+                        hover:bg-white/10 transition-all duration-200 
+                        hover:translate-x-1"
                 >
                   <IoHomeOutline /> Home
                 </Link>
