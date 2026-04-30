@@ -133,7 +133,7 @@ function Subscription() {
                 <SubscriptionCard
                   key={index}
                   type={plan.type}
-                  price={plan.priceRs}
+                  price={plan.price}
                   priceDollar={plan.priceDollar}
                   quantity={plan.quantity}
                   btnText={plan.btnText}
