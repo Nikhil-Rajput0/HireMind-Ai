@@ -63,13 +63,13 @@ It leverages Artificial Intelligence to simulate real interviews, analyze resume
 ## 📸 Screenshots
 
 - Homepage
-  ![Screenshot](/homepage.png)
+  ![Screenshot](./assets/homepage.png)
 - AI Interview
-  ![Screenshot](/interview.png)
+  ![Screenshot](./assets/interview.png)
 - Resume Generator
-  ![Screenshot](/resumeGenerator.png)
+  ![Screenshot](./assets/resumeGenerator.png)
 - Resume Analyzer
-  ![Screenshot](/resumeAnalyzer.png)
+  ![Screenshot](./assets/resumeAnalyzer.png)
 
 ---
 
