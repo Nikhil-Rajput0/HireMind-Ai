@@ -98,7 +98,7 @@ function HeaderMobile() {
                 backdrop-blur-2xl bg-gray-800 backdrop-saturate-150
                 border-l border-white/10
                 shadow-[0_8px_32px_rgba(0,0,0,0.25)]
-                px-6 pt-6 flex flex-col justify-between text-white"
+                p-6 flex flex-col text-white"
             >
               <div>
                 <div className="pb-5 pt-10">
@@ -108,7 +108,7 @@ function HeaderMobile() {
                   </div>
                 </div>
 
-                <ul className="flex flex-col gap-3 text-sm">
+                <ul className="flex flex-col gap-3 text-sm pb-3">
                   {[
                     {
                       href: "/homepage/interviewHr",
