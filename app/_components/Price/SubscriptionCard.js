@@ -19,7 +19,7 @@ function SubscriptionCard({
   textColor,
   delay,
 }) {
-  const { userData, setUserData, refreshUserData } = useContext(userContext);
+  const { userData } = useContext(userContext);
 
   const loadRazorpayScript = () => {
     return new Promise((resolve) => {
@@ -42,7 +42,7 @@ function SubscriptionCard({
     try {
       const loadingToast = toast.loading("Initiating payment...");
 
-      // Step 1: Create order (needs authentication)
+      // Create order
       const { data } = await axios.post(
         `${process.env.NEXT_PUBLIC_SERVER_UI}api/v1/payments/create-order`,
         { planId: id },
@@ -60,7 +60,7 @@ function SubscriptionCard({
         throw new Error("Failed to create order");
       }
 
-      // Step 2: Load Razorpay SDK
+      // Load Razorpay SDK
       const isLoaded = await loadRazorpayScript();
 
       if (!isLoaded) {
@@ -68,7 +68,7 @@ function SubscriptionCard({
         return;
       }
 
-      // Step 3: Configure Razorpay
+      // Configure Razorpay
       const options = {
         key: data.key_id,
         amount: data.order.amount,
@@ -78,66 +78,26 @@ function SubscriptionCard({
         image: "/logo.png",
         order_id: data.order.id,
         handler: async function (response) {
-          // This runs after successful payment
-          const verifyToast = toast.loading("Verifying payment...");
+          // Payment successful!
+          // Webhook will handle updating credits/plan on backend
+          toast.success("Payment successful! 🎉", {
+            duration: 4000,
+            icon: "✅",
+          });
 
-          try {
-            // Step 4: Verify payment (NO authentication needed)
-            const verifyResponse = await axios.post(
-              `${process.env.NEXT_PUBLIC_SERVER_UI}api/v1/payments/verify-payment`,
-              {
-                razorpay_order_id: response.razorpay_order_id,
-                razorpay_payment_id: response.razorpay_payment_id,
-                razorpay_signature: response.razorpay_signature,
-                planId: id,
-              },
-              {
-                // REMOVED: withCredentials: true
-                headers: {
-                  "Content-Type": "application/json",
-                },
-              },
-            );
-
-            toast.dismiss(verifyToast);
-
-            if (verifyResponse.data.status === "success") {
-              // Update local state
-              setUserData((prev) => ({
-                ...prev,
-                credits: verifyResponse.data.data.credits,
-                subscription: verifyResponse.data.data.subscription,
-                isLifetime: verifyResponse.data.data.isLifetime,
-              }));
-
-              toast.success(verifyResponse.data.message, {
-                duration: 5000,
-                icon: "🎉",
-              });
-
-              // Reload page to refresh all data
-              setTimeout(() => {
-                window.location.reload();
-              }, 1500);
-            }
-          } catch (verifyError) {
-            toast.dismiss(verifyToast);
-
-            console.error("Verification error:", verifyError);
-            console.error("Error response:", verifyError.response?.data);
-
-            // Payment was successful even if verification fails
-            // The email confirmation proves this
-            toast.success("Payment successful! Refreshing your account...", {
-              duration: 4000,
-              icon: "✅",
+          // Show updating message
+          setTimeout(() => {
+            toast.loading("Updating your account...", {
+              duration: 2000,
             });
+          }, 1000);
 
-            // Still reload to get fresh data from server
-            setTimeout(() => {
-              window.location.reload();
-            }, 1500);
-          }
+          // Reload page after short delay
+          // Webhook has already updated the database by now
+          setTimeout(() => {
+            toast.dismiss();
+            window.location.reload();
+          }, 3000);
         },
         prefill: {
           name: userData?.name || "",
@@ -157,10 +117,9 @@ function SubscriptionCard({
         retry: {
           enabled: false,
         },
-        timeout: 300,
       };
 
-      // Step 5: Create Razorpay instance and open
+      // Create Razorpay instance and open
       const razorpay = new window.Razorpay(options);
 
       razorpay.on("payment.failed", function (response) {
@@ -174,7 +133,6 @@ function SubscriptionCard({
 
       console.error("Payment error:", error);
 
-      // Better error handling
       if (error.response) {
         const status = error.response.status;
         const message = error.response.data?.message;

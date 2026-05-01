@@ -100,7 +100,7 @@ function Subscription() {
                   btnText={plan.btnText}
                   bgColor={plan.isPopular ? "bg-green-600" : "bg-white"}
                   btnColor={plan.isPopular ? "bg-white text-green-700" : ""}
-                  textColor={plan.isPopular ? "text-white" : ""}
+                  textColor={plan.isPopular ? "text-black" : ""}
                   delay={index * 0.1}
                 />
               ))}
