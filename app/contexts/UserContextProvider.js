@@ -58,7 +58,6 @@ const UserContextProvider = ({ children }) => {
         { withCredentials: true },
       );
       setPlans(res.data?.plan);
-      console.log(res.data?.plan);
     } catch (err) {
       return;
     }

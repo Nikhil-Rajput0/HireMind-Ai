@@ -3,10 +3,12 @@ import React from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { LiaRupeeSignSolid } from "react-icons/lia";
 import { motion } from "framer-motion";
+import toast from "react-hot-toast";
 
 function SubscriptionCard({
   type,
-  priceRs,
+  id,
+  price,
   priceDollar,
   quantity,
   bgColor,
@@ -42,7 +44,7 @@ function SubscriptionCard({
       <div>
         <p className="flex items-center text-3xl font-bold gap-[-8px] tracking-tighter">
           <LiaRupeeSignSolid className="font-extrabold" />
-          {priceRs}
+          {price}
         </p>
       </div>
       <div>
@@ -63,6 +65,7 @@ function SubscriptionCard({
           style={{ touchAction: "manipulation" }}
           onClick={(e) => {
             e.preventDefault();
+            toast.success(id, price);
           }}
         >
           {btnText}

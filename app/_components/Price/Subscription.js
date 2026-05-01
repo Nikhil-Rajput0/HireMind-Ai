@@ -132,6 +132,7 @@ function Subscription() {
               .map((plan, index) => (
                 <SubscriptionCard
                   key={index}
+                  id={plan._id}
                   type={plan.type}
                   price={plan.price}
                   priceDollar={plan.priceDollar}
