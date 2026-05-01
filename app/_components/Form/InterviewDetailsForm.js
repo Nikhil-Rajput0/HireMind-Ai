@@ -19,13 +19,21 @@ function InterviewDetailsForm({ interviewType }) {
     }));
   }, [interviewType, setFormData]);
 
+  const hasAccess = () => {
+    if (userData?.isLifetime) return true;
+    if (userData?.subscription?.isActive) return true;
+    if (userData?.credits >= 20) return true;
+    return false;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-    if (userData.credits < 20) {
-      toast.error("Not enough credits!");
+    if (!hasAccess()) {
+      toast.error("Not enough credits! Please purchase credits or subscribe.");
       setLoading(false);
+      router.push("/homepage#price");
       return;
     }
 
@@ -41,18 +49,26 @@ function InterviewDetailsForm({ interviewType }) {
         },
         { withCredentials: true },
       );
+
+      if (res.data.data?.credits !== undefined) {
+        setUserData((prev) => ({
+          ...prev,
+          credits: res.data.data.credits,
+        }));
+      }
+
       router.push(`/interview/${res.data.data.interview._id}`);
-      toast.success(res.data?.message);
-
-      const userRes = await axios.patch(
-        `${process.env.NEXT_PUBLIC_SERVER_UI}api/v1/users/updateCredits`,
-        { credits: userData.credits },
-        { withCredentials: true },
-      );
-
-      setUserData(userRes.data.user);
+      toast.success(res.data?.message || "Interview started!");
     } catch (error) {
-      toast.error(error.response?.data?.message);
+      const errorMessage =
+        error.response?.data?.message || "Something went wrong";
+
+      if (error.response?.status === 402) {
+        toast.error(errorMessage);
+        router.push("/homepage#price");
+      } else {
+        toast.error(errorMessage);
+      }
     } finally {
       setLoading(false);
     }
@@ -127,12 +143,60 @@ function InterviewDetailsForm({ interviewType }) {
           <option>Hardest</option>
         </select>
       </div>
+
+      <div className="text-gray-300 text-sm text-center bg-gray-800 rounded-lg py-2 px-3">
+        {userData?.isLifetime ? (
+          <span className="text-yellow-400">
+            👑 Lifetime Access - Unlimited Interviews
+          </span>
+        ) : userData?.subscription?.isActive ? (
+          <span className="text-green-400">
+            ✨ {userData.subscription.planName} Plan Active - Unlimited
+          </span>
+        ) : (
+          <span>
+            💰{" "}
+            <span className="text-white font-bold">
+              {userData?.credits || 0}
+            </span>{" "}
+            credits
+            <span className="text-gray-400"> (20 credits/interview)</span>
+          </span>
+        )}
+      </div>
+
       <button
         disabled={loading}
         type="submit"
-        className={`${loading ? "bg-gray-200" : "bg-green-500"} font-bold rounded-full px-3 py-2 flex items-center justify-center cursor-pointer ${loading ? "" : "hover:bg-green-600"}`}
+        className={`${
+          loading
+            ? "bg-gray-400 cursor-not-allowed"
+            : "bg-green-500 hover:bg-green-600"
+        } font-bold rounded-full px-3 py-2 flex items-center justify-center cursor-pointer transition-all duration-200`}
       >
-        Start Interview
+        {loading ? (
+          <span className="flex items-center gap-2">
+            <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+                fill="none"
+              />
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              />
+            </svg>
+            Starting...
+          </span>
+        ) : (
+          "Start Interview"
+        )}
       </button>
     </form>
   );

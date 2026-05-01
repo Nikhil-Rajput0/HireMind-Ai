@@ -3,6 +3,7 @@ import { useContext, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import userContext from "@/app/contexts/UserContext";
+import { useRouter } from "next/navigation";
 
 export default function ATSAnalyzer() {
   const [file, setFile] = useState(null);
@@ -10,6 +11,32 @@ export default function ATSAnalyzer() {
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const { setUserData, userData } = useContext(userContext);
+  const router = useRouter();
+
+  // Check if user has access (credits or subscription)
+  const hasAccess = () => {
+    if (userData?.isLifetime) return true;
+    if (userData?.subscription?.isActive) return true;
+    if (userData?.credits >= 20) return true;
+    return false;
+  };
+
+  // Get access type message
+  const getAccessMessage = () => {
+    if (userData?.isLifetime) {
+      return { text: "👑 Lifetime Access", color: "text-yellow-400" };
+    }
+    if (userData?.subscription?.isActive) {
+      return {
+        text: `✨ ${userData.subscription.planName} Plan Active`,
+        color: "text-green-400",
+      };
+    }
+    return {
+      text: `💰 ${userData?.credits || 0} credits remaining`,
+      color: "text-white",
+    };
+  };
 
   // Validate DOCX file
   const isValidDocx = (file) => {
@@ -60,13 +87,14 @@ export default function ATSAnalyzer() {
       return;
     }
 
-    setLoading(true);
-
-    if (userData.credits < 20) {
-      toast.error("Not enough credits!");
-      setLoading(false);
+    // Check access before making API call
+    if (!hasAccess()) {
+      toast.error("Not enough credits! Please purchase credits or subscribe.");
+      router.push("/#price");
       return;
     }
+
+    setLoading(true);
     const loadingToast = toast.loading("Analyzing your resume...");
 
     const formData = new FormData();
@@ -83,23 +111,28 @@ export default function ATSAnalyzer() {
       if (res.data.status === "success") {
         setResult(res.data.data);
         toast.success("Analysis completed!", { id: loadingToast });
+
+        // Update credits in context from response
+        if (res.data.data?.credits !== undefined) {
+          setUserData((prev) => ({
+            ...prev,
+            credits: res.data.data.credits,
+          }));
+        }
       } else {
         toast.error(res.data.message || "Analysis failed", {
           id: loadingToast,
         });
       }
-
-      const userRes = await axios.patch(
-        `${process.env.NEXT_PUBLIC_SERVER_UI}api/v1/users/updateCredits`,
-        { credits: userData.credits },
-        { withCredentials: true },
-      );
-
-      setUserData(userRes.data.user);
     } catch (err) {
-      toast.error(err.response?.data?.message || "Analysis failed", {
-        id: loadingToast,
-      });
+      const errorMessage = err.response?.data?.message || "Analysis failed";
+
+      if (err.response?.status === 402) {
+        toast.error(errorMessage, { id: loadingToast });
+        router.push("/#price");
+      } else {
+        toast.error(errorMessage, { id: loadingToast });
+      }
     } finally {
       setLoading(false);
     }
@@ -112,10 +145,15 @@ export default function ATSAnalyzer() {
     toast.success("Form reset");
   };
 
+  const access = getAccessMessage();
+
   return (
     <div className="min-h-screen bg-gray-900 text-white p-8">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">ATS Resume Analyzer</h1>
+        <div>
+          <h1 className="text-2xl font-bold">ATS Resume Analyzer</h1>
+          <p className={`text-sm mt-1 ${access.color}`}>{access.text}</p>
+        </div>
         {result && (
           <button
             onClick={resetAnalysis}
@@ -186,9 +224,25 @@ export default function ATSAnalyzer() {
             </p>
           </div>
 
+          {/* Credit info before button */}
+          {!hasAccess() && (
+            <div className="mt-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
+              <p className="text-red-400 text-sm text-center">
+                ⚠️ Insufficient credits. You need 20 credits to analyze a
+                resume.
+              </p>
+              <button
+                onClick={() => router.push("/#price")}
+                className="mt-2 w-full bg-red-500/20 text-red-300 py-2 rounded-lg hover:bg-red-500/30 transition text-sm"
+              >
+                Purchase Credits →
+              </button>
+            </div>
+          )}
+
           <button
             onClick={handleUpload}
-            disabled={loading || !file || !job.trim()}
+            disabled={loading || !file || !job.trim() || !hasAccess()}
             className="mt-6 w-full bg-green-600 px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
             {loading ? (
@@ -215,6 +269,8 @@ export default function ATSAnalyzer() {
                 </svg>
                 Analyzing...
               </>
+            ) : !hasAccess() ? (
+              "Get Credits to Analyze →"
             ) : (
               "Analyze Resume →"
             )}
@@ -223,7 +279,7 @@ export default function ATSAnalyzer() {
       ) : (
         <div className="mt-8 space-y-6">
           <div className="grid grid-cols-2 gap-4">
-            <div className="bg-linear-to-br from-green-600 to-green-800 p-6 rounded-xl text-center">
+            <div className="bg-gradient-to-br from-green-600 to-green-800 p-6 rounded-xl text-center">
               <p className="text-green-200 text-sm">ATS Score</p>
               <p className="text-3xl font-bold">{result.atsScore || 0}%</p>
               <div className="w-full bg-green-900 rounded-full h-2 mt-2">
@@ -233,7 +289,7 @@ export default function ATSAnalyzer() {
                 />
               </div>
             </div>
-            <div className="bg-linear-to-br from-blue-600 to-blue-800 p-6 rounded-xl text-center">
+            <div className="bg-gradient-to-br from-blue-600 to-blue-800 p-6 rounded-xl text-center">
               <p className="text-blue-200 text-sm">Match Score</p>
               <p className="text-3xl font-bold">{result.matchScore || 0}%</p>
               <div className="w-full bg-blue-900 rounded-full h-2 mt-2">

@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import userContext from "./UserContext";
 import toast from "react-hot-toast";
 import axios from "axios";
@@ -59,9 +59,25 @@ const UserContextProvider = ({ children }) => {
       );
       setPlans(res.data?.plan);
     } catch (err) {
-      return;
+      console.log("Failed to fetch plans:", err.message);
     }
   };
+
+  const refreshUserData = useCallback(async () => {
+    try {
+      const res = await axios.get(
+        "https://hiremind-ai-backend.onrender.com/api/v1/users/getMe",
+        {
+          withCredentials: true,
+        },
+      );
+      setUserData(res.data.user);
+      setInterview(res.data?.user?.interviews || []);
+      setGeneratedResume(res.data?.user?.resumes || []);
+    } catch (err) {
+      console.log("Failed to refresh user data:", err.message);
+    }
+  }, []);
 
   useEffect(() => {
     getData();
@@ -96,7 +112,7 @@ const UserContextProvider = ({ children }) => {
 
             <div className="w-64 h-2 bg-white/10 rounded-full overflow-hidden">
               <motion.div
-                className="h-full bg-linear-to-r from-green-400 via-emerald-300 to-green-400"
+                className="h-full bg-gradient-to-r from-green-400 via-emerald-300 to-green-400"
                 animate={{
                   x: ["-100%", "100%"],
                 }}
@@ -133,6 +149,7 @@ const UserContextProvider = ({ children }) => {
         plans,
         setPlans,
         setGeneratedResume,
+        refreshUserData,
       }}
     >
       {children}

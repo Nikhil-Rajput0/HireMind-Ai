@@ -1,15 +1,17 @@
+// components/Subscription.js
 "use client";
-import react, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { BsCoin } from "react-icons/bs";
 import { TbReload } from "react-icons/tb";
 import { FaInfinity } from "react-icons/fa6";
 import { LuAlarmClockOff } from "react-icons/lu";
 import SubscriptionCard from "./SubscriptionCard";
 import userContext from "@/app/contexts/UserContext";
+import axios from "axios";
 
 function Subscription() {
   const [activeTab, setActiveTab] = useState("credits");
-  const { plans } = useContext(userContext);
+  const { plans, setPlans, userData } = useContext(userContext);
 
   const tabs = [
     { id: "credits", label: "Credits", icon: <BsCoin size={20} /> },
@@ -17,74 +19,30 @@ function Subscription() {
     { id: "lifetime", label: "Lifetime", icon: <FaInfinity size={20} /> },
   ];
 
-  // const plans = {
-  //   credits: [
-  //     {
-  //       type: "Basic",
-  //       priceRs: "3000",
-  //       priceDollar: "20.0",
-  //       quantity: "100 credits",
-  //       btnText: "Get Credits",
-  //     },
-  //     {
-  //       type: "Standard",
-  //       priceRs: "5000",
-  //       priceDollar: "35.0",
-  //       quantity: "200 credits",
-  //       btnText: "Get Credits",
-  //       isPopular: true,
-  //     },
-  //     {
-  //       type: "Best Deal",
-  //       priceRs: "6500",
-  //       priceDollar: "45.0",
-  //       quantity: "350 credits",
-  //       btnText: "Get Credits",
-  //     },
-  //   ],
-  //   subscription: [
-  //     {
-  //       type: "Monthly",
-  //       priceRs: "1500",
-  //       priceDollar: "10.0",
-  //       quantity: "Unlimited/month",
-  //       btnText: "Subscribe",
-  //     },
-  //     {
-  //       type: "Quarterly",
-  //       priceRs: "4000",
-  //       priceDollar: "28.0",
-  //       quantity: "Unlimited/3 months",
-  //       btnText: "Subscribe",
-  //     },
-  //     {
-  //       type: "Yearly",
-  //       priceRs: "12000",
-  //       priceDollar: "85.0",
-  //       quantity: "Unlimited/year",
-  //       btnText: "Subscribe",
-  //       isPopular: true,
-  //     },
-  //   ],
-  //   lifetime: [
-  //     {
-  //       type: "Enterprise",
-  //       priceRs: "30000",
-  //       priceDollar: "175.0",
-  //       quantity: "Unlimited + Priority",
-  //       btnText: "Get Lifetime",
-  //       isPopular: true,
-  //     },
-  //   ],
-  // };
+  // Show current credits/plan status
+  const getUserPlanStatus = () => {
+    if (userData?.isLifetime) {
+      return "👑 Lifetime Member - Unlimited Access";
+    } else if (userData?.subscription?.isActive) {
+      return `✨ ${userData.subscription.planName} Plan Active`;
+    } else if (userData?.credits > 0) {
+      return `💰 ${userData.credits} Credits Available`;
+    }
+    return "Choose a plan to get started";
+  };
 
   return (
     <section id="price" className="py-10 lg:px-40 text-gray-800">
-      <div className="text-center text-lg lg:text-3xl pb-6 text-[#40650c] font-semibold">
-        Buy Your Plan
+      <div className="text-center">
+        <div className="text-lg lg:text-3xl pb-3 text-[#40650c] font-semibold">
+          Buy Your Plan
+        </div>
+        <div className="text-sm text-gray-600 pb-6">{getUserPlanStatus()}</div>
       </div>
-      <div className="flex flex-col gap-5  items-center">
-        <div className="flex border border-gray-300 bg-gray-200 rounded-full items-center justify-between  w-auto">
+
+      <div className="flex flex-col gap-5 items-center">
+        {/* Tabs */}
+        <div className="flex border border-gray-300 bg-gray-200 rounded-full items-center justify-between w-auto">
           <div className="lg:flex-1 flex items-center lg:justify-center justify-between text-xs lg:text-md w-full">
             {tabs.map((tab) => (
               <button
@@ -103,6 +61,8 @@ function Subscription() {
             ))}
           </div>
         </div>
+
+        {/* Info Bar */}
         <div className="pt-3 hidden lg:block">
           <div className="flex bg-gray-100 rounded-full px-8 py-2 items-center justify-center">
             <div>
@@ -112,39 +72,45 @@ function Subscription() {
               </h3>
             </div>
             <div>
-              <h3 className="flex items-center justify-center gap-1 text-[14px] font-normal text-gray-700  after:content-['|'] after:w-px after:text-gray-800 after:pl-3 after:pr-3">
+              <h3 className="flex items-center justify-center gap-1 text-[14px] font-normal text-gray-700 after:content-['|'] after:w-px after:text-gray-800 after:pl-3 after:pr-3">
                 <LuAlarmClockOff /> Credits Never Expires
               </h3>
             </div>
             <div>
               <h3 className="flex items-center justify-center gap-1 text-[14px] font-normal text-gray-700">
                 <BsCoin />
-                20 Credits&rarr; 1 Interview
+                20 Credits → 1 Interview
               </h3>
             </div>
           </div>
         </div>
-        <div className="pt-3">
-          <div className="grid grid-cols-1 sm:grid-cols-2 justify-center md:flex items-center lg:justify-center lg:gap-4 gap-8">
+
+        <div className="pt-3 w-full">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:flex items-center justify-center lg:gap-4 gap-8">
             {plans
-              .map((plan) => plan)
               .filter((plan) => plan.planType === activeTab)
               .map((plan, index) => (
                 <SubscriptionCard
-                  key={index}
+                  key={plan._id}
                   id={plan._id}
                   type={plan.type}
                   price={plan.price}
                   priceDollar={plan.priceDollar}
                   quantity={plan.quantity}
                   btnText={plan.btnText}
-                  bgColor={plan.isPopular ? "bg-green-600" : ""}
-                  btnColor={plan.isPopular ? "bg-white" : ""}
-                  textColor={plan.isPopular ? "text-black" : ""}
+                  bgColor={plan.isPopular ? "bg-green-600" : "bg-white"}
+                  btnColor={plan.isPopular ? "bg-white text-green-700" : ""}
+                  textColor={plan.isPopular ? "text-white" : ""}
                   delay={index * 0.1}
                 />
               ))}
           </div>
+        </div>
+
+        <div className="pt-8 text-center">
+          <p className="text-sm text-gray-500 flex items-center justify-center gap-2">
+            🔒 Secure payment powered by Razorpay
+          </p>
         </div>
       </div>
     </section>

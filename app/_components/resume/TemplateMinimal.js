@@ -10,7 +10,6 @@ export default function TemplateMinimal({ resume }) {
       <h2 className="mt-4 font-bold">Skills</h2>
 
       <ul className="flex flex-wrap gap-2">
-        {/* CASE 1: Simple array ["React", "Node"] */}
         {Array.isArray(resume.skills) && typeof resume.skills[0] === "string"
           ? resume.skills.map((skill, i) => (
               <li key={i} className="bg-gray-400 px-2 py-1 rounded">
