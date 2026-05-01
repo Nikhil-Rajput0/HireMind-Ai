@@ -96,7 +96,7 @@ const UserContextProvider = ({ children }) => {
 
             <div className="w-64 h-2 bg-white/10 rounded-full overflow-hidden">
               <motion.div
-                className="h-full bg-gradient-to-r from-green-400 via-emerald-300 to-green-400"
+                className="h-full bg-linear-to-r from-green-400 via-emerald-300 to-green-400"
                 animate={{
                   x: ["-100%", "100%"],
                 }}

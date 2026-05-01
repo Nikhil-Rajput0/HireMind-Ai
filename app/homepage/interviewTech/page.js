@@ -11,7 +11,7 @@ function Page() {
     <section>
       <div>
         <InterviewHeader type="Technical " interviewType="technical" />
-        <HrInterview />
+        <HrInterview type="technical" />
       </div>
     </section>
   );

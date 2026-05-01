@@ -6,7 +6,7 @@ import { IoTrashBin } from "react-icons/io5";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-function HrInterview() {
+function HrInterview({ type }) {
   const { interview, setInterview } = useContext(userContext);
   const [loadingId, setLoadingId] = useState(null);
 
@@ -27,7 +27,11 @@ function HrInterview() {
     }
   };
 
-  if (!interview || interview.length === 0) {
+  if (
+    !interview ||
+    interview.length === 0 ||
+    interview.interviewType !== type
+  ) {
     return (
       <div className="h-[60vh] flex flex-col justify-center items-center text-gray-400">
         <h2 className="text-2xl mb-2">No Interviews Yet</h2>
