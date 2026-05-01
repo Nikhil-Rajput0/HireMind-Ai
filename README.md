@@ -62,12 +62,14 @@ It leverages Artificial Intelligence to simulate real interviews, analyze resume
 
 ## 📸 Screenshots
 
-> Add your screenshots here
-
 - Homepage
+  ![Screenshot](/homepage.png)
 - AI Interview
+  ![Screenshot](/interview.png)
 - Resume Generator
+  ![Screenshot](/resumeGenerator.png)
 - Resume Analyzer
+  ![Screenshot](/resumeAnalyzer.png)
 
 ---
 
@@ -76,7 +78,7 @@ It leverages Artificial Intelligence to simulate real interviews, analyze resume
 ### 1️⃣ Clone the repository
 
 ```bash
-git clone https://github.com/your-username/hiremind-ai.git
+git clone https://github.com/Nikhil-Rajput0/hiremind-ai.git
 cd hiremind-ai
 ```
 
