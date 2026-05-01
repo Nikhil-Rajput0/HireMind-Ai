@@ -98,7 +98,7 @@ function HeaderMobile() {
                 backdrop-blur-2xl bg-gray-800 backdrop-saturate-150
                 border-l border-white/10
                 shadow-[0_8px_32px_rgba(0,0,0,0.25)]
-                p-6 flex flex-col justify-between text-white"
+                px-6 pt-6 flex flex-col justify-between text-white"
             >
               <div>
                 <div className="pb-5 pt-10">
@@ -108,7 +108,7 @@ function HeaderMobile() {
                   </div>
                 </div>
 
-                <ul className="space-y-3 text-sm">
+                <ul className="flex flex-col gap-3 text-sm">
                   {[
                     {
                       href: "/homepage/interviewHr",
@@ -152,7 +152,7 @@ function HeaderMobile() {
                 </ul>
               </div>
 
-              <div className="border-t border-white/10 pt-1 space-y-4">
+              <div className="border-t border-white/10 pt-1 flex flex-col gap-3">
                 <Link
                   href="/homepage"
                   onClick={() => setActive(false)}
@@ -166,7 +166,9 @@ function HeaderMobile() {
                 <Link
                   href="/homepage/profile"
                   onClick={() => setActive(false)}
-                  className="flex gap-2 items-center hover:text-green-400"
+                  className="flex gap-2 items-center px-3 py-2 rounded-lg 
+                        hover:bg-white/10 transition-all duration-200 
+                        hover:translate-x-1"
                 >
                   {userData?.photo ? (
                     <Image
@@ -184,14 +186,18 @@ function HeaderMobile() {
 
                 <button
                   onClick={() => goToSection("#price")}
-                  className="flex gap-2 items-center hover:text-green-400"
+                  className="flex gap-2 items-center px-3 py-2 rounded-lg 
+                        hover:bg-white/10 transition-all duration-200 
+                        hover:translate-x-1"
                 >
                   <CiDollar /> Buy Plan
                 </button>
 
                 <button
                   onClick={() => goToSection("#support")}
-                  className="flex gap-2 items-center hover:text-green-400"
+                  className="flex gap-2 items-center px-3 py-2 rounded-lg 
+                        hover:bg-white/10 transition-all duration-200 
+                        hover:translate-x-1"
                 >
                   <MdSupportAgent /> Contact
                 </button>
