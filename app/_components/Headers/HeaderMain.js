@@ -78,7 +78,13 @@ function HeaderMain() {
       })}
 
       <motion.button
-        onClick={() => router.push("/homepage#price")}
+        onClick={() => {
+          if (userData?.subscription?.isActive || userData?.isLifetime) {
+            toast.success("You are already subscribed 😇");
+            return;
+          }
+          router.push("/homepage#price");
+        }}
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.95 }}
         className="ml-4 bg-linear-to-r from-green-500 to-emerald-400 
