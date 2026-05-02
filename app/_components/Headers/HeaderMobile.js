@@ -5,22 +5,16 @@ import { IoClose, IoMenu, IoHomeOutline } from "react-icons/io5";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaCruzeiroSign } from "react-icons/fa6";
 import userContext from "@/app/contexts/UserContext";
-import { PiGogglesBold } from "react-icons/pi";
 import Link from "next/link";
-import {
-  MdLaptopChromebook,
-  MdOutlineLogout,
-  MdSupportAgent,
-} from "react-icons/md";
-import { GiClawString } from "react-icons/gi";
-import { RiAiGenerate2 } from "react-icons/ri";
-import { BiSolidAnalyse } from "react-icons/bi";
+import { MdOutlineLogout, MdSupportAgent } from "react-icons/md";
 import Image from "next/image";
 import { CgProfile } from "react-icons/cg";
 import { CiDollar } from "react-icons/ci";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import toast from "react-hot-toast";
+import UpgradeButton from "../UpgradeButton/UpgradeButton";
+import navItems from "../NavItems/NavItems";
 
 function HeaderMobile() {
   const { userData } = useContext(userContext);
@@ -104,38 +98,18 @@ function HeaderMobile() {
                 <div className="pb-5 pt-10">
                   <div className="flex items-center gap-2  bg-white/10 px-4 py-2 rounded-full border border-white/10">
                     <FaCruzeiroSign className="text-green-400" />
-                    <span>{userData?.credits || 0}</span>
+                    <span className="font-bold text-green-400">
+                      {Boolean(userData?.subscription?.isActive)
+                        ? userData?.subscription?.planName
+                        : userData?.isLifetime
+                          ? "Lifetime"
+                          : userData?.credits || 0}
+                    </span>
                   </div>
                 </div>
 
                 <ul className="flex flex-col gap-3 text-sm pb-3">
-                  {[
-                    {
-                      href: "/homepage/interviewHr",
-                      icon: <PiGogglesBold />,
-                      label: "HR Interview",
-                    },
-                    {
-                      href: "/homepage/interviewTech",
-                      icon: <MdLaptopChromebook />,
-                      label: "Technical",
-                    },
-                    {
-                      href: "/homepage/interviewStrict",
-                      icon: <GiClawString />,
-                      label: "Strict Mode",
-                    },
-                    {
-                      href: "/homepage/generateResume",
-                      icon: <RiAiGenerate2 />,
-                      label: "Resume Generator",
-                    },
-                    {
-                      href: "/homepage/analyseResume",
-                      icon: <BiSolidAnalyse />,
-                      label: "ATS Analyzer",
-                    },
-                  ].map((item, i) => (
+                  {navItems.map((item, i) => (
                     <motion.li key={i} whileHover={{ scale: 1.05 }}>
                       <Link
                         href={item.href}
@@ -213,14 +187,7 @@ function HeaderMobile() {
                   <MdOutlineLogout />
                 </div>
 
-                <motion.button
-                  whileTap={{ scale: 0.95 }}
-                  whileHover={{ scale: 1.05 }}
-                  onClick={() => goToSection("#price")}
-                  className="w-full mt-2 bg-linear-to-r from-green-500 to-emerald-400 text-black py-2 rounded-lg font-semibold"
-                >
-                  Upgrade 🚀
-                </motion.button>
+                <UpgradeButton />
               </div>
             </motion.div>
           </>

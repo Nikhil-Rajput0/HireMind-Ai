@@ -2,47 +2,15 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { FaCruzeiroSign } from "react-icons/fa6";
-import { MdLaptopChromebook } from "react-icons/md";
-import { RiAiGenerate2 } from "react-icons/ri";
-import { BiSolidAnalyse } from "react-icons/bi";
-import { GiClawString } from "react-icons/gi";
-import { PiGogglesBold } from "react-icons/pi";
 import { useContext, useEffect } from "react";
 import userContext from "@/app/contexts/UserContext";
-import toast from "react-hot-toast";
+import UpgradeButton from "../UpgradeButton/UpgradeButton";
+import navItems from "../NavItems/NavItems";
 
 function SideBar() {
   const router = useRouter();
   const { userData } = useContext(userContext);
   const pathname = usePathname();
-
-  const navItems = [
-    {
-      name: "HR Interview",
-      href: "/homepage/interviewHr",
-      icon: <PiGogglesBold />,
-    },
-    {
-      name: "Technical",
-      href: "/homepage/interviewTech",
-      icon: <MdLaptopChromebook />,
-    },
-    {
-      name: "Strict Mode",
-      href: "/homepage/interviewStrict",
-      icon: <GiClawString />,
-    },
-    {
-      name: "Resume Generator",
-      href: "/homepage/generateResume",
-      icon: <RiAiGenerate2 />,
-    },
-    {
-      name: "ATS Analyzer",
-      href: "/homepage/analyseResume",
-      icon: <BiSolidAnalyse />,
-    },
-  ];
 
   return (
     <div className="h-[90vh] w-65 bg-linear-to-b from-[#0f172a] to-[#020617] text-white flex flex-col justify-between p-4 border-r border-white/10 backdrop-blur-xl">
@@ -52,7 +20,7 @@ function SideBar() {
             <FaCruzeiroSign className="text-green-400" />
             <span className="text-sm">Credits:</span>
             <span className="font-bold text-green-400">
-              {userData?.subscription.isActive
+              {Boolean(userData?.subscription?.isActive)
                 ? userData?.subscription?.planName
                 : userData?.isLifetime
                   ? "Lifetime"
@@ -111,58 +79,7 @@ function SideBar() {
         </ul>
       </div>
 
-      <div className="bg-white/5 backdrop-blur-lg p-4 rounded-xl border border-white/10 shadow-lg">
-        <div className="flex items-center justify-between">
-          <p className="text-xs inline-flex text-gray-400">
-            {userData?.subscription?.isActive ? (
-              <span>{null}</span>
-            ) : (
-              <span className="text-xs inline-flex text-gray-400">Plan</span>
-            )}
-          </p>
-          {(userData?.subscription?.isActive || userData?.isLifetime) && (
-            <p className="flex-1 w-full text-xs text-gray-400">
-              {userData?.subscription?.isActive ? (
-                <span className="text-xs inline-flex text-gray-400">
-                  {`Plan Expires on ${new Date(
-                    userData?.subscription?.expiryDate,
-                  ).toLocaleDateString("en-GB", {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric",
-                  })}`}
-                </span>
-              ) : userData?.isLifetime ? (
-                <span className="text-xs inline-flex text-gray-400">
-                  Lifetime Member
-                </span>
-              ) : null}
-            </p>
-          )}
-        </div>
-        <p className="text-sm font-semibold text-green-400">
-          {userData?.role == "admin"
-            ? "Admin"
-            : userData?.subscription?.isActive || userData?.isLifetime
-              ? "Premium User💵"
-              : "FREE USER"}
-        </p>
-
-        <button
-          onClick={() => {
-            if (userData?.subscription?.isActive || userData?.isLifetime) {
-              toast.success("You are already subscribed 😇");
-              return;
-            }
-            router.push("/homepage#price");
-          }}
-          className="mt-3 w-full bg-linear-to-r from-green-500 to-emerald-400 text-black py-2 rounded-lg text-sm font-semibold hover:scale-105 transition cursor-pointer"
-        >
-          {userData?.subscription?.isActive || userData?.isLifetime
-            ? "Subscribed"
-            : "Upgrade 🚀"}
-        </button>
-      </div>
+      <UpgradeButton />
     </div>
   );
 }

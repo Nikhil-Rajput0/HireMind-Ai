@@ -10,6 +10,7 @@ import userContext from "@/app/contexts/UserContext";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { usePathname, useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 function HeaderMain() {
   const router = useRouter();
