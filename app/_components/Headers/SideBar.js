@@ -51,7 +51,11 @@ function SideBar() {
             <FaCruzeiroSign className="text-green-400" />
             <span className="text-sm">Credits:</span>
             <span className="font-bold text-green-400">
-              {userData?.credits || 0}
+              {userData?.subscription.isActive
+                ? userData?.subscription?.planName
+                : userData?.isLifetime
+                  ? "Lifetime"
+                  : userData?.credits || 0}
             </span>
           </div>
         </div>
@@ -107,16 +111,37 @@ function SideBar() {
       </div>
 
       <div className="bg-white/5 backdrop-blur-lg p-4 rounded-xl border border-white/10 shadow-lg">
-        <p className="text-xs text-gray-400">Plan</p>
+        <div className="flex items-center justify-between">
+          <p className="text-xs inline-flex text-gray-400">Plan</p>
+          {userData?.subscription?.isActive || userData?.isLifetime ? (
+            <p className="flex-1 w-full text-xs text-gray-500">
+              {userData?.subscription?.isActive ? (
+                <span>{`Plan Expires on ${new Date(userData?.subscription?.expiryDate).getMonth}`}</span>
+              ) : userData?.isLifetime ? (
+                <span>Lifetime Member</span>
+              ) : (
+                ""
+              )}
+            </p>
+          ) : (
+            ""
+          )}
+        </div>
         <p className="text-sm font-semibold text-green-400">
-          {userData?.role == "admin" ? "Admin" : "Free User"}
+          {userData?.role == "admin"
+            ? "Admin"
+            : userData?.subscription?.isActive || userData?.isLifetime
+              ? "Premium User💵"
+              : "FREE USER"}
         </p>
 
         <button
           onClick={() => router.push("/homepage#price")}
           className="mt-3 w-full bg-linear-to-r from-green-500 to-emerald-400 text-black py-2 rounded-lg text-sm font-semibold hover:scale-105 transition cursor-pointer"
         >
-          Upgrade 🚀
+          {userData?.subscription?.isActive || userData?.isLifetime
+            ? "Subscribed"
+            : "Upgrade 🚀"}
         </button>
       </div>
     </div>

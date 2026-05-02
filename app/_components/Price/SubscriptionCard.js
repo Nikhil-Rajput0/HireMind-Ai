@@ -90,6 +90,7 @@ function SubscriptionCard({
 
           setTimeout(() => {
             toast.dismiss();
+            window.location.reload();
           }, 3000);
         },
         prefill: {
