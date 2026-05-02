@@ -70,7 +70,7 @@ function HeaderMain() {
               {isActive && (
                 <motion.div
                   layoutId="nav-underline"
-                  className="absolute left-0 bottom-0 h-[2px] w-full bg-green-400 rounded-full"
+                  className="absolute left-0 bottom-0 h-0.5 w-full bg-green-400 rounded-full"
                 />
               )}
             </Link>

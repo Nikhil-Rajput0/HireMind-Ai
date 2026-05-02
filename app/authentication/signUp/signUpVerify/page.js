@@ -69,13 +69,14 @@ function Page() {
 
   return (
     <section className="min-h-screen flex bg-[#020617] text-white">
-      <div className="hidden lg:flex flex-col justify-between w-1/2 p-12 bg-gradient-to-br from-blue-900/20 to-purple-900/20">
+      <div className="hidden lg:flex flex-col justify-between w-1/2 p-12 bg-linear-to-br from-blue-900/20 to-purple-900/20">
         <Image src={logo} width={140} alt="logo" />
 
         <div>
           <h1 className="text-4xl font-semibold">Verify your email 🔐</h1>
-          <p className="text-gray-400 mt-3">
+          <p className="text-gray-400 mt-3 flex flex-col gap-1">
             We’ve sent a one-time password to your email.
+            <strong>Can&apos;t get email check spam folder please😇</strong>
           </p>
         </div>
 

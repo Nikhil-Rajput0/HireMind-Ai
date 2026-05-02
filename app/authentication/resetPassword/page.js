@@ -37,8 +37,9 @@ function Page() {
           >
             <h2 className="text-2xl font-semibold mb-2">Reset Password</h2>
 
-            <p className="text-sm text-gray-400 mb-6">
-              Enter the OTP and your new password.
+            <p className="text-sm text-gray-400 mb-6 flex flex-col gap-1">
+              Enter the OTP and your new password.{" "}
+              <strong>Can&apos;t get email check spam folder😇</strong>
             </p>
 
             <ResetPassword />
