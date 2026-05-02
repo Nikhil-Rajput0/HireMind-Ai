@@ -68,7 +68,6 @@ function SubscriptionCard({
         return;
       }
 
-      // Configure Razorpay
       const options = {
         key: data.key_id,
         amount: data.order.amount,
@@ -78,25 +77,19 @@ function SubscriptionCard({
         image: "/logo.png",
         order_id: data.order.id,
         handler: async function (response) {
-          // Payment successful!
-          // Webhook will handle updating credits/plan on backend
           toast.success("Payment successful! 🎉", {
             duration: 4000,
             icon: "✅",
           });
 
-          // Show updating message
           setTimeout(() => {
             toast.loading("Updating your account...", {
               duration: 2000,
             });
           }, 1000);
 
-          // Reload page after short delay
-          // Webhook has already updated the database by now
           setTimeout(() => {
             toast.dismiss();
-            window.location.reload();
           }, 3000);
         },
         prefill: {
