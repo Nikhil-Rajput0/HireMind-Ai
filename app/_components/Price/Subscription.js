@@ -11,7 +11,7 @@ import axios from "axios";
 
 function Subscription() {
   const [activeTab, setActiveTab] = useState("credits");
-  const { plans, setPlans, userData } = useContext(userContext);
+  const { plans, userData } = useContext(userContext);
 
   const tabs = [
     { id: "credits", label: "Credits", icon: <BsCoin size={20} /> },
@@ -85,8 +85,8 @@ function Subscription() {
           </div>
         </div>
 
-        <div className="pt-3 w-full">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:flex items-center justify-center lg:gap-4 gap-8">
+        <div className="pt-3 w-full px-7">
+          <div className="grid grid-cols-1  sm:grid-cols-2 md:grid-cols-3 lg:flex items-center justify-center lg:gap-4 gap-8">
             {plans
               .filter((plan) => plan.planType === activeTab)
               .map((plan, index) => (
