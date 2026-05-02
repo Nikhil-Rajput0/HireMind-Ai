@@ -66,7 +66,6 @@ function HeaderMain() {
               {item.icon}
               {item.label}
 
-              {/* 🔥 ACTIVE UNDERLINE */}
               {isActive && (
                 <motion.div
                   layoutId="nav-underline"
@@ -78,7 +77,6 @@ function HeaderMain() {
         );
       })}
 
-      {/* 🔥 UPGRADE BUTTON */}
       <motion.button
         onClick={() => router.push("/homepage#price")}
         whileHover={{ scale: 1.08 }}
@@ -87,7 +85,9 @@ function HeaderMain() {
         text-black px-4 py-2 rounded-full font-semibold 
         shadow-lg hover:shadow-green-500/40 transition-all cursor-pointer"
       >
-        Upgrade 🚀
+        {userData?.subscription?.isActive || userData?.isLifetime
+          ? "Subscribed"
+          : "Upgrade 🚀"}
       </motion.button>
     </div>
   );

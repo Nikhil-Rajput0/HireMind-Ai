@@ -113,18 +113,22 @@ function SideBar() {
       <div className="bg-white/5 backdrop-blur-lg p-4 rounded-xl border border-white/10 shadow-lg">
         <div className="flex items-center justify-between">
           <p className="text-xs inline-flex text-gray-400">Plan</p>
-          {userData?.subscription?.isActive || userData?.isLifetime ? (
+          {(userData?.subscription?.isActive || userData?.isLifetime) && (
             <p className="flex-1 w-full text-xs text-gray-500">
               {userData?.subscription?.isActive ? (
-                <span>{`Plan Expires on ${new Date(userData?.subscription?.expiryDate).getMonth}`}</span>
+                <span>
+                  {`Plan Expires on ${new Date(
+                    userData?.subscription?.expiryDate,
+                  ).toLocaleDateString("en-GB", {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                  })}`}
+                </span>
               ) : userData?.isLifetime ? (
                 <span>Lifetime Member</span>
-              ) : (
-                ""
-              )}
+              ) : null}
             </p>
-          ) : (
-            ""
           )}
         </div>
         <p className="text-sm font-semibold text-green-400">
