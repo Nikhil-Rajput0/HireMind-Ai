@@ -119,7 +119,7 @@ function HeaderMobile() {
                         hover:translate-x-1"
                       >
                         {item.icon}
-                        {item.label}
+                        {item.name}
                       </Link>
                     </motion.li>
                   ))}
