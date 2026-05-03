@@ -71,6 +71,11 @@ export default function ResumeForm({ resume, setResume, setScore }) {
         ...res.data.data,
       }));
 
+      // Set ATS score if returned
+      if (res.data?.resume?.score !== undefined) {
+        setScore(res.data.resume.score);
+      }
+
       // Update credits if returned from backend
       if (res.data.data?.credits !== undefined) {
         setUserData((prev) => ({
@@ -112,11 +117,6 @@ export default function ResumeForm({ resume, setResume, setScore }) {
         },
         { withCredentials: true },
       );
-
-      // Set ATS score if returned
-      if (res.data?.resume?.score !== undefined) {
-        setScore(res.data.resume.score);
-      }
 
       // Update user data with latest info
       if (res.data?.user) {
@@ -203,11 +203,6 @@ export default function ResumeForm({ resume, setResume, setScore }) {
           </label>
           <input
             placeholder="React, Node.js, MongoDB, TypeScript"
-            value={
-              Array.isArray(resume.skills)
-                ? resume.skills.join(", ")
-                : resume.skills || ""
-            }
             onChange={(e) =>
               setResume((prev) => ({
                 ...prev,
@@ -227,11 +222,6 @@ export default function ResumeForm({ resume, setResume, setScore }) {
           </label>
           <input
             placeholder="Google - Software Engineer (2020-2023), Freelance Developer (2018-2020)"
-            value={
-              Array.isArray(resume.experience)
-                ? resume.experience.join(", ")
-                : resume.experience || ""
-            }
             onChange={(e) =>
               setResume((prev) => ({
                 ...prev,
@@ -251,11 +241,6 @@ export default function ResumeForm({ resume, setResume, setScore }) {
           </label>
           <input
             placeholder="E-commerce Platform, Chat Application, Portfolio Website"
-            value={
-              Array.isArray(resume.projects)
-                ? resume.projects.join(", ")
-                : resume.projects || ""
-            }
             onChange={(e) =>
               setResume((prev) => ({
                 ...prev,
