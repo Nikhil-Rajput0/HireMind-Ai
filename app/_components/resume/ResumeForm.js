@@ -71,11 +71,6 @@ export default function ResumeForm({ resume, setResume, setScore }) {
         ...res.data.data,
       }));
 
-      // Set ATS score if returned
-      if (res.data?.resume?.score !== undefined) {
-        setScore(res.data.resume.score);
-      }
-
       // Update credits if returned from backend
       if (res.data.data?.credits !== undefined) {
         setUserData((prev) => ({
@@ -118,6 +113,11 @@ export default function ResumeForm({ resume, setResume, setScore }) {
         { withCredentials: true },
       );
 
+      // Set ATS score if returned
+      if (res.data?.resume?.score !== undefined) {
+        setScore(res.data.resume.score);
+      }
+
       // Update user data with latest info
       if (res.data?.user) {
         setUserData((prev) => ({
@@ -127,6 +127,7 @@ export default function ResumeForm({ resume, setResume, setScore }) {
       }
 
       toast.success(res.data?.message || "Resume saved successfully!");
+      router.push("/homepage/generateResume");
     } catch (err) {
       toast.error(err.response?.data?.message || "Failed to save resume");
     } finally {
